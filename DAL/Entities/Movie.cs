@@ -1,10 +1,11 @@
-﻿using System;
+﻿using DAL.interfaces;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace DAL.Entities
 {
-    public class Movie
+    public class Movie : IGenericEntities
     {
 
 
