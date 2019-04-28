@@ -64,23 +64,24 @@ namespace MyCollection.Controllers
         // GET: Movie/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            Movie model = repository.GetById(id);
+            return View(model);
         }
 
         // POST: Movie/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(Movie movie)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add update logic here
-
-                return RedirectToAction(nameof(Index));
+                repository.Edit(movie);
+                repository.SaveChanges();
+                return RedirectToAction("Index", "Home");
             }
-            catch
+            else
             {
-                return View();
+                return View(movie);
             }
         }
 
