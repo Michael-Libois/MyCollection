@@ -5,56 +5,63 @@
 }
 
 <h1>GetMovieDetail</h1>
-
+@*<div class="float-left">Float left on all viewport sizes</div><br>
+    <div class="float-right">Float right on all viewport sizes</div><b*@
 <div>
     <h4>IMDBMovieResult</h4>
     <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Year)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Year)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.imdbID)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.imdbID)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Type)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Type)
-        </dd>
-        <dt class="col-sm-2">
-            @*@Html.DisplayNameFor(model => model.Poster)*@
+    <div class="row">
+        <div class="col-6">
+            <div class="row">
+                <div class="col-sm-4 ">
+                    <strong>@Html.DisplayNameFor(model => model.Title)</strong>
+                </div>
+                <div class="col-sm-8">
+                    @Html.DisplayFor(model => model.Title)
+                </div>
+                <div class="col-sm-4 ">
+                    @Html.DisplayNameFor(model => model.Year)
+                </div>
+                <div class="col-sm-8">
+                    @Html.DisplayFor(model => model.Year)
+                </div>
+                <div class="col-sm-4 ">
+                    @Html.DisplayNameFor(model => model.imdbID)
+                </div>
+                <div class="col-sm-8">
+                    @Html.DisplayFor(model => model.imdbID)
+                </div>
+                <div class="col-sm-4 ">
+                    @Html.DisplayNameFor(model => model.Type)
+                </div>
+                <div class="col-sm-8">
+                    @Html.DisplayFor(model => model.Type)
+                </div>
+
+                @*<dd class = "col-sm-8">
+                        @Html.DisplayFor(model => model.Poster)
+                    </dd>*@
+                <div class="col-sm-4 ">
+                    @Html.DisplayNameFor(model => model.Genre)
+                </div>
+                <div class="col-sm-8">
+                    @Html.DisplayFor(model => model.Genre)
+                </div>
+                <div class="col-sm-4 ">
+                    @Html.DisplayNameFor(model => model.Director)
+                </div>
+                <div class="col-sm-8">
+                    @Html.DisplayFor(model => model.Director)
+                </div>
+            </div>
+        </div>
+        <div class="float-right col-6">
             <img src="@Url.Content(Model.Poster)" height="500" />
-        </dt>
-        @*<dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Poster)
-        </dd>*@
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Genre)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Genre)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Director)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Director)
-        </dd>
-    </dl>
+        </div>
+    </div>
 </div>
+<br>
+
 <div>
     @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
     <a asp-action="Index">Back to List</a>
