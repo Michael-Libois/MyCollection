@@ -47,11 +47,13 @@ namespace MyCollection.Controllers
         // POST: Movie/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Movie movie)
         {
             try
             {
                 // TODO: Add insert logic here
+                repository.Create(movie);
+                repository.SaveChanges();
 
                 return RedirectToAction(nameof(Index));
             }

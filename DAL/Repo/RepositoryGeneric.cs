@@ -45,8 +45,14 @@ namespace DAL.Repo
 
         public void Edit(T entity)
         {
-            var editedEntity = _context.Set<T>().FirstOrDefault(e => e.Id == entity.Id);
-            editedEntity = entity;
+            if (_context.Set<T>().Any(e => e.Id == entity.Id))
+            {
+                _context.Set<T>().Attach(entity);
+                _context.Set<T>().Update(entity);
+            }
+
+            //var editedEntity = _context.Set<T>().FirstOrDefault(e => e.Id == entity.Id);
+            //editedEntity = entity;
         }
 
         public T GetById(int id)
@@ -65,7 +71,7 @@ namespace DAL.Repo
         }
 
         public void SaveChanges() => _context.SaveChanges();
-    
-}
+
+    }
 
 }

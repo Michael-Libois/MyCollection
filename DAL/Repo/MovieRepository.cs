@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Repo
 {
-    //public class MovieRepository : RepositoryBase<Movie>, IMovieRepository
+    //public class MovieRepository : RepositoryGeneric<Movie>, IMovieRepository
     //{
 
     //    public MovieRepository(DatabaseContext databaseContext)
