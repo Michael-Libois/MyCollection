@@ -1,4 +1,4 @@
-﻿@model DAL.Entities.IMDBMovieResult
+﻿@model Common.BTO.MovieDetailBTO
 
 @{
     ViewData["Title"] = "GetMovieDetail";
@@ -8,7 +8,7 @@
 @*<div class="float-left">Float left on all viewport sizes</div><br>
     <div class="float-right">Float right on all viewport sizes</div><b*@
 <div>
-    <h4>IMDBMovieResult</h4>
+    <h4>IMDBMovieSummary</h4>
     <hr />
     <div class="row">
         <div class="col-6">
@@ -31,12 +31,12 @@
                 <div class="col-sm-8">
                     @Html.DisplayFor(model => model.imdbID)
                 </div>
-                <div class="col-sm-4 ">
+                @*<div class="col-sm-4 ">
                     @Html.DisplayNameFor(model => model.Type)
                 </div>
                 <div class="col-sm-8">
                     @Html.DisplayFor(model => model.Type)
-                </div>
+                </div>*@
 
                 @*<dd class = "col-sm-8">
                         @Html.DisplayFor(model => model.Poster)
@@ -64,5 +64,6 @@
 
 <div>
     @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Add", "AddToCollection", new { imdbid = Model.imdbID, Title = Model.Title, Year = Model.Year, Poster = Model.Poster, Director = Model.Director, Genre = Model.Genre})
     <a asp-action="Index">Back to List</a>
 </div>

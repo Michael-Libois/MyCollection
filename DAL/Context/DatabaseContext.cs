@@ -29,6 +29,6 @@ namespace DAL.Context
         }
 
 
-        public virtual DbSet<Movie> Movies { get; set; }
+        public virtual DbSet<MovieEF> Movies { get; set; }
     }
 }

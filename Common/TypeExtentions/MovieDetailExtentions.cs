@@ -1,0 +1,35 @@
+﻿using Common.BTO;
+using Common.DTO.IMDBProxy;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Common.TypeExtentions
+{
+    public static class MovieDetailExtentions
+    {
+        public static MovieDetailBTO ToBTO(this IMDBMovieDetail MovieDetail)
+            => new MovieDetailBTO
+            {
+                Id= 0,
+                Director = MovieDetail.Director,
+                Genre = MovieDetail.Genre,
+                imdbID = MovieDetail.imdbID,
+                Poster = MovieDetail.Poster,
+                Title = MovieDetail.Title,
+                Year = MovieDetail.Year
+            };
+
+        //public static IMDBMovieDetail ToDTO(this MovieDetailBTO MovieDetail)
+        //    => new IMDBMovieDetail
+        //    {
+                
+        //        Director = MovieDetail.Director,
+        //        Genre = MovieDetail.Genre,
+        //        imdbID = MovieDetail.imdbID,
+        //        Poster = MovieDetail.Poster,
+        //        Title = MovieDetail.Title,
+        //        Year = MovieDetail.Year
+        //    };
+    }
+}

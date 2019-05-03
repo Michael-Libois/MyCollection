@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using BLL.UserCases;
+using Common.DataContracts;
 using DAL.Entities;
-using DAL.interfaces;
 using DAL.Repo;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,11 +14,11 @@ namespace MyCollection.Controllers
 {
     public class MovieController : Controller
     {
-        private IRepositoryGeneric<Movie> repository = null;
+        private IRepositoryGeneric<MovieEF> repository = null;
 
         public MovieController()
         {
-            this.repository = new RepositoryGeneric<Movie>();
+            this.repository = new RepositoryGeneric<MovieEF>();
         }
 
         //public MovieController(IRepositoryGeneric<Movie> repository)
@@ -47,7 +49,7 @@ namespace MyCollection.Controllers
         // POST: Movie/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Movie movie)
+        public ActionResult Create(MovieEF movie)
         {
             try
             {
@@ -66,14 +68,14 @@ namespace MyCollection.Controllers
         // GET: Movie/Edit/5
         public ActionResult Edit(int id)
         {
-            Movie model = repository.GetById(id);
+            MovieEF model = repository.GetById(id);
             return View(model);
         }
 
         // POST: Movie/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Movie movie)
+        public ActionResult Edit(MovieEF movie)
         {
             if (ModelState.IsValid)
             {
@@ -114,6 +116,22 @@ namespace MyCollection.Controllers
         {
             return View();
         }
+
+        public ActionResult DisplayAllMoviesByUser()
+        {
+
+            var currentUser = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            var userUC = new User(currentUser, repository);
+
+            var movies = userUC.DisplayMyMovies();
+
+            return View(movies);
+        }
+
+
+
+        
 
 
     }

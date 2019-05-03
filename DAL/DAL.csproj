@@ -5,7 +5,29 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Factory\DbFactory.cs_" />
+    <None Remove="Factory\IDbFactory.cs_" />
+    <None Remove="Repo\IMovieRepository.cs_" />
+    <None Remove="Repo\MovieRepository.cs_" />
+    <None Remove="UnitOfWork\IUnitOfWork.cs_" />
+    <None Remove="UnitOfWork\UnitOfWork.cs_" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Factory\DbFactory.cs_" />
+    <Compile Include="Factory\IDbFactory.cs_" />
+    <Compile Include="Repo\IMovieRepository.cs_" />
+    <Compile Include="Repo\MovieRepository.cs_" />
+    <Compile Include="UnitOfWork\IUnitOfWork.cs_" />
+    <Compile Include="UnitOfWork\UnitOfWork.cs_" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj" />
   </ItemGroup>
 
   <ItemGroup>

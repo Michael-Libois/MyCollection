@@ -50,7 +50,7 @@ namespace MyCollection.Areas.Identity.Pages.Account
             public string LastName { get; set; }
 
 
-            [Required]
+            //[Required]
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }

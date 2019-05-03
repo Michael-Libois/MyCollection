@@ -14,7 +14,7 @@
             <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
         </ul>
         <div class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserAsync(User).Result.FirstName!</a>
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserAsync(User).Result.UserName!</a>
         </div>
     </form>
     

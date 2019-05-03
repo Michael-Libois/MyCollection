@@ -11,7 +11,7 @@ using MyCollection.ViewModels;
 
 namespace MyCollection.Controllers
 {
-    //[Authorize(Roles = "Administrators")]
+    [Authorize(Roles = "Administrators")]
     public class AdminController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -77,7 +77,7 @@ namespace MyCollection.Controllers
                 return RedirectToAction("UserManagement", _userManager.Users);
 
             var claims = await _userManager.GetClaimsAsync(user);
-            var vm = new EditUserViewModel() { Id = user.Id, Email = user.Email, UserName = user.UserName, UserClaims = claims.Select(c => c.Value).ToList() };
+            var vm = new EditUserViewModel() { Id = user.Id, /*Email = user.Email,*/ UserName = user.UserName/*, UserClaims = claims.Select(c => c.Value).ToList()*/ };
 
             return View(vm);
         }
@@ -89,7 +89,7 @@ namespace MyCollection.Controllers
 
             if (user != null)
             {
-                user.Email = editUserViewModel.Email;
+                //user.Email = editUserViewModel.Email;
                 user.UserName = editUserViewModel.UserName;
                 //user.Birthdate = editUserViewModel.Birthdate;
                 //user.City = editUserViewModel.City;

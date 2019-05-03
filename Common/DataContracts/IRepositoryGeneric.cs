@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL.interfaces
+namespace Common.DataContracts
 {
     public interface IRepositoryGeneric<T> where T : IGenericEntities
     {

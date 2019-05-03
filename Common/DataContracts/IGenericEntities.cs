@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DAL.interfaces
+namespace Common.DataContracts
 {
     public interface IGenericEntities
     {
         int Id { get; set; }
-
     }
 }

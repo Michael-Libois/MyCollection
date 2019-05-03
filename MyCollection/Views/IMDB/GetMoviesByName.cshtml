@@ -1,4 +1,4 @@
-﻿@model IEnumerable<DAL.Entities.IMDBMovieResult>
+﻿@model IEnumerable<Common.BTO.MovieSummaryBTO>
 
 @{
     ViewData["Title"] = "GetMoviesByName";
@@ -21,9 +21,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.imdbID)
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.Type)
-            </th>
+            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.Poster)
             </th>
@@ -42,9 +42,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.imdbID)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.Type)
-            </td>
+            </td>*@
             <td>
                 @*@Html.DisplayFor(modelItem => item.Poster)*@
                 <img src="@Url.Content(item.Poster)" height="200" />
@@ -54,6 +54,7 @@
                 @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
                 @Html.ActionLink("Details", "GetMovieDetail", new { imdbid = item.imdbID }) |
                 @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                
             </td>
         </tr>
 }

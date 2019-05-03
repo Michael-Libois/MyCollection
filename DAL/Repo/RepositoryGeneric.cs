@@ -1,5 +1,5 @@
-﻿using DAL.Context;
-using DAL.interfaces;
+﻿using Common.DataContracts;
+using DAL.Context;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
