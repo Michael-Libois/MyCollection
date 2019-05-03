@@ -35,6 +35,7 @@ namespace DAL.Entities
         //public string Production { get; set; }
         //public string Website { get; set; }
         //public string Response { get; set; }
+        //public string FilePath { get; set; }
     }
 
         //public class Rating

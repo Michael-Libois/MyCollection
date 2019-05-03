@@ -109,5 +109,12 @@ namespace MyCollection.Controllers
                 return View();
             }
         }
+
+        public ActionResult PlayMovie()
+        {
+            return View();
+        }
+
+
     }
 }
