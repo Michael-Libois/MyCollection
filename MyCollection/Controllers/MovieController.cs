@@ -16,9 +16,9 @@ namespace MyCollection.Controllers
     {
         private IRepositoryGeneric<MovieEF> repository = null;
 
-        public MovieController()
+        public MovieController(IRepositoryGeneric<MovieEF> Repository)
         {
-            this.repository = new RepositoryGeneric<MovieEF>();
+            this.repository = Repository;
         }
 
         //public MovieController(IRepositoryGeneric<Movie> repository)
@@ -122,7 +122,7 @@ namespace MyCollection.Controllers
 
             var currentUser = User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-            var userUC = new User(currentUser, repository);
+            var userUC = new User(currentUser, repository,null);
 
             var movies = userUC.DisplayMyMovies();
 

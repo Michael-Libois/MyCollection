@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Common.BTO;
+using DAL.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -14,10 +16,10 @@ namespace MyCollection.Controllers
     [Authorize(Roles = "Administrators")]
     public class AdminController : Controller
     {
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<ApplicationUserEF> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
 
-        public AdminController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+        public AdminController(UserManager<ApplicationUserEF> userManager, RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -46,7 +48,7 @@ namespace MyCollection.Controllers
         {
             if (!ModelState.IsValid) return View(addUserViewModel);
 
-            var user = new ApplicationUser()
+            var user = new ApplicationUserEF()
             {
                 UserName = addUserViewModel.UserName,
                 Email = addUserViewModel.Email,

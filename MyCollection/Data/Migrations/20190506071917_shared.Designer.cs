@@ -11,8 +11,8 @@ using MyCollection.Data;
 namespace MyCollection.Data.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20190428092437_init")]
-    partial class init
+    [Migration("20190506071917_shared")]
+    partial class shared
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -88,11 +88,9 @@ namespace MyCollection.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.Property<string>("LoginProvider")
-                        .HasMaxLength(128);
+                    b.Property<string>("LoginProvider");
 
-                    b.Property<string>("ProviderKey")
-                        .HasMaxLength(128);
+                    b.Property<string>("ProviderKey");
 
                     b.Property<string>("ProviderDisplayName");
 
@@ -123,11 +121,9 @@ namespace MyCollection.Data.Migrations
                 {
                     b.Property<string>("UserId");
 
-                    b.Property<string>("LoginProvider")
-                        .HasMaxLength(128);
+                    b.Property<string>("LoginProvider");
 
-                    b.Property<string>("Name")
-                        .HasMaxLength(128);
+                    b.Property<string>("Name");
 
                     b.Property<string>("Value");
 
@@ -140,6 +136,8 @@ namespace MyCollection.Data.Migrations
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("AcceptShared");
 
                     b.Property<int>("AccessFailedCount");
 

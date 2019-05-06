@@ -38,10 +38,10 @@ namespace MyCollection.Controllers
         
         private IRepositoryGeneric<MovieEF> repository = null;
 
-        public IMDBController()
+        public IMDBController(IRepositoryGeneric<MovieEF> Repository)
         {
             
-            this.repository = new RepositoryGeneric<MovieEF>();
+            this.repository = Repository;
         }
         
 
@@ -51,6 +51,8 @@ namespace MyCollection.Controllers
             var guest = new Visitor();
 
             var model = guest.SearchMoviesByName(name);
+
+            if (model.Count() == 0) return View("GetMoviesByNameNotFound", name);
 
             return View(model);
 
@@ -72,7 +74,7 @@ namespace MyCollection.Controllers
             {
                 var currentUser = User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-                var userUC = new User(currentUser, repository);
+                var userUC = new User(currentUser, repository,null);
 
                 userUC.AddToUserCollection(imdbmovie);
 

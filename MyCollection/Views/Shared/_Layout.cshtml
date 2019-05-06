@@ -3,8 +3,8 @@
 @using Microsoft.AspNetCore.Identity.EntityFrameworkCore
 @using MyCollection.Data
 
-@inject UserManager<ApplicationUser> UserManager
-@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<DAL.Entities.ApplicationUserEF> UserManager
+@inject SignInManager<DAL.Entities.ApplicationUserEF> SignInManager
 <!DOCTYPE html>
 <html>
 <head>
@@ -55,8 +55,19 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                        <li>
+                            @*<input type="text" placeholder="Search..">*@
+                            @using (Html.BeginForm("GetMoviesByName", "IMDB"))
+                            {
+                                //Champ texte de recherche
+                                @Html.TextBox("name")
+                                //Input de validation (n'est pas généré par un programme d'assistance)
+                                <input type="submit" value="Search" />
+                            }
+                        </li>
                     </ul>
                 </div>
+                
             </div>
         </nav>
     </header>

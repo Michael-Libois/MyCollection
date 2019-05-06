@@ -1,5 +1,7 @@
 ﻿using Common.DataContracts;
 using DAL.Context;
+using DAL.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -13,12 +15,12 @@ namespace DAL.Repo
     public class RepositoryGeneric<T> : IRepositoryGeneric<T> where T : class, IGenericEntities
     {
 
-        private readonly DatabaseContext _context;
+        private readonly IdentityDbContext<ApplicationUserEF> _context;
 
 
-        public RepositoryGeneric()
+        public RepositoryGeneric(IdentityDbContext<ApplicationUserEF> Context)
         {
-            this._context = new DatabaseContext();
+            this._context = Context;
         }
 
 

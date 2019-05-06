@@ -1,7 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using BLL.UserCases;
+using Common.DataContracts;
+using Common.DTO.DataContext;
+using DAL.Entities;
+using DAL.Repo;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -14,14 +20,17 @@ namespace MyCollection.Controllers
     //[Authorize]
     public class AccountController : Controller
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUserEF> _userManager;
+        private readonly SignInManager<ApplicationUserEF> _signInManager;
+        private IRepositoryGeneric<AdressEF> repositoryAdress = null;
 
-        public AccountController(UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager)
+        public AccountController(UserManager<ApplicationUserEF> userManager,
+            SignInManager<ApplicationUserEF> signInManager, IRepositoryGeneric<AdressEF> RepositoryAdress)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+
+            repositoryAdress = RepositoryAdress;
         }
 
         [AllowAnonymous]
@@ -68,13 +77,19 @@ namespace MyCollection.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(LoginViewModel loginViewModel)
         {
-            if (ModelState.IsValid)
+            if ((ModelState.IsValid)/*&&(uc_valideradress())*/)
             {
-                var user = new ApplicationUser() { UserName = loginViewModel.UserName, Email = loginViewModel.Email };
+                var user = new ApplicationUserEF() { UserName = loginViewModel.UserName, Email = loginViewModel.Email, AcceptShared = loginViewModel.AcceptShared };
                 var result = await _userManager.CreateAsync(user, loginViewModel.Password);
-
+                
                 if (result.Succeeded)
                 {
+                //await _signInManager.PasswordSignInAsync(user, loginViewModel.Password, false, false);
+                    //option2: var userid=  recherUserNonLoggedById();
+                    //var userid = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                    var UserRole = new User(user.Id, null, repositoryAdress);
+                    UserRole.AddNewUserAdress(loginViewModel.ToAdressBTO());
+
                     return RedirectToAction("Index", "Home");
                 }
             }

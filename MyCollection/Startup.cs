@@ -13,6 +13,10 @@ using Microsoft.EntityFrameworkCore;
 using MyCollection.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using DAL.Entities;
+using DAL.Context;
+using DAL.Repo;
+using Common.DataContracts;
 
 namespace MyCollection
 {
@@ -35,13 +39,14 @@ namespace MyCollection
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddDbContext<ApplicationDbContext>(options =>
+            services.AddDbContext<DatabaseContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
+
             //services.AddDefaultIdentity<ApplicationUser>()
             //    .AddDefaultUI(UIFramework.Bootstrap4)
             //    .AddEntityFrameworkStores<ApplicationDbContext>();
-            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+            services.AddIdentity<ApplicationUserEF, IdentityRole>(options =>
             {
                 options.Password.RequiredLength = 8;
                 options.Password.RequireNonAlphanumeric = true;
@@ -49,7 +54,10 @@ namespace MyCollection
                 //options.User.RequireUniqueEmail = true;
 
             })
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddEntityFrameworkStores<DatabaseContext>();
+
+            services.AddTransient<IRepositoryGeneric<MovieEF>, RepositoryGeneric<MovieEF>>();
+            services.AddTransient<IRepositoryGeneric<AdressEF>, RepositoryGeneric<AdressEF>>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }

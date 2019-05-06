@@ -26,6 +26,47 @@
             <span asp-validation-for="Password" class="text-danger"></span>
         </div>
     </div>
+
+
+    <div class="form-group">
+        <label asp-for="Street" class="col-md-2 control-label"></label>
+        <div class="col-md-10">
+            <input asp-for="Street" class="form-control" />
+            <span asp-validation-for="Street" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="Number" class="col-md-2 control-label"></label>
+        <div class="col-md-10">
+            <input asp-for="Number" class="form-control" />
+            <span asp-validation-for="Number" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="PostalCode" class="col-md-2 control-label"></label>
+        <div class="col-md-10">
+            <input asp-for="PostalCode" class="form-control" />
+            <span asp-validation-for="PostalCode" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="City" class="col-md-2 control-label"></label>
+        <div class="col-md-10">
+            <input asp-for="City" class="form-control" />
+            <span asp-validation-for="City" class="text-danger"></span>
+        </div>
+    </div>
+
+
+
+    <div class="checkbox">
+        <label>
+            @*<input type="checkbox" checked= value="" />*@
+            @Html.CheckBox("AcceptShared", true)
+            Share Collection
+        </label>
+
+    </div>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" class="btn btn-primary" value="Register" />

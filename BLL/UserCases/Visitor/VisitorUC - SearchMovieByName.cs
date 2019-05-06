@@ -13,10 +13,16 @@ namespace BLL.UserCases
 {
     public partial class Visitor
     {
-        public IEnumerable<MovieSummaryBTO> SearchMoviesByName(string Name)
+        public IEnumerable<MovieSummaryBTO> SearchMoviesByName(string name)
         {
             var a = new IMDBProxy();
-            return (Task.Run(() => a.GetMovies(Name)).Result).Select(x => x.ToBTO());
+
+            var result = (Task.Run(() => a.GetMovies(name)).Result).Select(x => x.ToBTO());
+
+            if (result.Count() == 0)
+                result = (Task.Run(() => a.GetMoviesT(name)).Result).Select(x => x.ToBTO());
+
+            return result;
         }
     }
 }

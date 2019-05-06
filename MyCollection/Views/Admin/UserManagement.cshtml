@@ -1,5 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Identity.EntityFrameworkCore
-@model IEnumerable<ApplicationUser>
+@model IEnumerable<DAL.Entities.ApplicationUserEF>
 
 <h2>User management</h2>
 
@@ -16,7 +16,7 @@ else
             <th>Email</th>
             <th>Actions</th>
         </tr>
-        @foreach (ApplicationUser user in Model)
+        @foreach (DAL.Entities.ApplicationUserEF user in Model)
         {
             <tr>
                 <td>@user.Id</td>

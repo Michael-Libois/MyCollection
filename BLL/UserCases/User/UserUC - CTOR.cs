@@ -10,8 +10,9 @@ namespace BLL.UserCases
     {
         private readonly string userId;
         private readonly IRepositoryGeneric<MovieEF> iMovieRepository;
+        private readonly IRepositoryGeneric<AdressEF> iAdressRepository;
 
-        public User(string UserId, IRepositoryGeneric<MovieEF> MovieRepository)
+        public User(string UserId, IRepositoryGeneric<MovieEF> MovieRepository, IRepositoryGeneric<AdressEF> AdressRepository)
         {
             if (string.IsNullOrWhiteSpace(UserId)|| string.IsNullOrEmpty(UserId))
             {
@@ -20,6 +21,8 @@ namespace BLL.UserCases
 
             userId = UserId;
             iMovieRepository = MovieRepository;
+            iAdressRepository = AdressRepository;
         }
+
     }
 }
