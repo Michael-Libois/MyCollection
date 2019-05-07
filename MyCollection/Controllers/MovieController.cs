@@ -7,11 +7,13 @@ using BLL.UserCases;
 using Common.DataContracts;
 using DAL.Entities;
 using DAL.Repo;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MyCollection.Controllers
 {
+    [Authorize]
     public class MovieController : Controller
     {
         private IRepositoryGeneric<MovieEF> repository = null;
@@ -90,9 +92,14 @@ namespace MyCollection.Controllers
         }
 
         // GET: Movie/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int Id)
         {
-            return View();
+            var currentUser = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var userUC = new User(currentUser, repository, null);
+            userUC.DeleteFromUserCollection(Id);
+
+
+            return RedirectToAction("DisplayAllMoviesByUser", "Movie");
         }
 
         // POST: Movie/Delete/5

@@ -1,5 +1,7 @@
 ﻿@model Common.BTO.MovieDetailBTO
-
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<DAL.Entities.ApplicationUserEF> UserManager
+@inject SignInManager<DAL.Entities.ApplicationUserEF> SignInManager
 @{
     ViewData["Title"] = "GetMovieDetail";
 }
@@ -25,18 +27,18 @@
                 <div class="col-sm-8">
                     @Html.DisplayFor(model => model.Year)
                 </div>
-                <div class="col-sm-4 ">
-                    @Html.DisplayNameFor(model => model.imdbID)
-                </div>
-                <div class="col-sm-8">
-                    @Html.DisplayFor(model => model.imdbID)
-                </div>
                 @*<div class="col-sm-4 ">
-                    @Html.DisplayNameFor(model => model.Type)
-                </div>
-                <div class="col-sm-8">
-                    @Html.DisplayFor(model => model.Type)
-                </div>*@
+                        @Html.DisplayNameFor(model => model.imdbID)
+                    </div>
+                    <div class="col-sm-8">
+                        @Html.DisplayFor(model => model.imdbID)
+                    </div>*@
+                @*<div class="col-sm-4 ">
+                        @Html.DisplayNameFor(model => model.Type)
+                    </div>
+                    <div class="col-sm-8">
+                        @Html.DisplayFor(model => model.Type)
+                    </div>*@
 
                 @*<dd class = "col-sm-8">
                         @Html.DisplayFor(model => model.Poster)
@@ -53,6 +55,18 @@
                 <div class="col-sm-8">
                     @Html.DisplayFor(model => model.Director)
                 </div>
+                <div class="col-sm-4 ">
+                    @Html.DisplayNameFor(model => model.Actors)
+                </div>
+                <div class="col-sm-8">
+                    @Html.DisplayFor(model => model.Actors)
+                </div>
+                <div class="col-sm-4 ">
+                    @Html.DisplayNameFor(model => model.Country)
+                </div>
+                <div class="col-sm-8">
+                    @Html.DisplayFor(model => model.Country)
+                </div>
             </div>
         </div>
         <div class="float-right col-6">
@@ -61,9 +75,22 @@
     </div>
 </div>
 <br>
-
+@if (SignInManager.IsSignedIn(User))
+{
 <div>
     @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    @Html.ActionLink("Add", "AddToCollection", new { imdbid = Model.imdbID, Title = Model.Title, Year = Model.Year, Poster = Model.Poster, Director = Model.Director, Genre = Model.Genre})
+    @Html.ActionLink("Add", "AddToCollection", new
+{
+   imdbid = Model.imdbID,
+   Title = Model.Title,
+   Year = Model.Year,
+   Poster = Model.Poster,
+   Director = Model.Director,
+   Genre = Model.Genre,
+   Actors = Model.Actors,
+   Country = Model.Country
+})
+    @* TODO #1 "~/IMDB/GetMoviesByName/"+Model.imdbID*@
     <a asp-action="Index">Back to List</a>
 </div>
+}

@@ -10,9 +10,10 @@ namespace BLL.UserCases
 {
     public partial class User
     {
-        public IEnumerable<MovieSummaryBTO> DisplayMyMovies()
+        public IEnumerable<MovieSummaryBTO> DisplayMoviesByUserId(string UserID)
         {
-            return DisplayMoviesByUserId(userId);
+            Func<MovieEF, bool> funcPred = p => p.UserID == UserID;
+            return iMovieRepository.Filter(funcPred).Select(x => x.ToBTO());
         }
     }
 }

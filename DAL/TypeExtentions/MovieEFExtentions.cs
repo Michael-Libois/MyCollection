@@ -24,6 +24,7 @@ namespace DAL.TypeExtentions
         public static MovieSummaryBTO ToBTO(this MovieEF MovieDetail)
             => new MovieSummaryBTO
             {
+                UserID = MovieDetail.UserID,
                 Id = MovieDetail.Id,
                 Director = MovieDetail.Director,
                 Genre = MovieDetail.Genre,

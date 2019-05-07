@@ -16,7 +16,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using MyCollection.Data;
 using Newtonsoft.Json;
 using BLL.UserCases;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace MyCollection.Controllers
 {
@@ -66,7 +66,7 @@ namespace MyCollection.Controllers
 
             return View(model);
         }
-
+        [Authorize]
         public ActionResult AddToCollection(MovieDetailBTO imdbmovie)
         {
             

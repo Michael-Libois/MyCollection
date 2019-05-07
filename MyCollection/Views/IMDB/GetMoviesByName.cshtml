@@ -6,9 +6,9 @@
 
 <h1>GetMoviesByName</h1>
 
-<p>
+@*<p>
     <a asp-action="Create">Create New</a>
-</p>
+</p>*@
 <table class="table">
     <thead>
         <tr>
@@ -39,9 +39,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Year)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.imdbID)
-            </td>
+            </td>*@
             @*<td>
                 @Html.DisplayFor(modelItem => item.Type)
             </td>*@
@@ -51,9 +51,9 @@
 
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "GetMovieDetail", new { imdbid = item.imdbID }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |*@
+                @Html.ActionLink("Details", "GetMovieDetail", new { imdbid = item.imdbID }) 
+                @*@Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
                 
             </td>
         </tr>

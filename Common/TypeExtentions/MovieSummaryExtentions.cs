@@ -12,6 +12,7 @@ namespace Common.TypeExtentions
             => new MovieSummaryBTO
             {
                 Id = 0,
+                UserID = MovieDetail.UserID,
                 Director = MovieDetail.Director,
                 Genre = MovieDetail.Genre,
                 imdbID = MovieDetail.imdbID,

@@ -17,7 +17,9 @@ namespace Common.TypeExtentions
                 imdbID = MovieDetail.imdbID,
                 Poster = MovieDetail.Poster,
                 Title = MovieDetail.Title,
-                Year = MovieDetail.Year
+                Year = MovieDetail.Year,
+                Actors = MovieDetail.Actors,
+                Country = MovieDetail.Country
             };
 
         //public static IMDBMovieDetail ToDTO(this MovieDetailBTO MovieDetail)

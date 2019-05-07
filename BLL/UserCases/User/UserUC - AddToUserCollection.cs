@@ -23,6 +23,8 @@ namespace BLL.UserCases
                 movie.Title = imdbmovie.Title;
                 movie.Year = imdbmovie.Year;
                 movie.UserID = userId;
+                movie.Actors = imdbmovie.Actors;
+                movie.Country = imdbmovie.Country;
 
                 // TODO: Add insert logic here
                 iMovieRepository.Create(movie);

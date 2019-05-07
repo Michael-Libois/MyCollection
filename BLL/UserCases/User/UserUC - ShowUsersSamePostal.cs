@@ -15,14 +15,20 @@ namespace BLL.UserCases
         //Func<AdressEF, bool> funcPred = p => p.PostalCode == ;
         //return iMovieRepository.Filter(funcPred).Select(x=>x.ToBTO());
 
-        public IEnumerable<AdressBTO> ShowUsersSamePostal()
+        public IEnumerable<MovieSummaryBTO> ShowUsersSamePostalMovies()
         {
             Func<AdressEF, bool> funcFindUserAdress = p => p.UserID == userId;
             var UserPostalCode = iAdressRepository.Filter(funcFindUserAdress).FirstOrDefault().PostalCode;
 
             Func<AdressEF, bool> funcFindAllUsersInPostalCode = p => p.PostalCode == UserPostalCode;
 
-            return iAdressRepository.Filter(funcFindAllUsersInPostalCode).Select(x => x.ToBTO());
+            var UserIds = iAdressRepository.Filter(funcFindAllUsersInPostalCode).Select(x => x.UserID);
+
+            List<MovieSummaryBTO> listmovies = new List<MovieSummaryBTO>();
+            foreach (var item in UserIds)
+                listmovies.AddRange(DisplayMoviesByUserId(item));
+
+            return listmovies;
         }
     }
 }
