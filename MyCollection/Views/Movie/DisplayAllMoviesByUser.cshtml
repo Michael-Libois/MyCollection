@@ -11,19 +11,42 @@
 </p>
 
 
-<form asp-action="Index" method="get">
+<form asp-action="DisplayMoviesByFilter" method="get">
     <div class="form-actions no-color">
         <p>
-            Find by  
-            <select id="FilterType" name="FilterType">
-                <option value="Title">Title</option>
+            Find by
+
+            @*<select id="FilterType" name="FilterType">
+                @foreach (var item in collection)
+                {
+                    if (item = @ViewBag.FilterType)
+                    {
+                        <option value="item" selected="selected">item</option>
+                    }
+                    else
+                    {
+                        <option value="item">item</option>
+                    }
+                }
+
+                <option id="Title" value="Title">Title</option>
                 <option value="Year">Year</option>
+
+
+
                 <option value="Genre">Genre</option>
                 <option value="Director">Director</option>
-            </select>
-            
-            
-            <input type="text" name="SearchString" value=        "@ViewData["currentFilter"]" />
+            </select>*@
+
+            @Html.DropDownList("FilterType", new List<SelectListItem>
+            {
+            new SelectListItem{ Text="Title", Value = "Title", Selected =(string)ViewData["FilterType"] == "Title" },
+            new SelectListItem{ Text="Year", Value = "Year", Selected =(string)ViewData["FilterType"] == "Year"  },
+            new SelectListItem{ Text="Genre", Value = "Genre", Selected =(string)ViewData["FilterType"] == "Genre" },
+            new SelectListItem{ Text="Director", Value = "Director", Selected =(string)ViewData["FilterType"] == "Director" },
+            })
+
+            <input type="text" name="SearchString" value="@ViewData["SearchString"]" />
             <input type="submit" value="Search" class="btn btn-default" /> |
             <a asp-action="Index">Back to Full List</a>
         </p>

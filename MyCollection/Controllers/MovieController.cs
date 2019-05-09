@@ -136,10 +136,18 @@ namespace MyCollection.Controllers
             return View(movies);
         }
 
+        public ActionResult DisplayMoviesByFilter(string FilterType, string SearchString)
+        {
+            var currentUser = User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
+            var userUC = new User(currentUser, repository, null);
 
-        
+            var movies = userUC.FilterMyMovies(FilterType, SearchString);
 
+            ViewData["FilterType"] = FilterType;
+            ViewData["SearchString"] = SearchString;
 
+            return View("DisplayAllMoviesByUser",movies);
+        }
     }
 }
