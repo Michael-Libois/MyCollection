@@ -9,12 +9,15 @@ namespace BLL.UserCases
     public partial class User
     {
         private readonly string userId;
-        private readonly IRepositoryGeneric<MovieEF> iMovieRepository;
-        private readonly IRepositoryGeneric<AdressEF> iAdressRepository;
+        private readonly IRepositoryGeneric<MovieEF, int> iMovieRepository;
+        private readonly IRepositoryGeneric<AdressEF, int> iAdressRepository;
+        private readonly IRepositoryGeneric<ApplicationUserEF, string> iUserRepository;
 
-        public User(string UserId, IRepositoryGeneric<MovieEF> MovieRepository, IRepositoryGeneric<AdressEF> AdressRepository)
+        public User(string UserId, IRepositoryGeneric<MovieEF, int> MovieRepository,
+            IRepositoryGeneric<AdressEF, int> AdressRepository,
+            IRepositoryGeneric<ApplicationUserEF, string> UserRepository)
         {
-            if (string.IsNullOrWhiteSpace(UserId)|| string.IsNullOrEmpty(UserId))
+            if (string.IsNullOrWhiteSpace(UserId) || string.IsNullOrEmpty(UserId))
             {
                 throw new ArgumentException("message", nameof(UserId));
             }
@@ -22,6 +25,7 @@ namespace BLL.UserCases
             userId = UserId;
             iMovieRepository = MovieRepository;
             iAdressRepository = AdressRepository;
+            iUserRepository = UserRepository;
         }
 
     }

@@ -9,6 +9,7 @@ using DAL.Entities;
 using DAL.Repo;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MyCollection.Controllers
@@ -16,9 +17,9 @@ namespace MyCollection.Controllers
     [Authorize]
     public class MovieController : Controller
     {
-        private IRepositoryGeneric<MovieEF> repository = null;
+        private IRepositoryGeneric<MovieEF, int> repository = null;
 
-        public MovieController(IRepositoryGeneric<MovieEF> Repository)
+        public MovieController(IRepositoryGeneric<MovieEF, int> Repository)
         {
             this.repository = Repository;
         }
@@ -39,7 +40,10 @@ namespace MyCollection.Controllers
         // GET: Movie/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            var currentUser = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var userUC = new User(currentUser, repository, null, null);
+            var moviedetail = userUC.DisplayMovieDetail(id);
+            return View(moviedetail);
         }
 
         // GET: Movie/Create
@@ -95,7 +99,7 @@ namespace MyCollection.Controllers
         public ActionResult Delete(int Id)
         {
             var currentUser = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var userUC = new User(currentUser, repository, null);
+            var userUC = new User(currentUser, repository, null,null);
             userUC.DeleteFromUserCollection(Id);
 
 
@@ -124,30 +128,86 @@ namespace MyCollection.Controllers
             return View();
         }
 
-        public ActionResult DisplayAllMoviesByUser()
+        public ActionResult DisplayAllMyMovies()
         {
+
+            var displayUrl = UriHelper.GetDisplayUrl(Request);
+            var urlBuilder =
+            new UriBuilder(displayUrl)
+            {
+                Query = null,
+                Fragment = null
+            };
+            string url = urlBuilder.ToString();
+
+
+            ViewData["URL"] = url;
+
+
 
             var currentUser = User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-            var userUC = new User(currentUser, repository,null);
+            var userUC = new User(currentUser, repository, null, null);
 
             var movies = userUC.DisplayMyMovies();
 
             return View(movies);
         }
 
-        public ActionResult DisplayMoviesByFilter(string FilterType, string SearchString)
+        public ActionResult DisplayAllMoviesByUser(string UserID)
         {
+
+            var displayUrl = UriHelper.GetDisplayUrl(Request);
+            var urlBuilder =
+            new UriBuilder(displayUrl)
+            {
+                Query = null,
+                Fragment = null
+            };
+            string url = urlBuilder.ToString();
+
+
+            ViewData["URL"] = url;
+
+
+
             var currentUser = User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-            var userUC = new User(currentUser, repository, null);
+            var userUC = new User(currentUser, repository, null, null);
+
+            var movies = userUC.DisplayMoviesByUserId(UserID);
+
+            return View("DisplayAllMyMovies", movies);
+        }
+
+        public ActionResult DisplayMoviesByFilter(string FilterType, string SearchString)
+        {
+
+            var displayUrl = UriHelper.GetDisplayUrl(Request);
+            var urlBuilder =
+            new UriBuilder(displayUrl)
+            {
+                Query = null,
+                Fragment = null
+            };
+            string url = urlBuilder.ToString();
+
+
+            ViewData["URL"] = url;
+
+
+
+
+            var currentUser = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            var userUC = new User(currentUser, repository, null, null);
 
             var movies = userUC.FilterMyMovies(FilterType, SearchString);
 
             ViewData["FilterType"] = FilterType;
             ViewData["SearchString"] = SearchString;
 
-            return View("DisplayAllMoviesByUser",movies);
+            return View("DisplayAllMyMovies",movies);
         }
     }
 }

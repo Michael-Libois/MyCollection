@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Common.BTO.MovieSummaryBTO>
 
 @{
-    ViewData["Title"] = "DisplayAllMoviesByUser";
+    ViewData["Title"] = "DisplayAllMyMovies";
 }
 
 <h1>DisplayAllMoviesByUser</h1>
@@ -17,26 +17,26 @@
             Find by
 
             @*<select id="FilterType" name="FilterType">
-                @foreach (var item in collection)
+            @foreach (var item in collection)
+            {
+                if (item = @ViewBag.FilterType)
                 {
-                    if (item = @ViewBag.FilterType)
-                    {
-                        <option value="item" selected="selected">item</option>
-                    }
-                    else
-                    {
-                        <option value="item">item</option>
-                    }
+                    <option value="item" selected="selected">item</option>
                 }
+                else
+                {
+                    <option value="item">item</option>
+                }
+            }
 
-                <option id="Title" value="Title">Title</option>
-                <option value="Year">Year</option>
+            <option id="Title" value="Title">Title</option>
+            <option value="Year">Year</option>
 
 
 
-                <option value="Genre">Genre</option>
-                <option value="Director">Director</option>
-            </select>*@
+            <option value="Genre">Genre</option>
+            <option value="Director">Director</option>
+        </select>*@
 
             @Html.DropDownList("FilterType", new List<SelectListItem>
             {
@@ -48,7 +48,8 @@
 
             <input type="text" name="SearchString" value="@ViewData["SearchString"]" />
             <input type="submit" value="Search" class="btn btn-default" /> |
-            <a asp-action="Index">Back to Full List</a>
+            @*<a asp-action="Index">Back to Full List</a>*@
+            <a href="@ViewData["URL"]">Back</a>
         </p>
     </div>
 </form>

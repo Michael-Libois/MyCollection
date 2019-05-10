@@ -4,8 +4,8 @@ using System.Text;
 
 namespace Common.DataContracts
 {
-    public interface IGenericEntities
+    public interface IGenericEntities<T>
     {
-        int Id { get; set; }
+        T Id { get; set; }
     }
 }

@@ -21,17 +21,5 @@ namespace Common.TypeExtentions
                 Actors = MovieDetail.Actors,
                 Country = MovieDetail.Country
             };
-
-        //public static IMDBMovieDetail ToDTO(this MovieDetailBTO MovieDetail)
-        //    => new IMDBMovieDetail
-        //    {
-                
-        //        Director = MovieDetail.Director,
-        //        Genre = MovieDetail.Genre,
-        //        imdbID = MovieDetail.imdbID,
-        //        Poster = MovieDetail.Poster,
-        //        Title = MovieDetail.Title,
-        //        Year = MovieDetail.Year
-        //    };
     }
 }

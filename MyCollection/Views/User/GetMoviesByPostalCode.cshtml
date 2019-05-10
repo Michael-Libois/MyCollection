@@ -18,14 +18,17 @@
             <th>
                 @Html.DisplayNameFor(model => model.Year)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.imdbID)
-            </th>
             @*<th>
-                    @Html.DisplayNameFor(model => model.Type)
-                </th>*@
+            @Html.DisplayNameFor(model => model.imdbID)
+        </th>*@
+            @*<th>
+            @Html.DisplayNameFor(model => model.Type)
+        </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.Poster)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserID)
             </th>
             <th></th>
         </tr>
@@ -51,6 +54,11 @@
                     <img src="@Url.Content(item.Poster)" height="200" />
 
                 </td>
+
+                <td>
+                    @Html.ActionLink(item.UserName, "DisplayAllMoviesByUser", "Movie", new { UserID = item.UserID })
+                </td>
+
                 <td>
                     @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |*@
                     @Html.ActionLink("Details", "GetMovieDetail", new { imdbid = item.imdbID }) |

@@ -15,7 +15,7 @@ namespace BLL.UserCases
             Func<MovieEF, bool> funcPred = p => p.UserID == userId;
             Func<MovieSummaryBTO, bool> funcFilter;
 
-            var result1 = iMovieRepository.Filter(funcPred).Select(x => x.ToBTO());
+            var result1 = iMovieRepository.Filter(funcPred).Select(x => x.ToSummaryBTO());
 
             switch (filter)
             {

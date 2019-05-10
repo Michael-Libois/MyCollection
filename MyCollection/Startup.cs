@@ -56,8 +56,9 @@ namespace MyCollection
             })
                 .AddEntityFrameworkStores<DatabaseContext>();
 
-            services.AddTransient<IRepositoryGeneric<MovieEF>, RepositoryGeneric<MovieEF>>();
-            services.AddTransient<IRepositoryGeneric<AdressEF>, RepositoryGeneric<AdressEF>>();
+            services.AddTransient<IRepositoryGeneric<MovieEF,int>, RepositoryGeneric<MovieEF,int>>();
+            services.AddTransient<IRepositoryGeneric<AdressEF,int>, RepositoryGeneric<AdressEF,int>>();
+            services.AddTransient<IRepositoryGeneric<ApplicationUserEF,string>, RepositoryGeneric<ApplicationUserEF,string>>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }

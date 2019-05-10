@@ -22,10 +22,10 @@ namespace MyCollection.Controllers
     {
         private readonly UserManager<ApplicationUserEF> _userManager;
         private readonly SignInManager<ApplicationUserEF> _signInManager;
-        private IRepositoryGeneric<AdressEF> repositoryAdress = null;
+        private IRepositoryGeneric<AdressEF, int> repositoryAdress = null;
 
         public AccountController(UserManager<ApplicationUserEF> userManager,
-            SignInManager<ApplicationUserEF> signInManager, IRepositoryGeneric<AdressEF> RepositoryAdress)
+            SignInManager<ApplicationUserEF> signInManager, IRepositoryGeneric<AdressEF, int> RepositoryAdress)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -87,7 +87,7 @@ namespace MyCollection.Controllers
                 //await _signInManager.PasswordSignInAsync(user, loginViewModel.Password, false, false);
                     //option2: var userid=  recherUserNonLoggedById();
                     //var userid = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-                    var UserRole = new User(user.Id, null, repositoryAdress);
+                    var UserRole = new User(user.Id, null, repositoryAdress, null);
                     UserRole.AddNewUserAdress(loginViewModel.ToAdressBTO());
 
                     return RedirectToAction("Index", "Home");

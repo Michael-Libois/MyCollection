@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Repo
 {
-    public class RepositoryGeneric<T> : IRepositoryGeneric<T> where T : class, IGenericEntities
+    public class RepositoryGeneric<T,U> : IRepositoryGeneric<T,U> where T : class, IGenericEntities<U>
     {
 
         private readonly IdentityDbContext<ApplicationUserEF> _context;
@@ -36,9 +36,9 @@ namespace DAL.Repo
             _context.Set<T>().Remove(entity);
         }
 
-        public void Delete(int id)
+        public void Delete(U id)
         {
-            var entityToDelete = _context.Set<T>().FirstOrDefault(e => e.Id == id);
+            var entityToDelete = _context.Set<T>().FirstOrDefault(e => e.Id.Equals(id));
             if (entityToDelete != null)
             {
                 _context.Set<T>().Remove(entityToDelete);
@@ -47,7 +47,7 @@ namespace DAL.Repo
 
         public void Edit(T entity)
         {
-            if (_context.Set<T>().Any(e => e.Id == entity.Id))
+            if (_context.Set<T>().Any(e => e.Id.Equals(entity.Id)))
             {
                 _context.Set<T>().Attach(entity);
                 _context.Set<T>().Update(entity);
@@ -57,9 +57,9 @@ namespace DAL.Repo
             //editedEntity = entity;
         }
 
-        public T GetById(int id)
+        public T GetById(U id)
         {
-            return _context.Set<T>().FirstOrDefault(e => e.Id == id);
+            return _context.Set<T>().FirstOrDefault(e => e.Id.Equals(id));
         }
 
         public IEnumerable<T> Filter()

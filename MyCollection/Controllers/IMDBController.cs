@@ -36,9 +36,9 @@ namespace MyCollection.Controllers
 
         //}
         
-        private IRepositoryGeneric<MovieEF> repository = null;
+        private IRepositoryGeneric<MovieEF, int> repository = null;
 
-        public IMDBController(IRepositoryGeneric<MovieEF> Repository)
+        public IMDBController(IRepositoryGeneric<MovieEF, int> Repository)
         {
             
             this.repository = Repository;
@@ -74,12 +74,12 @@ namespace MyCollection.Controllers
             {
                 var currentUser = User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-                var userUC = new User(currentUser, repository,null);
+                var userUC = new User(currentUser, repository,null, null);
 
                 userUC.AddToUserCollection(imdbmovie);
 
                 //return RedirectToAction(nameof(Index));
-                return RedirectToAction("Index","Home");
+                return RedirectToAction("DisplayAllMyMovies", "Movie");
             }
             catch(Exception Ex)
             {

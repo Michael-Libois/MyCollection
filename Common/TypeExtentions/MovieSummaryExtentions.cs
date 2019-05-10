@@ -20,16 +20,5 @@ namespace Common.TypeExtentions
                 Title = MovieDetail.Title,
                 Year = MovieDetail.Year
             };
-
-        //public static IMDBMovieSummary ToDTO(this MovieSummaryBTO MovieDetail)
-        //    => new IMDBMovieSummary
-        //    {
-        //        Director = MovieDetail.Director,
-        //        Genre = MovieDetail.Genre,
-        //        imdbID = MovieDetail.imdbID,
-        //        Poster = MovieDetail.Poster,
-        //        Title = MovieDetail.Title,
-        //        Year = MovieDetail.Year
-        //    };
     }
 }

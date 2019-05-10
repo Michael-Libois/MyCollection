@@ -1,4 +1,5 @@
 ﻿using DAL.Entities;
+using DAL.Entities.Messages;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -25,6 +26,19 @@ namespace DAL.Context
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+            builder.Entity<ConvUserEF>().HasKey(cu => new { cu.ConversationId, cu.UserId });
+
+            builder.Entity<ConvUserEF>()
+                .HasOne<ConversationEF>(cu => cu.ConversationEF)
+                .WithMany(c => c.ConvUserEFs)
+                .HasForeignKey(cu => cu.ConversationId);
+
+
+            builder.Entity<ConvUserEF>()
+                .HasOne<ApplicationUserEF>(cu => cu.ApplicationUserEF)
+                .WithMany(au => au.ConvUserEFs)
+                .HasForeignKey(cu => cu.UserId);
+
         }
 
         public virtual void Save()
@@ -35,5 +49,9 @@ namespace DAL.Context
 
         public virtual DbSet<MovieEF> Movies { get; set; }
         public virtual DbSet<AdressEF> Adresses { get; set; }
+        public virtual DbSet<MessageEF> Messages { get; set; }
+        public virtual DbSet<ConversationEF> Conversations { get; set; }
+        public virtual DbSet<ConvUserEF> ConvUsers { get; set; }
+
     }
 }

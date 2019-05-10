@@ -21,7 +21,7 @@ namespace DAL.TypeExtentions
                 Year = MovieDetail.Year
             };
 
-        public static MovieSummaryBTO ToBTO(this MovieEF MovieDetail)
+        public static MovieSummaryBTO ToSummaryBTO(this MovieEF MovieDetail)
             => new MovieSummaryBTO
             {
                 UserID = MovieDetail.UserID,
@@ -32,6 +32,19 @@ namespace DAL.TypeExtentions
                 Poster = MovieDetail.Poster,
                 Title = MovieDetail.Title,
                 Year = MovieDetail.Year
+            };
+        public static MovieDetailBTO ToDetailBTO(this MovieEF MovieDetail)
+            => new MovieDetailBTO
+            {
+                Id = 0,
+                Director = MovieDetail.Director,
+                Genre = MovieDetail.Genre,
+                imdbID = MovieDetail.imdbID,
+                Poster = MovieDetail.Poster,
+                Title = MovieDetail.Title,
+                Year = MovieDetail.Year,
+                Actors = MovieDetail.Actors,
+                Country = MovieDetail.Country
             };
     }
 }

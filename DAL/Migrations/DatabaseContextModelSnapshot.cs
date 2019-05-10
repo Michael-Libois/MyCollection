@@ -97,6 +97,57 @@ namespace DAL.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("DAL.Entities.Messages.ConvUserEF", b =>
+                {
+                    b.Property<int>("ConversationId");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("ConversationId", "UserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ConvUsers");
+                });
+
+            modelBuilder.Entity("DAL.Entities.Messages.ConversationEF", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Subject");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Conversations");
+                });
+
+            modelBuilder.Entity("DAL.Entities.Messages.MessageEF", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Content");
+
+                    b.Property<int>("ConversationId");
+
+                    b.Property<DateTime>("Datetime");
+
+                    b.Property<bool>("IsChecked");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ConversationId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Messages");
+                });
+
             modelBuilder.Entity("DAL.Entities.MovieEF", b =>
                 {
                     b.Property<int>("Id")
@@ -234,6 +285,31 @@ namespace DAL.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("DAL.Entities.Messages.ConvUserEF", b =>
+                {
+                    b.HasOne("DAL.Entities.Messages.ConversationEF", "ConversationEF")
+                        .WithMany("ConvUserEFs")
+                        .HasForeignKey("ConversationId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("DAL.Entities.ApplicationUserEF", "ApplicationUserEF")
+                        .WithMany("ConvUserEFs")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("DAL.Entities.Messages.MessageEF", b =>
+                {
+                    b.HasOne("DAL.Entities.Messages.ConversationEF", "Conversation")
+                        .WithMany("Messages")
+                        .HasForeignKey("ConversationId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("DAL.Entities.ApplicationUserEF", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

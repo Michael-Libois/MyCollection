@@ -22,13 +22,21 @@ namespace BLL.UserCases
 
             Func<AdressEF, bool> funcFindAllUsersInPostalCode = p => p.PostalCode == UserPostalCode;
 
-            var UserIds = iAdressRepository.Filter(funcFindAllUsersInPostalCode).Select(x => x.UserID);
+            var UserIds = iAdressRepository.Filter(funcFindAllUsersInPostalCode);//.Select(x => x.UserID);
 
             List<MovieSummaryBTO> listmovies = new List<MovieSummaryBTO>();
             foreach (var item in UserIds)
-                listmovies.AddRange(DisplayMoviesByUserId(item));
+                listmovies.AddRange(DisplayMoviesByUserId(item.UserID));
+            //listusers.Add(ApplicationUserEF);
 
+            //listmovies.ForEach(x => x.UserName = iUserRepository.GetById(x.UserID).UserName);
+            listmovies.ForEach(x => x.UserName = formatName(x.UserID));
+            
             return listmovies;
+        }
+        private string formatName(string id)
+        { var u = iUserRepository.GetById(id);
+            return u.FirstName + " " + u.LastName + $"({u.UserName})";
         }
     }
 }

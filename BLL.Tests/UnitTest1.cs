@@ -21,11 +21,11 @@ namespace BLL.Tests
                 new MovieEF { Id = 2, UserID="1", Genre = "Action" }
             };
 
-            var mock = new Mock<IRepositoryGeneric<MovieEF>>();
+            var mock = new Mock<IRepositoryGeneric<MovieEF, int>>();
             mock.Setup(foo => foo.Filter(It.IsAny<Func<MovieEF, bool>>()))
                 .Returns(ListAReturner);
 
-            var UserUC = new User("1", mock.Object, null);
+            var UserUC = new User("1", mock.Object, null, null);
 
             //ACT
             var ListToAssert = UserUC.FilterMyMovies("Genre", "Horror").ToList();
@@ -43,11 +43,11 @@ namespace BLL.Tests
                 new MovieEF { Id = 2, UserID="1", Title = "Fake Title2", Genre = "Action" }
             };
 
-            var mock = new Mock<IRepositoryGeneric<MovieEF>>();
+            var mock = new Mock<IRepositoryGeneric<MovieEF, int>>();
             mock.Setup(foo => foo.Filter(It.IsAny<Func<MovieEF, bool>>()))
                 .Returns(ListAReturner);
 
-            var UserUC = new User("1", mock.Object, null);
+            var UserUC = new User("1", mock.Object, null, null);
 
             //ACT
             var ListToAssert = UserUC.FilterMyMovies("Genre", "Advanture").ToList();
@@ -65,11 +65,11 @@ namespace BLL.Tests
                 new MovieEF { Id = 2, UserID="1", Genre = "Action" }
             };
 
-            var mock = new Mock<IRepositoryGeneric<MovieEF>>();
-            mock.Setup(foo => foo.Filter(It.IsAny<Func<MovieEF, bool>>()))
+            var mockMovies = new Mock<IRepositoryGeneric<MovieEF, int>>();
+            mockMovies.Setup(foo => foo.Filter(It.IsAny<Func<MovieEF, bool>>()))
                 .Returns(ListAReturner);
 
-            var UserUC = new User("1", mock.Object, null);
+            var UserUC = new User("1", mockMovies.Object, null, null);
 
             //ACT
             var ListToAssert = UserUC.FilterMyMovies("...", "Horror").ToList();

@@ -7,7 +7,7 @@ using System.Text;
 namespace DAL.Entities
 {
     [Table("Movies")]
-    public class MovieEF : IGenericEntities
+    public class MovieEF : IGenericEntities<int>
     {
 
         public int Id { get; set; }

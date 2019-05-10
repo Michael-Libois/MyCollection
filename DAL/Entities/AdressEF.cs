@@ -8,7 +8,7 @@ namespace DAL.Entities
 {
 
     [Table("Adress")]
-    public class AdressEF : IGenericEntities
+    public class AdressEF : IGenericEntities<int>
     {
 
         public int Id { get; set; }
