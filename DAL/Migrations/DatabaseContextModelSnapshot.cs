@@ -97,19 +97,6 @@ namespace DAL.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("DAL.Entities.Messages.ConvUserEF", b =>
-                {
-                    b.Property<int>("ConversationId");
-
-                    b.Property<string>("UserId");
-
-                    b.HasKey("ConversationId", "UserId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("ConvUsers");
-                });
-
             modelBuilder.Entity("DAL.Entities.Messages.ConversationEF", b =>
                 {
                     b.Property<int>("Id")
@@ -118,7 +105,15 @@ namespace DAL.Migrations
 
                     b.Property<string>("Subject");
 
+                    b.Property<string>("UserId1");
+
+                    b.Property<string>("UserId2");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId1");
+
+                    b.HasIndex("UserId2");
 
                     b.ToTable("Conversations");
                 });
@@ -287,17 +282,15 @@ namespace DAL.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("DAL.Entities.Messages.ConvUserEF", b =>
+            modelBuilder.Entity("DAL.Entities.Messages.ConversationEF", b =>
                 {
-                    b.HasOne("DAL.Entities.Messages.ConversationEF", "ConversationEF")
-                        .WithMany("ConvUserEFs")
-                        .HasForeignKey("ConversationId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                    b.HasOne("DAL.Entities.ApplicationUserEF", "User1")
+                        .WithMany()
+                        .HasForeignKey("UserId1");
 
-                    b.HasOne("DAL.Entities.ApplicationUserEF", "ApplicationUserEF")
-                        .WithMany("ConvUserEFs")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                    b.HasOne("DAL.Entities.ApplicationUserEF", "User2")
+                        .WithMany()
+                        .HasForeignKey("UserId2");
                 });
 
             modelBuilder.Entity("DAL.Entities.Messages.MessageEF", b =>

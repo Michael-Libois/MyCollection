@@ -1,6 +1,7 @@
 ﻿using Common.DataContracts;
 using DAL.Context;
 using DAL.Entities;
+using DAL.Entities.Messages;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -15,7 +16,7 @@ namespace DAL.Repo
     public class RepositoryGeneric<T,U> : IRepositoryGeneric<T,U> where T : class, IGenericEntities<U>
     {
 
-        private readonly IdentityDbContext<ApplicationUserEF> _context;
+        public IdentityDbContext<ApplicationUserEF> _context;
 
 
         public RepositoryGeneric(IdentityDbContext<ApplicationUserEF> Context)
@@ -28,7 +29,7 @@ namespace DAL.Repo
 
         public void Create(T entity)
         {
-            _context.Set<T>().Add(entity);
+                _context.Set<T>().Add(entity);
         }
 
         public void Delete(T entity)

@@ -12,7 +12,7 @@ namespace DAL.Entities.Messages
 
         [ForeignKey("User")]
         public string UserId { get; set; }
-        public ApplicationUserEF User { get; set; }
+        public ApplicationUserEF User { get; set; } //Sender
 
         [ForeignKey("Conversation")]
         public int ConversationId { get; set; }

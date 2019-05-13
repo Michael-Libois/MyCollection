@@ -60,7 +60,7 @@
                 </td>
 
                 <td>
-                    @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |*@
+                    @Html.ActionLink("Send Message", "AddMessage", "Message", new { receiverId = item.UserID }) |
                     @Html.ActionLink("Details", "GetMovieDetail", new { imdbid = item.imdbID }) |
                     @*@Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
 

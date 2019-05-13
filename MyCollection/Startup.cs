@@ -17,6 +17,7 @@ using DAL.Entities;
 using DAL.Context;
 using DAL.Repo;
 using Common.DataContracts;
+using DAL.Entities.Messages;
 
 namespace MyCollection
 {
@@ -59,6 +60,8 @@ namespace MyCollection
             services.AddTransient<IRepositoryGeneric<MovieEF,int>, RepositoryGeneric<MovieEF,int>>();
             services.AddTransient<IRepositoryGeneric<AdressEF,int>, RepositoryGeneric<AdressEF,int>>();
             services.AddTransient<IRepositoryGeneric<ApplicationUserEF,string>, RepositoryGeneric<ApplicationUserEF,string>>();
+            services.AddTransient<IRepositoryGeneric<MessageEF, int>, RepositoryGeneric<MessageEF, int>>();
+            services.AddTransient<IRepositoryGeneric<ConversationEF, int>, RepositoryGeneric<ConversationEF, int>>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }

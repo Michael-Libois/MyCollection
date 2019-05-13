@@ -10,6 +10,6 @@ namespace DAL.Entities
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public bool AcceptShared { get; set; }
-        public ICollection<ConvUserEF> ConvUserEFs { get; set; }
+        
     }
 }

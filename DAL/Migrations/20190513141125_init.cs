@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DAL.Migrations
 {
-    public partial class v1 : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -65,19 +65,6 @@ namespace DAL.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Conversations",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Subject = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Conversations", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -208,27 +195,30 @@ namespace DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ConvUsers",
+                name: "Conversations",
                 columns: table => new
                 {
-                    ConversationId = table.Column<int>(nullable: false),
-                    UserId = table.Column<string>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Subject = table.Column<string>(nullable: true),
+                    UserId1 = table.Column<string>(nullable: true),
+                    UserId2 = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ConvUsers", x => new { x.ConversationId, x.UserId });
+                    table.PrimaryKey("PK_Conversations", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ConvUsers_Conversations_ConversationId",
-                        column: x => x.ConversationId,
-                        principalTable: "Conversations",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ConvUsers_AspNetUsers_UserId",
-                        column: x => x.UserId,
+                        name: "FK_Conversations_AspNetUsers_UserId1",
+                        column: x => x.UserId1,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Conversations_AspNetUsers_UserId2",
+                        column: x => x.UserId2,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -300,9 +290,14 @@ namespace DAL.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ConvUsers_UserId",
-                table: "ConvUsers",
-                column: "UserId");
+                name: "IX_Conversations_UserId1",
+                table: "Conversations",
+                column: "UserId1");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Conversations_UserId2",
+                table: "Conversations",
+                column: "UserId2");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Messages_ConversationId",
@@ -334,9 +329,6 @@ namespace DAL.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
-
-            migrationBuilder.DropTable(
-                name: "ConvUsers");
 
             migrationBuilder.DropTable(
                 name: "Messages");
