@@ -1,0 +1,141 @@
+﻿@model IEnumerable<Common.BTO.ConversationBTO>
+
+@{
+    ViewData["Title"] = "DisplayAllConvConv";
+}
+
+<h1>DisplayAllConvConv</h1>
+
+<p>
+    @*<a asp-action="Create">Create New</a>*@
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.Id)
+                </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.Subject)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserB)
+            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.UserId1)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UserId2)
+                </th>*@
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Subject)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserB)
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.UserId1)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserId2)
+                    </td>*@
+                <td>
+                    @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |*@
+                    @Html.ActionLink("Details", "DisplayMessageConv", new { convId = item.Id })
+
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalScrollable" onclick="getConversation(@item.Id)">
+                        Launch demo modal
+                    </button>
+                    |<div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalScrollableTitle">Modal title</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    "UserName"
+                                                </th>
+                                                <th style="overflow-wrap: break-word">
+                                                    "Content"
+                                                </th>
+                                                <th>
+                                                    "Datetime"
+                                                </th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="ConvContent"></tbody>
+
+                                    </table>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    @*<button type="button" class="btn btn-primary">Save changes</button>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+                    @*@Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script type="text/javascript">
+function getConversation(id) {
+ $.ajax({
+   url: '@Url.Action("GetConversation", "Message")',
+     type: 'GET',
+    contentType: 'application/json; charset=utf-8',
+    dataType: 'json',
+    cache: false,
+        data: { 'convId': id },
+     success: function (results) {
+         var resultsJSON = JSON.parse(results);
+         //alert(r[0].Content);
+             for (y in resultsJSON) {
+                 
+                 var table = document.getElementById("ConvContent");
+                 var row = table.insertRow(0);
+                 var cell1 = row.insertCell(0);
+                 var cell2 = row.insertCell(1);
+                 var cell3 = row.insertCell(2);
+
+                 cell1.innerHTML = resultsJSON[y].UserName;
+                 cell2.innerHTML = resultsJSON[y].Content;
+                 cell3.innerHTML = resultsJSON[y].Datetime;
+             }
+   },
+   error: function () {
+    alert('Error occured');
+   }
+   });
+        }
+
+    //TODO Stocker en variableConv
+</script>

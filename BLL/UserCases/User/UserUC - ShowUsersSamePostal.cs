@@ -36,7 +36,7 @@ namespace BLL.UserCases
         }
         private string formatName(string id)
         { var u = iUserRepository.GetById(id);
-            return u.FirstName + " " + u.LastName + $"({u.UserName})";
+            return u.FirstName + " " + u.LastName + $"{u.UserName}";
         }
     }
 }

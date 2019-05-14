@@ -63,6 +63,17 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Movie" asp-action="DisplayAllMyMovies">MyCollection</a>
                             </li>
+
+                            @await Component.InvokeAsync("UserMenu")
+
+                            <div class="dropdown">
+                                <a asp-controller=""
+                                   asp-action="Index"></a>
+                            </div>
+
+
+
+
                         }
 
 

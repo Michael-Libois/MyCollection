@@ -11,8 +11,8 @@ namespace Common.BTO
         
         public string UserId { get; set; } //Sender
         //public ApplicationUserEF User { get; set; }
+        public string UserName { get; set; }
 
-        
         public int ConversationId { get; set; }
         //public ConversationEF Conversation { get; set; }
 
