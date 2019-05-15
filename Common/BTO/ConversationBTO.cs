@@ -23,4 +23,5 @@ namespace Common.BTO
         //public ICollection<MessageEF> Messages { get; set; }
 
     }
+
 }

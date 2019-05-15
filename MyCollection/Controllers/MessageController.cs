@@ -10,6 +10,7 @@ using DAL.Entities;
 using DAL.Entities.Messages;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using MyCollection.ViewModels;
 using Newtonsoft.Json;
 
 namespace MyCollection.Controllers
@@ -46,14 +47,23 @@ namespace MyCollection.Controllers
         }
 
         [HttpPost]//receiverId
-        public IActionResult AddMessage(MessageBTO message, string receiverId)
+        public IActionResult AddMessageByReceiver(MessageBTO message, string receiverID)
         {
 
             var currentUser = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var listUsers = new List<string> { receiverId, currentUser };
+            var messageUC = new MessageUC(currentUser, iUserRepository, iConversationRepository, iMessageRepository);
+            messageUC.AddNewMessage(message, currentUser, receiverID);
+
+            return View("AddMessage");
+        }
+        [HttpPost]
+        public IActionResult AddMessage(MessageBTO message)
+        {
+
+            var currentUser = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var messageUC = new MessageUC(currentUser, iUserRepository, iConversationRepository, iMessageRepository);
             //messageUC.AddNewMessage(message, listUsers);
-            messageUC.AddNewMessage(message, currentUser,receiverId);
+            messageUC.AddNewMessage(message, message.ConversationId);
 
 
 
@@ -77,16 +87,19 @@ namespace MyCollection.Controllers
 
         public IActionResult DisplayAllConvConv(/*string receiverId*/)
         {
-
             var currentUser = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             //var listUsers = new List<string> { receiverId, currentUser };
             var messageUC = new MessageUC(currentUser, iUserRepository, iConversationRepository, iMessageRepository);
             //messageUC.AddNewMessage(message, listUsers);
             var model = messageUC.DisplayAllConvUser(currentUser);
 
+            var vm = new MessConvViewModel
+            {
+                conversation = messageUC.DisplayAllConvUser(currentUser),
+                message = new MessageBTO()
+            };
 
-
-            return View(model);
+            return View(vm);
         }
 
         public IActionResult testmodal(/*string receiverId*/)

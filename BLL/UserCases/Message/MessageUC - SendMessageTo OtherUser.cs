@@ -19,6 +19,15 @@ namespace BLL.UserCases.Message
 
         }
 
+        public List<string> GetMessageUsers(int ConversationID)
+        {
+            Func<ConversationEF, bool> funcPred = p => p.Id == ConversationID;
+
+            var conv =  iConversationRepository.Filter(funcPred).FirstOrDefault();
+
+            return new List<string> { conv.UserId1, conv.UserId2 };
+        }
+
         public void AddUsersToConversations(/*int ConversationID,*/ List<string> Destinataires)
         {
             //ConversationEF conversation = iConversationRepository.Filter(x => x.Id == ConversationID).FirstOrDefault();
@@ -42,6 +51,12 @@ namespace BLL.UserCases.Message
 
             iConversationRepository.SaveChanges();
 
+        }
+
+        public void AddNewMessage(MessageBTO messageBTO, int ConversationID)
+        {
+            var users = GetMessageUsers(ConversationID);
+            AddNewMessage(messageBTO, users[0], users[1]);
         }
 
         public void AddNewMessage(MessageBTO messageBTO, string User1Id, string User2Id)
