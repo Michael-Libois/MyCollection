@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Common.BTO.MovieSummaryBTO>
+﻿@*@model IEnumerable<Common.BTO.MovieSummaryBTO>*@
+@model MyCollection.ViewModels.PostalMessageViewModel
 
 @{
     ViewData["Title"] = "GetMoviesByName";
@@ -13,28 +14,28 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Title)
+                @Html.DisplayNameFor(model => model.ListMoviePostal[0].Title)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Year)
+                @Html.DisplayNameFor(model => model.ListMoviePostal[0].Year)
             </th>
             @*<th>
-            @Html.DisplayNameFor(model => model.imdbID)
-        </th>*@
+                    @Html.DisplayNameFor(model => model.imdbID)
+                </th>*@
             @*<th>
-            @Html.DisplayNameFor(model => model.Type)
-        </th>*@
+                    @Html.DisplayNameFor(model => model.Type)
+                </th>*@
             <th>
-                @Html.DisplayNameFor(model => model.Poster)
+                @Html.DisplayNameFor(model => model.ListMoviePostal[0].Poster)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.UserID)
+                @Html.DisplayNameFor(model => model.ListMoviePostal[0].UserID)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in Model.ListMoviePostal)
         {
             <tr>
                 <td>

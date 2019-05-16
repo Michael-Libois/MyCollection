@@ -4,11 +4,12 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using BLL.UserCases;
+using Common.BTO;
 using Common.DataContracts;
 using DAL.Entities;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
-
+using MyCollection.ViewModels;
 
 namespace MyCollection.Controllers
 {
@@ -54,8 +55,17 @@ namespace MyCollection.Controllers
             var currentUser = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var userUC = new User(currentUser, repository, adressRepository, userRepository);
             var users = userUC.ShowUsersSamePostalMovies();
-          
-            return View(users);
+
+            var vm = new PostalMessageViewModel
+            {
+                ListMoviePostal = users.ToList(),
+                messagePost = new MessageBTO()
+            };
+
+
+
+
+            return View(vm);
         }
     }
 }

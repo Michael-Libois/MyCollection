@@ -55,8 +55,14 @@ namespace BLL.UserCases.Message
 
         public void AddNewMessage(MessageBTO messageBTO, int ConversationID)
         {
-            var users = GetMessageUsers(ConversationID);
-            AddNewMessage(messageBTO, users[0], users[1]);
+
+            
+            
+                var users = GetMessageUsers(ConversationID);
+                AddNewMessage(messageBTO, users[0], users[1]);
+            
+
+            
         }
 
         public void AddNewMessage(MessageBTO messageBTO, string User1Id, string User2Id)

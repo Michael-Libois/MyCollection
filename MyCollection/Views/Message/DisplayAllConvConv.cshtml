@@ -51,12 +51,12 @@
                     </td>*@
                 <td>
                     @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |*@
-                    @Html.ActionLink("Details", "DisplayMessageConv", new { convId = item.Id })
+                    @*@Html.ActionLink("Details", "DisplayMessageConv", new { convId = item.Id })*@
 
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalScrollable" onclick="getConversation(@item.Id)">
-                        Launch demo modal
+                        Open
                     </button>
-                    |<div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+                    <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -89,8 +89,8 @@
                                 <div class="modal-footer">
 
                                     <div class="row">
-                                        <div class="col-md-4">
-                                            <form asp-action="AddMessage">
+                                        <div class="col-md-4" style="width: 500px;">
+                                            <form asp-action="AddMessage" id="test">
                                                 <input asp-for="@Model.message.ConversationId" class="form-control" hidden="hidden" />
 
                                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -109,8 +109,8 @@
             <input asp-for="ConversationId" class="form-control" />
             <span asp-validation-for="ConversationId" class="text-danger"></span>
         </div>*@
-                                                <div class="form-group">
-                                                    <label asp-for="@Model.message.Content" class="control-label"></label>
+                                                <div class="form-group"style="width: 600px;"  >
+                                                    <label asp-for="@Model.message.Content" class="control-label">New Message</label>
                                                     <input asp-for="@Model.message.Content" class="form-control" />
                                                     <span asp-validation-for="@Model.message.Content" class="text-danger"></span>
                                                 </div>
@@ -124,9 +124,12 @@
                 <input class="form-check-input" asp-for="IsChecked" /> @Html.DisplayNameFor(model => model.IsChecked)
             </label>
         </div>*@
-                                                <div class="form-group">
-                                                    <input type="submit" value="AddMessage" class="btn btn-primary" />
-                                                </div>
+                                            <div class="form-group">
+                                                @*<input type="submit" value="Submit" class="btn btn-primary" />*@
+                                                <button type="button" class="btn btn-secondary" onclick="postMessage()">
+                                                    Send
+                                                </button>
+                                            </div>
                                             </form>
                                         </div>
                                     </div>
@@ -153,11 +156,21 @@
 </table>
 
 <script type="text/javascript">
+
     function postMessage() {
         //ajaxpost nouveaumessage
+        $.ajax({ 
+   type: "post",
+   url: "@Url.Action("AddMessage")",
+   data: $("#test").serialize(),
+   success: function(data) { getConversation(data) },
+   error: function() { alert("An error occurred"); },
 
+        })
+            //getConversation('convId')
+            ;
         //getElementById()
-
+    
     }
 function getConversation(id) {
  $.ajax({
@@ -187,7 +200,8 @@ function getConversation(id) {
 
                  var UserB = document.getElementById("message_ConversationId");
                  UserB.value = resultsJSON[y].ConversationId;
-             }
+         }
+         //setTimeout(getConversation(id), 5000);
    },
    error: function () {
     alert('Error occured');

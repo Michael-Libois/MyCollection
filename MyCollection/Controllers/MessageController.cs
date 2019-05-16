@@ -57,9 +57,9 @@ namespace MyCollection.Controllers
             return View("AddMessage");
         }
         [HttpPost]
-        public IActionResult AddMessage(MessageBTO message)
+        public JsonResult AddMessage(MessageBTO message)
         {
-
+            var data = message.ConversationId;
             var currentUser = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var messageUC = new MessageUC(currentUser, iUserRepository, iConversationRepository, iMessageRepository);
             //messageUC.AddNewMessage(message, listUsers);
@@ -67,7 +67,7 @@ namespace MyCollection.Controllers
 
 
 
-            return View();
+            return Json(data);
         }
 
 
