@@ -4,8 +4,36 @@
 @{
     ViewData["Title"] = "GetMoviesByName";
 }
+    
+<h1></h1>
 
-<h1>GetMoviesByName</h1>
+
+ 
+<form asp-controller="User" asp-action="FilterMoviesByPostalCode" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Find by
+
+            @Html.DropDownList("FilterType", new List<SelectListItem>
+            {
+            new SelectListItem{ Text="Title", Value = "Title", Selected =(string)ViewData["FilterType"] == "Title" },
+            new SelectListItem{ Text="Year", Value = "Year", Selected =(string)ViewData["FilterType"] == "Year"  },
+            new SelectListItem{ Text="Genre", Value = "Genre", Selected =(string)ViewData["FilterType"] == "Genre" },
+            new SelectListItem{ Text="Director", Value = "Director", Selected =(string)ViewData["FilterType"] == "Director" },
+            })
+
+            
+
+            <input type="text" name="SearchString" value="@ViewData["SearchString"]" />
+            <input type="submit" value="Search" class="btn btn-default" /> |
+            @*<a asp-action="Index">Back to Full List</a>*@
+            <a href="@ViewData["URL"]">Back</a>
+        </p>
+    </div>
+</form>
+
+
+
 
 @*<p>
         <a asp-action="Create">Create New</a>
@@ -61,13 +89,104 @@
                 </td>
 
                 <td>
-                    @Html.ActionLink("Send Message", "AddMessage", "Message", new { receiverId = item.UserID }) |
+                    @*@Html.ActionLink("Send Message", "AddMessage", "Message", new { receiverId = item.UserID }) |*@
                     @Html.ActionLink("Details", "GetMovieDetail", new { imdbid = item.imdbID }) |
                     @*@Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
 
+
+
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalScrollable"  onclick="javascript:setUserId('@item.UserID');">
+                        Open
+                    </button>
+
+                    <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalScrollableTitle">Modal title</h5>
+                                    @*<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>*@
+                                </div>
+
+                                <hr />
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <form asp-controller="Message" asp-action="AddMessageByReceiver" id="test">
+                                                @*item.UserID*@
+                                                <input id="receiverId" name="receiverId" hidden="hidden"/>
+                                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                                                <div class="form-group">
+                                                    <label asp-for="@Model.message.Content" class="control-label"></label>
+                                                    <input asp-for="@Model.message.Content" class="form-control" />
+                                                    <span asp-validation-for="@Model.message.Content" class="text-danger"></span>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    @*<input type="submit" value="AddMessage" class="btn btn-primary"  onclick="postMessage()"/>*@
+                                                    <button type="button" class="btn btn-secondary" onclick="postMessage()"  data-dismiss="modal">
+                                                        Send
+                                                    </button>
+                                                </div>
+
+                                                
+
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                @*<button type="button" class="btn btn-primary">Save changes</button>*@
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+
                 </td>
             </tr>
+
+
         }
     </tbody>
 </table>
+
+<script type="text/javascript">
+
+
+
+        var setUserId = function (id) {
+            var userID = document.getElementById("receiverId");
+            //var mi = document.createElement("input");
+
+            userID.value = id;
+
+            //mi.setAttribute('type', 'text');
+            //mi.setAttribute('value', id);
+
+            //userID = mi ;
+        };
+
+    var postMessage = function () {
+        //ajaxpost nouveaumessage
+        $.ajax({
+            type: "post",
+            url: "@Url.Action("AddMessageByReceiver","Message")",
+            data: $("#test").serialize(),
+            //contentType: 'application/json; charset=utf-8',
+            //dataType: 'json',
+            success: function () { alert("MESSAGE SENT"); },
+            error: function () {alert("An error occurred"); },
+
+        });
+        //
+    }
+</script>
+
 

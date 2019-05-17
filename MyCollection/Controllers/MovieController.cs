@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using BLL.UserCases;
+using Common.BTO;
 using Common.DataContracts;
 using DAL.Entities;
 using DAL.Repo;
@@ -180,7 +181,7 @@ namespace MyCollection.Controllers
             return View("DisplayAllMyMovies", movies);
         }
 
-        public ActionResult DisplayMoviesByFilter(string FilterType, string SearchString)
+        public ActionResult DisplayMyMoviesByFilter(string FilterType, string SearchString)
         {
 
             var displayUrl = UriHelper.GetDisplayUrl(Request);
@@ -209,5 +210,9 @@ namespace MyCollection.Controllers
 
             return View("DisplayAllMyMovies",movies);
         }
+
+     
+
+
     }
 }

@@ -35,7 +35,7 @@ namespace MyCollection.Controllers
             return View();
         }
 
-        public IActionResult GetMoviesByPostalCode()
+            public IActionResult GetMoviesByPostalCode()
         {
 
             var displayUrl = UriHelper.GetDisplayUrl(Request);
@@ -59,13 +59,53 @@ namespace MyCollection.Controllers
             var vm = new PostalMessageViewModel
             {
                 ListMoviePostal = users.ToList(),
-                messagePost = new MessageBTO()
+                message = new MessageBTO()
             };
 
 
 
 
             return View(vm);
+        }
+
+
+
+
+        public IActionResult FilterMoviesByPostalCode(string FilterType, string SearchString)
+        {
+
+            var displayUrl = UriHelper.GetDisplayUrl(Request);
+            var urlBuilder =
+            new UriBuilder(displayUrl)
+            {
+                Query = null,
+                Fragment = null
+            };
+            string url = urlBuilder.ToString();
+
+
+            ViewData["URL"] = url;
+
+
+
+            var currentUser = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var userUC = new User(currentUser, repository, adressRepository, userRepository);
+            var users = userUC.ShowUsersSamePostalMovies();
+
+            var listfilter = userUC.FilterMovies(users, FilterType, SearchString);
+
+
+
+            var vm = new PostalMessageViewModel
+            {
+                ListMoviePostal = listfilter.ToList(),
+                message = new MessageBTO()
+            };
+
+
+
+
+            return View("GetMoviesByPostalCode", vm);
         }
     }
 }

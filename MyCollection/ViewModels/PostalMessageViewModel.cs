@@ -9,6 +9,6 @@ namespace MyCollection.ViewModels
     public class PostalMessageViewModel
     {
         public List<MovieSummaryBTO> ListMoviePostal { get; set; }
-        public MessageBTO messagePost { get; set; }
+        public MessageBTO message { get; set; }
     }
 }

@@ -47,14 +47,14 @@ namespace MyCollection.Controllers
         }
 
         [HttpPost]//receiverId
-        public IActionResult AddMessageByReceiver(MessageBTO message, string receiverID)
+        public JsonResult AddMessageByReceiver(MessageBTO message, string receiverID)
         {
 
             var currentUser = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var messageUC = new MessageUC(currentUser, iUserRepository, iConversationRepository, iMessageRepository);
             messageUC.AddNewMessage(message, currentUser, receiverID);
 
-            return View("AddMessage");
+            return Json(true);
         }
         [HttpPost]
         public JsonResult AddMessage(MessageBTO message)
