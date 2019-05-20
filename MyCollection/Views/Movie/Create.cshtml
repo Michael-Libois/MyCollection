@@ -1,4 +1,4 @@
-﻿@model Common.BTO.MovieSummaryBTO
+﻿@model Common.BTO.MovieDetailBTO
 
 @{
     ViewData["Title"] = "Create";
@@ -33,14 +33,14 @@
                 <span asp-validation-for="Director" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Poster" class="control-label"></label>
+                <label asp-for="Poster" class="control-label">ImagePath</label>
                 <input asp-for="Poster" class="form-control" />
                 <span asp-validation-for="Poster" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="imdbID" class="control-label"></label>
-                <input asp-for="imdbID" class="form-control" />
-                <span asp-validation-for="imdbID" class="text-danger"></span>
+                <label asp-for="Actors" class="control-label"></label>
+                <input asp-for="Actors" class="form-control" />
+                <span asp-validation-for="Actors" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
@@ -53,6 +53,3 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

@@ -8,6 +8,7 @@ using Common.BTO;
 using Common.DataContracts;
 using DAL.Entities;
 using DAL.Repo;
+using DAL.TypeExtentions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
@@ -56,15 +57,16 @@ namespace MyCollection.Controllers
         // POST: Movie/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(MovieEF movie)
+        public ActionResult Create(MovieDetailBTO movie)
         {
             try
             {
+                movie.UserID = User.FindFirst(ClaimTypes.NameIdentifier).Value;
                 // TODO: Add insert logic here
-                repository.Create(movie);
+                repository.Create(movie.DetBToToDEF());
                 repository.SaveChanges();
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("DisplayAllMyMovies", "Movie");
             }
             catch
             {
@@ -75,7 +77,9 @@ namespace MyCollection.Controllers
         // GET: Movie/Edit/5
         public ActionResult Edit(int id)
         {
-            MovieEF model = repository.GetById(id);
+            MovieDetailBTO model = repository.GetById(id).ToDetailBTO();
+
+            //TODO EF to Common.BTO.MovieDetailBTO
             return View(model);
         }
 
@@ -88,7 +92,8 @@ namespace MyCollection.Controllers
             {
                 repository.Edit(movie);
                 repository.SaveChanges();
-                return RedirectToAction("Index", "Home");
+                //return RedirectToAction("Index", "Home");
+                return RedirectToAction("DisplayAllMyMovies", "Movie");
             }
             else
             {
@@ -104,25 +109,25 @@ namespace MyCollection.Controllers
             userUC.DeleteFromUserCollection(Id);
 
 
-            return RedirectToAction("DisplayAllMoviesByUser", "Movie");
+            return RedirectToAction("DisplayAllMyMovies", "Movie");
         }
 
         // POST: Movie/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Delete(int id, IFormCollection collection)
+        //{
+        //    try
+        //    {
+        //        // TODO: Add delete logic here
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
 
         public ActionResult PlayMovie()
         {

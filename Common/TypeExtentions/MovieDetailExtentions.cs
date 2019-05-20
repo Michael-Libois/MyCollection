@@ -11,7 +11,7 @@ namespace Common.TypeExtentions
         public static MovieDetailBTO ToBTO(this IMDBMovieDetail MovieDetail)
             => new MovieDetailBTO
             {
-                Id= 0,
+                Id= MovieDetail.Id,
                 Director = MovieDetail.Director,
                 Genre = MovieDetail.Genre,
                 imdbID = MovieDetail.imdbID,

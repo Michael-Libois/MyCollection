@@ -6,6 +6,20 @@
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Views\IMDB\GetMoviesByName_.cshtml_" />
+    <None Remove="Views\Movie\DisplayAllMyMovies.cshtml_" />
+    <None Remove="Views\Shared\_Layout.cshtml_" />
+    <None Remove="Views\User\GetMoviesByPostalCode.cshtml_" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Views\IMDB\GetMoviesByName_.cshtml_" />
+    <Content Include="Views\Movie\DisplayAllMyMovies.cshtml_" />
+    <Content Include="Views\Shared\_Layout.cshtml_" />
+    <Content Include="Views\User\GetMoviesByPostalCode.cshtml_" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />

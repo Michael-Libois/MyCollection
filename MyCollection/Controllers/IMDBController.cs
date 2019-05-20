@@ -70,8 +70,8 @@ namespace MyCollection.Controllers
         public ActionResult AddToCollection(MovieDetailBTO imdbmovie)
         {
             
-            try
-            {
+            //try
+            //{
                 var currentUser = User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
                 var userUC = new User(currentUser, repository,null, null);
@@ -80,11 +80,11 @@ namespace MyCollection.Controllers
 
                 //return RedirectToAction(nameof(Index));
                 return RedirectToAction("DisplayAllMyMovies", "Movie");
-            }
-            catch(Exception Ex)
-            {
-                return View();
-            }
+            //}
+            //catch(Exception Ex)
+            //{
+            //    return View();
+            //}
 
         }
     }

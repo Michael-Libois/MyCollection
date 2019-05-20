@@ -1,14 +1,13 @@
-﻿@*@model IEnumerable<Common.BTO.MovieSummaryBTO>*@
-@model MyCollection.ViewModels.PostalMessageViewModel
+﻿@model MyCollection.ViewModels.PostalMessageViewModel
 
 @{
     ViewData["Title"] = "GetMoviesByName";
 }
-    
+
 <h1></h1>
 
 
- 
+
 <form asp-controller="User" asp-action="FilterMoviesByPostalCode" method="get">
     <div class="form-actions no-color">
         <p>
@@ -22,7 +21,7 @@
             new SelectListItem{ Text="Director", Value = "Director", Selected =(string)ViewData["FilterType"] == "Director" },
             })
 
-            
+
 
             <input type="text" name="SearchString" value="@ViewData["SearchString"]" />
             <input type="submit" value="Search" class="btn btn-default" /> |
@@ -35,127 +34,99 @@
 
 
 
-@*<p>
-        <a asp-action="Create">Create New</a>
-    </p>*@
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ListMoviePostal[0].Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ListMoviePostal[0].Year)
-            </th>
-            @*<th>
-                    @Html.DisplayNameFor(model => model.imdbID)
-                </th>*@
-            @*<th>
-                    @Html.DisplayNameFor(model => model.Type)
-                </th>*@
-            <th>
-                @Html.DisplayNameFor(model => model.ListMoviePostal[0].Poster)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ListMoviePostal[0].UserID)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.ListMoviePostal)
+<div class="row justify-content-center">
+    <div class="col-12">
+
+
+        <div class="row row-centered">
+
+            @foreach (var item in Model.ListMoviePostal)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Title)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Year)
-                </td>
-                @*<td>
-                        @Html.DisplayFor(modelItem => item.imdbID)
-                    </td>*@
-                @*<td>
-                        @Html.DisplayFor(modelItem => item.Type)
-                    </td>*@
-                <td>
-                    @*@Html.DisplayFor(modelItem => item.Poster)*@
-                    <img src="@Url.Content(item.Poster)" height="200" />
-
-                </td>
-
-                <td>
-                    @Html.ActionLink(item.UserName, "DisplayAllMoviesByUser", "Movie", new { UserID = item.UserID })
-                </td>
-
-                <td>
-                    @*@Html.ActionLink("Send Message", "AddMessage", "Message", new { receiverId = item.UserID }) |*@
-                    @Html.ActionLink("Details", "GetMovieDetail", new { imdbid = item.imdbID }) |
-                    @*@Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
 
 
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card h-100" style="width: 18rem;">
+                    <a href="#"><img class="card-img-top" src="@Url.Content(item.Poster)" alt=""></a>
+                    <div class="card-body">
+                        <h4 class="card-title">
+                            @Html.ActionLink(item.Title, "Details", new { id = item.Id })
+                        </h4>
+                        <h5>@*@Html.DisplayFor(modelItem => item.Genre)*@</h5>
+                        @*<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>*@
+                    </div>
+                    <div class="card-footer">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalScrollable" onclick="javascript:setUserId('@item.UserID');">
+                            Open
+                        </button>
 
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalScrollable"  onclick="javascript:setUserId('@item.UserID');">
-                        Open
-                    </button>
+                        <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalScrollableTitle">Modal title</h5>
+                                        @*<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>*@
+                                    </div>
 
-                    <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalScrollableTitle">Modal title</h5>
-                                    @*<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>*@
-                                </div>
+                                    <hr />
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <form asp-controller="Message" asp-action="AddMessageByReceiver" id="test">
+                                                    @*item.UserID*@
+                                                    <input id="receiverId" name="receiverId" hidden="hidden" />
+                                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                                <hr />
-                                <div class="modal-body">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <form asp-controller="Message" asp-action="AddMessageByReceiver" id="test">
-                                                @*item.UserID*@
-                                                <input id="receiverId" name="receiverId" hidden="hidden"/>
-                                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                                    <div class="form-group">
+                                                        <label asp-for="@Model.message.Content" class="control-label"></label>
+                                                        <input asp-for="@Model.message.Content" class="form-control" />
+                                                        <span asp-validation-for="@Model.message.Content" class="text-danger"></span>
+                                                    </div>
 
-                                                <div class="form-group">
-                                                    <label asp-for="@Model.message.Content" class="control-label"></label>
-                                                    <input asp-for="@Model.message.Content" class="form-control" />
-                                                    <span asp-validation-for="@Model.message.Content" class="text-danger"></span>
-                                                </div>
+                                                    <div class="form-group">
+                                                        @*<input type="submit" value="AddMessage" class="btn btn-primary"  onclick="postMessage()"/>*@
+                                                        <button type="button" class="btn btn-secondary" onclick="postMessage()" data-dismiss="modal">
+                                                            Send
+                                                        </button>
+                                                    </div>
 
-                                                <div class="form-group">
-                                                    @*<input type="submit" value="AddMessage" class="btn btn-primary"  onclick="postMessage()"/>*@
-                                                    <button type="button" class="btn btn-secondary" onclick="postMessage()"  data-dismiss="modal">
-                                                        Send
-                                                    </button>
-                                                </div>
 
-                                                
 
-                                            </form>
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
+
+
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    @*<button type="button" class="btn btn-primary">Save changes</button>*@
                                 </div>
-
-
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                @*<button type="button" class="btn btn-primary">Save changes</button>*@
                             </div>
+
                         </div>
 
+
+
                     </div>
-
-
-
-
-                </td>
-            </tr>
-
+                </div>
+            </div>
 
         }
-    </tbody>
-</table>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
 
 <script type="text/javascript">
 
@@ -188,5 +159,6 @@
         //
     }
 </script>
+
 
 

@@ -13,6 +13,7 @@ namespace DAL.TypeExtentions
             => new MovieEF
             {
                 Id = MovieDetail.Id,
+                UserID = MovieDetail.UserID,
                 Director = MovieDetail.Director,
                 Genre = MovieDetail.Genre,
                 imdbID = MovieDetail.imdbID,
@@ -36,7 +37,23 @@ namespace DAL.TypeExtentions
         public static MovieDetailBTO ToDetailBTO(this MovieEF MovieDetail)
             => new MovieDetailBTO
             {
-                Id = 0,
+                Id = MovieDetail.Id,
+                UserID = MovieDetail.UserID,
+                Director = MovieDetail.Director,
+                Genre = MovieDetail.Genre,
+                imdbID = MovieDetail.imdbID,
+                Poster = MovieDetail.Poster,
+                Title = MovieDetail.Title,
+                Year = MovieDetail.Year,
+                Actors = MovieDetail.Actors,
+                Country = MovieDetail.Country
+            };
+
+        public static MovieEF DetBToToDEF(this MovieDetailBTO MovieDetail)
+            => new MovieEF
+            {
+                Id = MovieDetail.Id,
+                UserID = MovieDetail.UserID,
                 Director = MovieDetail.Director,
                 Genre = MovieDetail.Genre,
                 imdbID = MovieDetail.imdbID,
