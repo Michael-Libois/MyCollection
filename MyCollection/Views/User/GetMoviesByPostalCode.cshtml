@@ -49,14 +49,14 @@
                     <a href="#"><img class="card-img-top" src="@Url.Content(item.Poster)" alt=""></a>
                     <div class="card-body">
                         <h4 class="card-title">
-                            @Html.ActionLink(item.Title, "Details", new { id = item.Id })
+                            @Html.ActionLink(item.Title, "Details", "Movie", new { id = item.Id })
                         </h4>
                         <h5>@*@Html.DisplayFor(modelItem => item.Genre)*@</h5>
                         @*<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>*@
                     </div>
                     <div class="card-footer">
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalScrollable" onclick="javascript:setUserId('@item.UserID');">
-                            Open
+                            Message To @item.UserName
                         </button>
 
                         <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
@@ -76,11 +76,12 @@
                                                 <form asp-controller="Message" asp-action="AddMessageByReceiver" id="test">
                                                     @*item.UserID*@
                                                     <input id="receiverId" name="receiverId" hidden="hidden" />
-                                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                                    <div asp-validation-summary="ModelOnly" cliv>
 
                                                     <div class="form-group">
                                                         <label asp-for="@Model.message.Content" class="control-label"></label>
-                                                        <input asp-for="@Model.message.Content" class="form-control" />
+                                                        @*<input asp-for="@Model.message.Content" class="form-control" />*@
+                                                        <textarea asp-for="@Model.message.Content" class="form-control md-textarea" length="120" rows="5" cols="33"></textarea>
                                                         <span asp-validation-for="@Model.message.Content" class="text-danger"></span>
                                                     </div>
 

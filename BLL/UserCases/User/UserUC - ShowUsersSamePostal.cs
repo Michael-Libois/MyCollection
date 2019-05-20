@@ -28,7 +28,8 @@ namespace BLL.UserCases
             foreach (var item in UserIds)
                 listmovies.AddRange(DisplayMoviesByUserId(item.UserID));
             //listusers.Add(ApplicationUserEF);
-
+            
+            listmovies.RemoveAll(y => y.UserID == userId);
             //listmovies.ForEach(x => x.UserName = iUserRepository.GetById(x.UserID).UserName);
             listmovies.ForEach(x => x.UserName = formatName(x.UserID));
             
