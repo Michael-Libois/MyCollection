@@ -21,7 +21,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace MyCollection.Controllers
 {
 
-    
+
     public class IMDBController : Controller
     {
         //public async Task<List<IMDBMovieSummary>> GetMovies(string name)
@@ -35,26 +35,41 @@ namespace MyCollection.Controllers
 
 
         //}
-        
+
         private IRepositoryGeneric<MovieEF, int> repository = null;
 
         public IMDBController(IRepositoryGeneric<MovieEF, int> Repository)
         {
-            
+
             this.repository = Repository;
         }
-        
+
 
 
         public ActionResult GetMoviesByName(string name)
         {
+
+
+
             var guest = new Visitor();
 
             var model = guest.SearchMoviesByName(name);
 
-            if (model.Count() == 0) return View("GetMoviesByNameNotFound", name);
+            if (model.First()?.imdbID != null)
+            {
+                return View(model);
+            }
 
-            return View(model);
+            return RedirectToAction("Index", "Home");
+
+
+
+            //return RedirectToAction("Index", "Home");
+
+            //if (model.Count() == 0) return RedirectToAction("Index", "Home");
+            //    else
+            //    return View(model);
+
 
         }
 
@@ -69,17 +84,17 @@ namespace MyCollection.Controllers
         [Authorize]
         public ActionResult AddToCollection(MovieDetailBTO imdbmovie)
         {
-            
+
             //try
             //{
-                var currentUser = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var currentUser = User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-                var userUC = new User(currentUser, repository,null, null);
+            var userUC = new User(currentUser, repository, null, null);
 
-                userUC.AddToUserCollection(imdbmovie);
+            userUC.AddToUserCollection(imdbmovie);
 
-                //return RedirectToAction(nameof(Index));
-                return RedirectToAction("DisplayAllMyMovies", "Movie");
+            //return RedirectToAction(nameof(Index));
+            return RedirectToAction("DisplayAllMyMovies", "Movie");
             //}
             //catch(Exception Ex)
             //{

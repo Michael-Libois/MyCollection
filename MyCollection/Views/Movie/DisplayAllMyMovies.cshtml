@@ -5,7 +5,7 @@
     ViewData["Title"] = "DisplayAllMyMovies";
 }
 
-<h1>DisplayAllMoviesByUser</h1>
+<h1>MyCollection</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -48,9 +48,9 @@
             })
 
             <input type="text" name="SearchString" value="@ViewData["SearchString"]" />
-            <input type="submit" value="Search" class="btn btn-default" /> |
-            @*<a asp-action="Index">Back to Full List</a>*@
-            <a href="@ViewData["URL"]">Back</a>
+            <input type="submit" value="Search" class="btn btn-default" /> 
+            <a asp-action="DisplayAllMyMovies" >Back to Full List</a>
+            @*<a href="@ViewData["URL"]">Back</a>*@
         </p>
     </div>
 </form>
@@ -81,11 +81,11 @@
 
                     @if (item.Poster != null)
                     {
-                        <a href="#"><img class="card-img-top" src="@Url.Content(item.Poster)" alt=""></a>
+                        <a ><img class="card-img-top" src="@Url.Content(item.Poster)" alt=""></a>
                     }
                     @if (item.Poster == null)
                     {
-                        <a href="#"><img class="card-img-top" src="~/img/antoine-barres.jpg" alt=""></a>
+                        <a href="#"><img class="card-img-top" src="~/img/noimage.png" alt=""></a>
                     }
 
 

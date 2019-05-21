@@ -18,17 +18,26 @@
 
                 <div class="col-lg-4 col-md-6 mb-4">
                     <div class="card h-100" style="width: 18rem;">
-                        <a href="#"><img class="card-img-top" src="@Url.Content(item.Poster)" alt=""></a>
+                        @if (item.Poster != null)
+                        {
+                            <a href="#"><img class="card-img-top" src="@Url.Content(item.Poster)" alt=""></a>
+                        }
+                        @if (item.Poster == "N/A")
+                        {
+                            <a href="#"><img class="card-img-top" src="~/img/noimage.png" alt=""></a>
+                        }
+                        
+
                         <div class="card-body">
                             <h4 class="card-title">
-                                @Html.ActionLink(item.Title, "GetMovieDetail", new { imdbid = item.imdbID },new { style = "color:black" } )
+                                @Html.ActionLink(item.Title, "GetMovieDetail", new { imdbid = item.imdbID }, new { style = "color:black" })
                             </h4>
                             @*<h5>$24.99</h5>
-                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>*@
+            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>*@
                         </div>
                         @*<div class="card-footer">
-                            <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-                        </div>*@
+            <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+        </div>*@
                     </div>
                 </div>
 

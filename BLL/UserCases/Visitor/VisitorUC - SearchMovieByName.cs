@@ -17,12 +17,12 @@ namespace BLL.UserCases
         {
             var a = new IMDBProxy();
 
-            var result = (Task.Run(() => a.GetMovies(name)).Result).Select(x => x.ToBTO());
+            var result = (Task.Run(() => a.GetMovies(name)).Result);
 
-            if (result.Count() == 0)
-                result = (Task.Run(() => a.GetMoviesT(name)).Result).Select(x => x.ToBTO());
+            if (result.Count()==0)
+                result = (Task.Run(() => a.GetMoviesT(name)).Result);
 
-            return result;
+            return result.Select(x => x.ToBTO());
         }
     }
 }

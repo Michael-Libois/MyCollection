@@ -9,7 +9,7 @@ namespace Common.TypeExtentions
     public static class MovieDetailSummaryExtentions
     {
         public static MovieSummaryBTO ToBTO(this IMDBMovieSummary MovieDetail)
-            => new MovieSummaryBTO
+            => MovieDetail != null ? new MovieSummaryBTO
             {
                 Id = 0,
                 UserID = MovieDetail.UserID,
@@ -19,6 +19,18 @@ namespace Common.TypeExtentions
                 Poster = MovieDetail.Poster,
                 Title = MovieDetail.Title,
                 Year = MovieDetail.Year
-            };
+            } : null;
+        //public static MovieSummaryBTO ToBTOAncien(this IMDBMovieSummary MovieDetail)
+        //    => new MovieSummaryBTO
+        //    {
+        //        Id = 0,
+        //        UserID = MovieDetail.UserID,
+        //        Director = MovieDetail.Director,
+        //        Genre = MovieDetail.Genre,
+        //        imdbID = MovieDetail.imdbID,
+        //        Poster = MovieDetail.Poster,
+        //        Title = MovieDetail.Title,
+        //        Year = MovieDetail.Year
+        //    };
     }
 }

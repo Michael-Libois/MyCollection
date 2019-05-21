@@ -33,11 +33,11 @@ namespace MyCollection.Controllers
 
 
         // GET: Movie
-        public ActionResult Index()
-        {
-            var model = repository.Filter();
-            return View(model);
-        }
+        //public ActionResult Index()
+        //{
+        //    var model = repository.Filter();
+        //    return View(model);
+        //}
 
         // GET: Movie/Details/5
         public ActionResult Details(int id)
@@ -47,6 +47,17 @@ namespace MyCollection.Controllers
             var moviedetail = userUC.DisplayMovieDetail(id);
             return View(moviedetail);
         }
+
+
+        public ActionResult DetailsPostal(int id)
+        {
+            var currentUser = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var userUC = new User(currentUser, repository, null, null);
+            var moviedetail = userUC.DisplayMovieDetail(id);
+            return View(moviedetail);
+        }
+
+
 
         // GET: Movie/Create
         public ActionResult Create()
@@ -61,10 +72,9 @@ namespace MyCollection.Controllers
         {
             try
             {
-                movie.UserID = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-                // TODO: Add insert logic here
-                repository.Create(movie.DetBToToDEF());
-                repository.SaveChanges();
+                var currentUser = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                var userUC = new User(currentUser, repository, null, null);
+                userUC.CreateMovie(movie);
 
                 return RedirectToAction("DisplayAllMyMovies", "Movie");
             }
@@ -86,13 +96,14 @@ namespace MyCollection.Controllers
         // POST: Movie/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(MovieEF movie)
+        public ActionResult Edit(MovieDetailBTO movie)
         {
             if (ModelState.IsValid)
             {
-                repository.Edit(movie);
-                repository.SaveChanges();
-                //return RedirectToAction("Index", "Home");
+                var currentUser = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                var userUC = new User(currentUser, repository, null, null);
+                userUC.EditMovie(movie);
+                
                 return RedirectToAction("DisplayAllMyMovies", "Movie");
             }
             else

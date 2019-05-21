@@ -126,7 +126,10 @@ namespace MyCollection.Controllers
 
             //return Json(json, JsonRequestBehavior.AllowGet);
 
-            return Json(JsonConvert.SerializeObject(model));
+            var jsonSettings = new JsonSerializerSettings();
+            jsonSettings.DateFormatString = "dd/MM/yyy hh:mm:ss";
+
+            return Json(JsonConvert.SerializeObject(model, jsonSettings));
 
 
             

@@ -22,16 +22,16 @@ namespace BLL.UserCases
                 switch (filter)
                 {
                     case "Genre":
-                        funcFilter = p => p.Genre.Contains(searchTerm);
+                        funcFilter = p => p.Genre.Contains(searchTerm, StringComparison.OrdinalIgnoreCase);
                         break;
                     case "Title":
-                        funcFilter = p => p.Title.Contains(searchTerm);
+                        funcFilter = p => p.Title.Contains(searchTerm, StringComparison.OrdinalIgnoreCase);
                         break;
                     case "Year":
-                        funcFilter = p => p.Year.Contains(searchTerm);
+                        funcFilter = p => p.Year.Contains(searchTerm, StringComparison.OrdinalIgnoreCase);
                         break;
                     case "Director":
-                        funcFilter = p => p.Director.Contains(searchTerm);
+                        funcFilter = p => p.Director.Contains(searchTerm, StringComparison.OrdinalIgnoreCase);
                         break;
                     default:
                         funcFilter = p => true;

@@ -3,7 +3,7 @@
 @inject UserManager<DAL.Entities.ApplicationUserEF> UserManager
 @inject SignInManager<DAL.Entities.ApplicationUserEF> SignInManager
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "DetailsMoviePostal";
 }
 
 <h1>GetMovieDetail</h1>
@@ -16,8 +16,8 @@
         <div class="col-6">
             <div class="row">
                 @*<div class="col-sm-4 ">
-                    <strong>@Html.DisplayFor(model => model.Id)</strong>
-                </div>*@
+                        <strong>@Html.DisplayFor(model => model.Id)</strong>
+                    </div>*@
                 <div class="col-sm-4 ">
                     <strong>@Html.DisplayNameFor(model => model.Title)</strong>
                 </div>
@@ -31,21 +31,21 @@
                     @Html.DisplayFor(model => model.Year)
                 </div>
                 @*<div class="col-sm-4 ">
-            @Html.DisplayNameFor(model => model.imdbID)
-        </div>
-        <div class="col-sm-8">
-            @Html.DisplayFor(model => model.imdbID)
-        </div>*@
+                        @Html.DisplayNameFor(model => model.imdbID)
+                    </div>
+                    <div class="col-sm-8">
+                        @Html.DisplayFor(model => model.imdbID)
+                    </div>*@
                 @*<div class="col-sm-4 ">
-            @Html.DisplayNameFor(model => model.Type)
-        </div>
-        <div class="col-sm-8">
-            @Html.DisplayFor(model => model.Type)
-        </div>*@
+                        @Html.DisplayNameFor(model => model.Type)
+                    </div>
+                    <div class="col-sm-8">
+                        @Html.DisplayFor(model => model.Type)
+                    </div>*@
 
                 @*<dd class = "col-sm-8">
-            @Html.DisplayFor(model => model.Poster)
-        </dd>*@
+                        @Html.DisplayFor(model => model.Poster)
+                    </dd>*@
                 <div class="col-sm-4 ">
                     @Html.DisplayNameFor(model => model.Genre)
                 </div>
@@ -78,26 +78,10 @@
     </div>
 </div>
 <br>
-@if (SignInManager.IsSignedIn(User))
-{
-<div>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
-    @Html.ActionLink("Delete", "Delete", new { id = Model.Id })
-    @*@Html.ActionLink("Add", "AddToCollection", new
-        {
-           imdbid = Model.imdbID,
-           Title = Model.Title,
-           Year = Model.Year,
-           Poster = Model.Poster,
-           Director = Model.Director,
-           Genre = Model.Genre,
-           Actors = Model.Actors,
-           Country = Model.Country
-        })*@
-    @* TODO #1 "~/IMDB/GetMoviesByName/"+Model.imdbID*@
-    <a asp-action="DisplayAllMyMovies">Back to List</a>
-</div>
-}
+
+        <a asp-action="GetMoviesByPostalCode" asp-controller="User">Back to List</a>
+    
+
 
 @*@model Common.BTO.MovieDetailBTO
 
@@ -171,3 +155,4 @@
         @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
         <a asp-action="Index">Back to List</a>
     </div>*@
+

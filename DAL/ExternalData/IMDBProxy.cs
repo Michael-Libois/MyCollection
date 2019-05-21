@@ -15,11 +15,11 @@ namespace DAL.ExternalData
         public async Task<IEnumerable<IMDBMovieSummary>> GetMovies(string name)
         {
             var client = new HttpClient();
-            var response = await client.GetAsync("http://www.omdbapi.com/?apikey=3fb1023d&s=" + name /*+"&page=100"*/);
+            var response = await client.GetAsync("http://www.omdbapi.com/?apikey=3fb1023d&s=" + name /*+ "&page=1"*/);
             var content = await response.Content.ReadAsStringAsync();
             var movies = JsonConvert.DeserializeObject<JsonRetourIMDB>(content).Search.AsEnumerable();
 
-            return movies != null ? movies : new List<IMDBMovieSummary>();
+            return movies  != null ? movies : new List<IMDBMovieSummary>();
         }
         public async Task<IEnumerable<IMDBMovieSummary>> GetMoviesT(string name)
         {
