@@ -10,6 +10,7 @@ namespace BLL.UserCases
     public partial class User
     {
         public MovieDetail DisplayMovieDetail(int id)
-            => iMovieRepository.GetById(id).ToDetailBTO();
+            => unitOfWork.iMovieDetailRepository.GetById(id);
+        
     }
 }

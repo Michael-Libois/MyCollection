@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using BLL.UserCases.Message;
+
 using Common.MTO;
 using Common.DataContracts;
 using DAL.Entities;
@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using MyCollection.ViewModels;
 using Newtonsoft.Json;
 using DAL.UnitOfWork;
+using BLL.UserCases;
 
 namespace MyCollection.Controllers
 {

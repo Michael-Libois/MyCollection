@@ -12,10 +12,10 @@ namespace BLL.UserCases
     {
         public IEnumerable<MovieSummary> FilterMyMovies(string filter, string searchTerm)
         {
-            Func<MovieEF, bool> funcPred = p => p.UserID == userId;
+            Func<MovieSummary, bool> funcPred = p => p.UserID == userId;
             Func<MovieSummary, bool> funcFilter;
 
-            var result1 = iMovieRepository.Filter(funcPred).Select(x => x.ToSummaryBTO());
+            var result1 = unitOfWork.iMovieSummaryRepository.Filter(funcPred);
 
             switch (filter)
             {

@@ -14,12 +14,12 @@ namespace BLL.UserCases
 
         public IEnumerable<MovieSummary> ShowUsersSamePostalMovies()
         {
-            Func<AdressEF, bool> funcFindUserAdress = p => p.UserID == userId;
-            var UserPostalCode = iAdressRepository.Filter(funcFindUserAdress).FirstOrDefault().PostalCode;
+            Func<Adress, bool> funcFindUserAdress = p => p.UserID == userId;
+            var UserPostalCode = unitOfWork.iAdressRepository.Filter(funcFindUserAdress).FirstOrDefault().PostalCode;
 
-            Func<AdressEF, bool> funcFindAllUsersInPostalCode = p => (p.PostalCode == UserPostalCode)&&(p.UserID != userId);
+            Func<Adress, bool> funcFindAllUsersInPostalCode = p => (p.PostalCode == UserPostalCode)&&(p.UserID != userId);
 
-            var UserIds = iAdressRepository.Filter(funcFindAllUsersInPostalCode);//.Select(x => x.UserID);
+            var UserIds = unitOfWork.iAdressRepository.Filter(funcFindAllUsersInPostalCode);//.Select(x => x.UserID);
 
             List<MovieSummary> listmovies = new List<MovieSummary>();
             foreach (var item in UserIds)
@@ -31,7 +31,7 @@ namespace BLL.UserCases
         }
 
         private string formatName(string id)
-        { var u = iUserRepository.GetById(id);
+        { var u = unitOfWork.iUserRepository.GetById(id);
             return u.FirstName + " " + u.LastName + $"{u.UserName}";
         }
     }

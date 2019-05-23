@@ -13,8 +13,8 @@ namespace BLL.UserCases
         public void EditMovie (MovieDetail movie)
         {
 
-            iMovieRepository.Edit(movie.DetBToToDEF());
-            iMovieRepository.SaveChanges();
+            unitOfWork.iMovieDetailRepository.Edit(movie);
+            unitOfWork.SaveChanges();
 
 
         }

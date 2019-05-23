@@ -15,7 +15,7 @@ namespace BLL.UserCases
         {
             try
             {
-                var movie = new Movie
+                var movie = new MovieDetail
                 {
                     Director = imdbmovie.Director,
                     Genre = imdbmovie.Genre,
@@ -29,8 +29,8 @@ namespace BLL.UserCases
                 };
 
                 // TODO: Add insert logic here
-                unityOfWork.iMovieDetailRepository.Create(movie);
-                unityOfWork.iMovieDetailRepository.SaveChanges();
+                unitOfWork.iMovieDetailRepository.Create(movie);
+                unitOfWork.iMovieDetailRepository.SaveChanges();
             }
             catch (Exception)
             {

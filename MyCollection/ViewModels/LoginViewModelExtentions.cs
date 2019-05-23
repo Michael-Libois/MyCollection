@@ -1,5 +1,5 @@
 ﻿using Common.MTO;
-using Common.DTO.DataContext;
+//using Common.DTO.DataContext;
 
 namespace MyCollection.ViewModels
 {

@@ -83,9 +83,9 @@ namespace BLL.UserCases
 
             var message = new Message
             {
-
+                //not SURE CHEEEECCCKKKKK
                 UserId = userId,
-                Conversation = conversation,
+                ConversationId = conversation.Id,
                 Content = Message.Content,
                 Datetime = DateTime.Now,
                 IsChecked = false

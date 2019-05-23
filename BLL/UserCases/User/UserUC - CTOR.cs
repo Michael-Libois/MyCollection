@@ -10,9 +10,9 @@ namespace BLL.UserCases
     public partial class User
     {
         private readonly string userId;
-        private readonly IUnitOfWork unityOfWork;
+        private readonly IUnitOfWork unitOfWork;
 
-        public User(string UserId, IUnitOfWork unityOfWork)
+        public User(string UserId, IUnitOfWork unitOfWork)
         {
             if (string.IsNullOrWhiteSpace(UserId) || string.IsNullOrEmpty(UserId))
             {
@@ -20,7 +20,7 @@ namespace BLL.UserCases
             }
 
             userId = UserId;
-            this.unityOfWork = unityOfWork;
+            this.unitOfWork = unitOfWork;
         }
 
     }

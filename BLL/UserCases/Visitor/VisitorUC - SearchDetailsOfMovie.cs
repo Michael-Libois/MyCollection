@@ -15,7 +15,7 @@ namespace BLL.UserCases
         {
             var a = new IMDBProxy();
 
-            return Task.Run(() => a.GetMovieDetail(ImdbId)).Result.ToBTO();
+            return Task.Run(() => a.GetMovieDetail(ImdbId)).Result.ToMTO();
         }
     }
 }
