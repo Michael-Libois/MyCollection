@@ -1,31 +1,23 @@
 ﻿using Common.DataContracts;
 using DAL.Entities;
 using DAL.Entities.Messages;
+using DAL.UnitOfWork;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace BLL.UserCases.Message
+namespace BLL.UserCases
 {
     public partial class MessageUC
     {
         private readonly string userId;
-        private readonly IRepositoryGeneric<ConversationEF, int> iConversationRepository;
-        private readonly IRepositoryGeneric<MessageEF, int> iMessageRepository;
-        //private readonly IRepositoryGeneric<ConvUserEF, int> iConvUserRepository;
-        private readonly IRepositoryGeneric<ApplicationUserEF, string> iUserRepository;
+        private readonly IUnitOfWork unitOfWork;
 
-
-        public MessageUC(string UserId, IRepositoryGeneric<ApplicationUserEF, string> UserRepository, 
-            IRepositoryGeneric<ConversationEF, int> ConversationRepository, IRepositoryGeneric<MessageEF, int> MessageRepository
-            //IRepositoryGeneric<ConvUserEF, int> ConvUserRepository
-            )
+        public MessageUC(string UserId, IUnitOfWork unitOfWork)
         {
+
             userId = UserId;
-            iUserRepository = UserRepository;
-            iConversationRepository = ConversationRepository;
-            iMessageRepository = MessageRepository;
-            //iConvUserRepository = ConvUserRepository;
+            this.unitOfWork = unitOfWork;
 
         }
     }

@@ -1,4 +1,4 @@
-﻿@model Common.BTO.MovieDetailBTO
+﻿@model Common.MTO.MovieDetail
 @using Microsoft.AspNetCore.Identity
 @inject UserManager<DAL.Entities.ApplicationUserEF> UserManager
 @inject SignInManager<DAL.Entities.ApplicationUserEF> SignInManager
@@ -99,7 +99,7 @@
 </div>
 }
 
-@*@model Common.BTO.MovieDetailBTO
+@*@model Common.MTO.MovieDetail
 
     @{
         ViewData["Title"] = "Details";
@@ -108,7 +108,7 @@
     <h1>Details</h1>
 
     <div>
-        <h4>MovieDetailBTO</h4>
+        <h4>MovieDetail</h4>
         <hr />
         <dl class="row">
             <dt class="col-sm-2">

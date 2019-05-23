@@ -1,4 +1,4 @@
-﻿using Common.BTO;
+﻿using Common.MTO;
 
 using DAL.Entities;
 using DAL.ExternalData;
@@ -11,22 +11,22 @@ namespace BLL.UserCases
 {
     public partial class User : Visitor
     {
-        public void AddNewUserAdress(AdressBTO adressBTO)
+        public void AddNewUserAdress(Adress Adress)
         {
             try
             {
-                AdressEF adress = new AdressEF();
+                var adress = new Adress();
 
-                adress.Id = adressBTO.Id;
-                adress.UserID = userId; //Ref:Au cas on as besoin du BTO: adressBTO.UserID;
-                adress.Street = adressBTO.Street;
-                adress.Number = adressBTO.Number;
-                adress.PostalCode = adressBTO.PostalCode;
-                adress.City = adressBTO.City;
+                adress.Id = Adress.Id;
+                adress.UserID = userId; //Ref:Au cas on a besoin du BTO: Adress.UserID;
+                adress.Street = Adress.Street;
+                adress.Number = Adress.Number;
+                adress.PostalCode = Adress.PostalCode;
+                adress.City = Adress.City;
 
                 // TODO: Add insert logic here
-                iAdressRepository.Create(adress);
-                iAdressRepository.SaveChanges();
+                unityOfWork.iAdressRepository.Create(adress);
+                unityOfWork.iAdressRepository.SaveChanges();
             }
             catch (Exception)
             {

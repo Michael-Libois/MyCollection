@@ -1,7 +1,7 @@
-﻿using Common.BTO;
+﻿using Common.MTO;
 using DAL.Entities;
 using DAL.Repo;
-using DAL.TypeExtentions;
+using DAL.Converters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,29 +12,24 @@ namespace BLL.UserCases
     public partial class User
     {
 
-        //Func<AdressEF, bool> funcPred = p => p.PostalCode == ;
-        //return iMovieRepository.Filter(funcPred).Select(x=>x.ToBTO());
-
-        public IEnumerable<MovieSummaryBTO> ShowUsersSamePostalMovies()
+        public IEnumerable<MovieSummary> ShowUsersSamePostalMovies()
         {
             Func<AdressEF, bool> funcFindUserAdress = p => p.UserID == userId;
             var UserPostalCode = iAdressRepository.Filter(funcFindUserAdress).FirstOrDefault().PostalCode;
 
-            Func<AdressEF, bool> funcFindAllUsersInPostalCode = p => p.PostalCode == UserPostalCode;
+            Func<AdressEF, bool> funcFindAllUsersInPostalCode = p => (p.PostalCode == UserPostalCode)&&(p.UserID != userId);
 
             var UserIds = iAdressRepository.Filter(funcFindAllUsersInPostalCode);//.Select(x => x.UserID);
 
-            List<MovieSummaryBTO> listmovies = new List<MovieSummaryBTO>();
+            List<MovieSummary> listmovies = new List<MovieSummary>();
             foreach (var item in UserIds)
                 listmovies.AddRange(DisplayMoviesByUserId(item.UserID));
-            //listusers.Add(ApplicationUserEF);
             
-            listmovies.RemoveAll(y => y.UserID == userId);
-            //listmovies.ForEach(x => x.UserName = iUserRepository.GetById(x.UserID).UserName);
             listmovies.ForEach(x => x.UserName = formatName(x.UserID));
             
             return listmovies;
         }
+
         private string formatName(string id)
         { var u = iUserRepository.GetById(id);
             return u.FirstName + " " + u.LastName + $"{u.UserName}";

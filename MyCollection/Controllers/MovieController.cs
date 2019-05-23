@@ -4,26 +4,29 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using BLL.UserCases;
-using Common.BTO;
+using Common.MTO;
 using Common.DataContracts;
 using DAL.Entities;
 using DAL.Repo;
-using DAL.TypeExtentions;
+using DAL.Converters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using DAL.UnitOfWork;
 
 namespace MyCollection.Controllers
 {
     [Authorize]
     public class MovieController : Controller
     {
-        private IRepositoryGeneric<MovieEF, int> repository = null;
+        private readonly IUnitOfWork unitOfWork;
 
-        public MovieController(IRepositoryGeneric<MovieEF, int> Repository)
+        //public MovieController(IUnitOfWork Repository)
+        public MovieController(IUnitOfWork unitOfWork)
         {
-            this.repository = Repository;
+
+            this.unitOfWork = unitOfWork;
         }
 
         //public MovieController(IRepositoryGeneric<Movie> repository)
@@ -43,7 +46,7 @@ namespace MyCollection.Controllers
         public ActionResult Details(int id)
         {
             var currentUser = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var userUC = new User(currentUser, repository, null, null);
+            var userUC = new User(currentUser, unitOfWork);
             var moviedetail = userUC.DisplayMovieDetail(id);
             return View(moviedetail);
         }
@@ -52,7 +55,7 @@ namespace MyCollection.Controllers
         public ActionResult DetailsPostal(int id)
         {
             var currentUser = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var userUC = new User(currentUser, repository, null, null);
+            var userUC = new User(currentUser, unitOfWork);
             var moviedetail = userUC.DisplayMovieDetail(id);
             return View(moviedetail);
         }
@@ -68,12 +71,12 @@ namespace MyCollection.Controllers
         // POST: Movie/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(MovieDetailBTO movie)
+        public ActionResult Create(MovieDetail movie)
         {
             try
             {
                 var currentUser = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-                var userUC = new User(currentUser, repository, null, null);
+                var userUC = new User(currentUser, unitOfWork);
                 userUC.CreateMovie(movie);
 
                 return RedirectToAction("DisplayAllMyMovies", "Movie");
@@ -87,21 +90,21 @@ namespace MyCollection.Controllers
         // GET: Movie/Edit/5
         public ActionResult Edit(int id)
         {
-            MovieDetailBTO model = repository.GetById(id).ToDetailBTO();
+            MovieDetail model = unitOfWork.iMovieDetailRepository.GetById(id);
 
-            //TODO EF to Common.BTO.MovieDetailBTO
+            //TODO EF to Common.MTO.MovieDetail
             return View(model);
         }
 
         // POST: Movie/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(MovieDetailBTO movie)
+        public ActionResult Edit(MovieDetail movie)
         {
             if (ModelState.IsValid)
             {
                 var currentUser = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-                var userUC = new User(currentUser, repository, null, null);
+                var userUC = new User(currentUser, unitOfWork);
                 userUC.EditMovie(movie);
                 
                 return RedirectToAction("DisplayAllMyMovies", "Movie");
@@ -116,7 +119,7 @@ namespace MyCollection.Controllers
         public ActionResult Delete(int Id)
         {
             var currentUser = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var userUC = new User(currentUser, repository, null,null);
+            var userUC = new User(currentUser, unitOfWork);
             userUC.DeleteFromUserCollection(Id);
 
 
@@ -164,7 +167,7 @@ namespace MyCollection.Controllers
 
             var currentUser = User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-            var userUC = new User(currentUser, repository, null, null);
+            var userUC = new User(currentUser, unitOfWork);
 
             var movies = userUC.DisplayMyMovies();
 
@@ -190,7 +193,7 @@ namespace MyCollection.Controllers
 
             var currentUser = User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-            var userUC = new User(currentUser, repository, null, null);
+            var userUC = new User(currentUser, unitOfWork);
 
             var movies = userUC.DisplayMoviesByUserId(UserID);
 
@@ -217,7 +220,7 @@ namespace MyCollection.Controllers
 
             var currentUser = User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-            var userUC = new User(currentUser, repository, null, null);
+            var userUC = new User(currentUser, unitOfWork);
 
             var movies = userUC.FilterMyMovies(FilterType, SearchString);
 

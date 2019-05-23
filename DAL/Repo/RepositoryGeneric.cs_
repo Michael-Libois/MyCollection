@@ -1,0 +1,80 @@
+﻿//using Common.DataContracts;
+//using DAL.Context;
+//using DAL.Entities;
+//using DAL.Entities.Messages;
+//using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+//using Microsoft.EntityFrameworkCore;
+//using System;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Linq.Expressions;
+//using System.Text;
+//using System.Threading.Tasks;
+
+//namespace DAL.Repo
+//{
+//    public class RepositoryGeneric<TEf,TIdType> : IRepositoryGeneric<TEf,TIdType> where TEf : class, IGenericEntities<TIdType>
+//    {
+
+//        public IdentityDbContext<ApplicationUserEF> _context;
+
+
+//        public RepositoryGeneric(IdentityDbContext<ApplicationUserEF> Context)
+//        {
+//            this._context = Context;
+//        }
+
+
+//        public RepositoryGeneric(DatabaseContext context) => _context = context;
+
+//        public void Create(TEf entity)
+//        {
+//                _context.Set<TEf>().Add(entity);
+//        }
+
+//        public void Delete(TEf entity)
+//        {
+//            _context.Set<TEf>().Remove(entity);
+//        }
+
+//        public void Delete(TIdType id)
+//        {
+//            var entityToDelete = _context.Set<TEf>().FirstOrDefault(e => e.Id.Equals(id));
+//            if (entityToDelete != null)
+//            {
+//                _context.Set<TEf>().Remove(entityToDelete);
+//            }
+//        }
+
+//        public void Edit(TEf entity)
+//        {
+//            if (_context.Set<TEf>().Any(e => e.Id.Equals(entity.Id)))
+//            {
+//                _context.Set<TEf>().Attach(entity);
+//                _context.Set<TEf>().Update(entity);
+//            }
+
+//            //var editedEntity = _context.Set<T>().FirstOrDefault(e => e.Id == entity.Id);
+//            //editedEntity = entity;
+//        }
+
+//        public TEf GetById(TIdType id)
+//        {
+//            return _context.Set<TEf>().FirstOrDefault(e => e.Id.Equals(id));
+//        }
+
+//        public IEnumerable<TEf> Filter()
+//        {
+//            return _context.Set<TEf>();
+//        }
+
+//        public IEnumerable<TEf> Filter(Func<TEf, bool> predicate)
+//        {
+//            return _context.Set<TEf>().Where(predicate);
+//        }
+
+//        public void SaveChanges() => _context.SaveChanges();
+
+//    }
+
+//}

@@ -1,4 +1,4 @@
-﻿using Common.BTO;
+﻿using Common.MTO;
 using Common.TypeExtentions;
 using DAL.Entities;
 using DAL.ExternalData;
@@ -11,7 +11,7 @@ namespace BLL.UserCases
 {
     public partial class Visitor
     {
-        public MovieDetailBTO SearchDetailsOfMovie(string ImdbId)
+        public MovieDetail SearchDetailsOfMovie(string ImdbId)
         {
             var a = new IMDBProxy();
 

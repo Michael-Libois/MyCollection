@@ -1,6 +1,6 @@
-﻿namespace Common.BTO
+﻿namespace Common.MTO
 {
-    public class MovieSummaryBTO
+    public class MovieSummary
     {
         public int Id { get; set; }
         public string UserID { get; set; }

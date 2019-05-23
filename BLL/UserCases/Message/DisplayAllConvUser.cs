@@ -1,6 +1,6 @@
-﻿using Common.BTO;
+﻿using Common.MTO;
 using DAL.Entities.Messages;
-using DAL.TypeExtentions;
+using DAL.Converters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,19 +8,19 @@ using System.Security.Claims;
 using System.Text;
 
 
-namespace BLL.UserCases.Message
+namespace BLL.UserCases
 {
     public partial class MessageUC
     {
 
-        public List<ConversationBTO> DisplayAllConvUser(string userId)
+        public List<Conversation> DisplayAllConvUser(string userId)
         {
 
-            Func<ConversationEF, bool> funcPred = p => (p.UserId1 == userId) || (p.UserId2 == userId);
+            Func<Conversation, bool> funcPred = p => (p.UserId1 == userId) || (p.UserId2 == userId);
 
             
 
-            var list = iConversationRepository.Filter(funcPred).Select(x => x.ToBTO()).ToList();
+            var list = unitOfWork.iConversationRepository.Filter(funcPred).ToList();
             list.ForEach(x => x.UserB =  userId==x.UserId1? formatName(x.UserId2) : formatName(x.UserId1));
 
 

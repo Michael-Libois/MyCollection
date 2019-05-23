@@ -1,0 +1,37 @@
+﻿//using Common.MTO;
+////using Common.DTO.DataContext;
+//using System;
+//using System.Collections.Generic;
+//using System.Text;
+
+//namespace Common.TypeExtentions
+//{
+//    public static class AdressExtentions
+//    {
+
+//        public static Adress ToBTO(this AdressDTO adressDTO)
+//            => new Adress
+//            {
+//                Id = adressDTO.Id,
+//                UserID = adressDTO.UserID,
+//                Street = adressDTO.Street,
+//                Number = adressDTO.Number,
+//                PostalCode = adressDTO.PostalCode,
+//                City = adressDTO.City
+                
+//            };
+
+//        public static AdressDTO ToDTO(this Adress Adress)
+//            => new AdressDTO
+//            {
+//                Id = Adress.Id,
+//                UserID = Adress.UserID,
+//                Street = Adress.Street,
+//                Number = Adress.Number,
+//                PostalCode = Adress.PostalCode,
+//                City = Adress.City
+
+//            };
+
+//    }
+//}

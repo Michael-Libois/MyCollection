@@ -1,6 +1,6 @@
-﻿using Common.BTO;
+﻿using Common.MTO;
 using DAL.Entities;
-using DAL.TypeExtentions;
+using DAL.Converters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +10,10 @@ namespace BLL.UserCases
 {
     public partial class User
     {
-        public IEnumerable<MovieSummaryBTO> FilterMyMovies(string filter, string searchTerm)
+        public IEnumerable<MovieSummary> FilterMyMovies(string filter, string searchTerm)
         {
             Func<MovieEF, bool> funcPred = p => p.UserID == userId;
-            Func<MovieSummaryBTO, bool> funcFilter;
+            Func<MovieSummary, bool> funcFilter;
 
             var result1 = iMovieRepository.Filter(funcPred).Select(x => x.ToSummaryBTO());
 

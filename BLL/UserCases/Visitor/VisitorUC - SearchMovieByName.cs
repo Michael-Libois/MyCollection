@@ -1,4 +1,4 @@
-﻿using Common.BTO;
+﻿using Common.MTO;
 using Common.DTO.IMDBProxy;
 using Common.TypeExtentions;
 using DAL.Entities;
@@ -13,7 +13,7 @@ namespace BLL.UserCases
 {
     public partial class Visitor
     {
-        public IEnumerable<MovieSummaryBTO> SearchMoviesByName(string name)
+        public IEnumerable<MovieSummary> SearchMoviesByName(string name)
         {
             var a = new IMDBProxy();
 
@@ -22,7 +22,7 @@ namespace BLL.UserCases
             if (result.Count()==0)
                 result = (Task.Run(() => a.GetMoviesT(name)).Result);
 
-            return result.Select(x => x.ToBTO());
+            return result.Select(x => x.ToMTO());
         }
     }
 }

@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace Common.BTO
+namespace Common.MTO
 {
-    public class MessageBTO
+    public class Message
     {
         public int Id { get; set; }
 
-        
+
         public string UserId { get; set; } //Sender
         //public ApplicationUserEF User { get; set; }
         public string UserName { get; set; }

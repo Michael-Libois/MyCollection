@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Common.BTO
+namespace Common.MTO
 {
-    public class MovieDetailBTO
+    public class MovieDetail
     {
         public int Id { get; set; }
         public string UserID { get; set; }

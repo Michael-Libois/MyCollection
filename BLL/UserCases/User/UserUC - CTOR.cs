@@ -1,5 +1,6 @@
 ﻿using Common.DataContracts;
 using DAL.Entities;
+using DAL.UnitOfWork;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,13 +10,9 @@ namespace BLL.UserCases
     public partial class User
     {
         private readonly string userId;
-        private readonly IRepositoryGeneric<MovieEF, int> iMovieRepository;
-        private readonly IRepositoryGeneric<AdressEF, int> iAdressRepository;
-        private readonly IRepositoryGeneric<ApplicationUserEF, string> iUserRepository;
+        private readonly IUnitOfWork unityOfWork;
 
-        public User(string UserId, IRepositoryGeneric<MovieEF, int> MovieRepository,
-            IRepositoryGeneric<AdressEF, int> AdressRepository,
-            IRepositoryGeneric<ApplicationUserEF, string> UserRepository)
+        public User(string UserId, IUnitOfWork unityOfWork)
         {
             if (string.IsNullOrWhiteSpace(UserId) || string.IsNullOrEmpty(UserId))
             {
@@ -23,9 +20,7 @@ namespace BLL.UserCases
             }
 
             userId = UserId;
-            iMovieRepository = MovieRepository;
-            iAdressRepository = AdressRepository;
-            iUserRepository = UserRepository;
+            this.unityOfWork = unityOfWork;
         }
 
     }

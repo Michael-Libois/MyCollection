@@ -1,4 +1,4 @@
-﻿using Common.BTO;
+﻿using Common.MTO;
 using Common.DTO.IMDBProxy;
 using System;
 using System.Collections.Generic;
@@ -8,10 +8,11 @@ namespace Common.TypeExtentions
 {
     public static class MovieDetailExtentions
     {
-        public static MovieDetailBTO ToBTO(this IMDBMovieDetail MovieDetail)
-            => new MovieDetailBTO
+        public static MovieDetail ToMTO(this IMDBMovieDetail MovieDetail)
+        {
+            return new MovieDetail
             {
-                Id= MovieDetail.Id,
+                Id = MovieDetail.Id,
                 Director = MovieDetail.Director,
                 Genre = MovieDetail.Genre,
                 imdbID = MovieDetail.imdbID,
@@ -21,5 +22,6 @@ namespace Common.TypeExtentions
                 Actors = MovieDetail.Actors,
                 Country = MovieDetail.Country
             };
+        }
     }
 }

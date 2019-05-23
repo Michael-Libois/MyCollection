@@ -8,18 +8,18 @@ using System.Threading.Tasks;
 
 namespace Common.DataContracts
 {
-    public interface IRepositoryGeneric<T,U> where T : IGenericEntities<U>
+    public interface IRepositoryGeneric<TDto, Tef,TIdType> where Tef : IGenericEntities<TIdType>
     {
 
-        void Create(T entity);
-        void Delete(T entity);
-        void Delete(U id);
-        void Edit(T entity);
+        void Create(TDto entity);
+        void Delete(TDto entity);
+        void Delete(TIdType id);
+        void Edit(TDto entity);
 
         //read side (could be in separate Readonly Generic Repository)
-        T GetById(U id);
-        IEnumerable<T> Filter();
-        IEnumerable<T> Filter(Func<T, bool> predicate);
+        TDto GetById(TIdType id);
+        IEnumerable<TDto> Filter();
+        IEnumerable<TDto> Filter(Func<TDto, bool> predicate);
 
         //separate method SaveChanges can be helpful when using this pattern with UnitOfWork
         void SaveChanges();

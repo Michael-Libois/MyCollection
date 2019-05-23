@@ -1,5 +1,5 @@
-﻿using Common.BTO;
-using DAL.TypeExtentions;
+﻿using Common.MTO;
+using DAL.Converters;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,7 +10,7 @@ namespace BLL.UserCases
     {
 
 
-        public void EditMovie (MovieDetailBTO movie)
+        public void EditMovie (MovieDetail movie)
         {
 
             iMovieRepository.Edit(movie.DetBToToDEF());

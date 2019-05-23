@@ -4,7 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using BLL.UserCases.Message;
-using Common.BTO;
+using Common.MTO;
 using Common.DataContracts;
 using DAL.Entities;
 using DAL.Entities.Messages;
@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MyCollection.ViewModels;
 using Newtonsoft.Json;
+using DAL.UnitOfWork;
 
 namespace MyCollection.Controllers
 {
@@ -19,18 +20,13 @@ namespace MyCollection.Controllers
     {
 
         
-        private readonly IRepositoryGeneric<ConversationEF, int> iConversationRepository = null;
-        private readonly IRepositoryGeneric<MessageEF, int> iMessageRepository = null;
-        private readonly IRepositoryGeneric<ApplicationUserEF, string> iUserRepository = null;
 
-        public MessageController(IRepositoryGeneric<ApplicationUserEF, string> UserRepository,
-            IRepositoryGeneric<ConversationEF, int> ConversationRepository, IRepositoryGeneric<MessageEF, int> MessageRepository)
+        private readonly IUnitOfWork unitOfWork;
+
+        public MessageController(IUnitOfWork UnitOfWork)
         {
-            
-            iConversationRepository = ConversationRepository;
-            iMessageRepository = MessageRepository;
-            iUserRepository = UserRepository;
 
+            unitOfWork = UnitOfWork;
         }
 
         public IActionResult Index()
@@ -47,21 +43,21 @@ namespace MyCollection.Controllers
         }
 
         [HttpPost]//receiverId
-        public JsonResult AddMessageByReceiver(MessageBTO message, string receiverID)
+        public JsonResult AddMessageByReceiver(Message message, string receiverID)
         {
 
             var currentUser = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var messageUC = new MessageUC(currentUser, iUserRepository, iConversationRepository, iMessageRepository);
+            var messageUC = new MessageUC(currentUser, unitOfWork);
             messageUC.AddNewMessage(message, currentUser, receiverID);
 
             return Json(true);
         }
         [HttpPost]
-        public JsonResult AddMessage(MessageBTO message)
+        public JsonResult AddMessage(Message message)
         {
             var data = message.ConversationId;
             var currentUser = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var messageUC = new MessageUC(currentUser, iUserRepository, iConversationRepository, iMessageRepository);
+            var messageUC = new MessageUC(currentUser, unitOfWork);
             //messageUC.AddNewMessage(message, listUsers);
             messageUC.AddNewMessage(message, message.ConversationId);
 
@@ -76,7 +72,7 @@ namespace MyCollection.Controllers
 
             var currentUser = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             //var listUsers = new List<string> { receiverId, currentUser };
-            var messageUC = new MessageUC(currentUser, iUserRepository, iConversationRepository, iMessageRepository);
+            var messageUC = new MessageUC(currentUser, unitOfWork);
             //messageUC.AddNewMessage(message, listUsers);
             var model = messageUC.DisplayMessagesConv(convId);
 
@@ -89,14 +85,14 @@ namespace MyCollection.Controllers
         {
             var currentUser = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             //var listUsers = new List<string> { receiverId, currentUser };
-            var messageUC = new MessageUC(currentUser, iUserRepository, iConversationRepository, iMessageRepository);
+            var messageUC = new MessageUC(currentUser, unitOfWork);
             //messageUC.AddNewMessage(message, listUsers);
             var model = messageUC.DisplayAllConvUser(currentUser);
 
             var vm = new MessConvViewModel
             {
                 conversation = messageUC.DisplayAllConvUser(currentUser),
-                message = new MessageBTO()
+                message = new Message()
             };
 
             return View(vm);
@@ -118,7 +114,7 @@ namespace MyCollection.Controllers
 
             var currentUser = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             //var listUsers = new List<string> { receiverId, currentUser };
-            var messageUC = new MessageUC(currentUser, iUserRepository, iConversationRepository, iMessageRepository);
+            var messageUC = new MessageUC(currentUser, unitOfWork);
             //messageUC.AddNewMessage(message, listUsers);
             var model = messageUC.DisplayMessagesConv(convId);
 

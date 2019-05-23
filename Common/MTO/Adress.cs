@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Common.BTO
+namespace Common.MTO
 {
-    public class AdressBTO
+    public class Adress
     {
         public int Id { get; set; }
         public string UserID { get; set; }

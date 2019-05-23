@@ -18,6 +18,8 @@ using DAL.Context;
 using DAL.Repo;
 using Common.DataContracts;
 using DAL.Entities.Messages;
+using Common.MTO;
+using DAL.UnitOfWork;
 
 namespace MyCollection
 {
@@ -57,11 +59,14 @@ namespace MyCollection
             })
                 .AddEntityFrameworkStores<DatabaseContext>();
 
-            services.AddTransient<IRepositoryGeneric<MovieEF,int>, RepositoryGeneric<MovieEF,int>>();
-            services.AddTransient<IRepositoryGeneric<AdressEF,int>, RepositoryGeneric<AdressEF,int>>();
-            services.AddTransient<IRepositoryGeneric<ApplicationUserEF,string>, RepositoryGeneric<ApplicationUserEF,string>>();
-            services.AddTransient<IRepositoryGeneric<MessageEF, int>, RepositoryGeneric<MessageEF, int>>();
-            services.AddTransient<IRepositoryGeneric<ConversationEF, int>, RepositoryGeneric<ConversationEF, int>>();
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
+            //services.AddTransient<IRepositoryGeneric<MovieDetail, MovieEF,int>, RepositoryGeneric<MovieDetail, MovieEF,int>>();
+            //services.AddTransient<IRepositoryGeneric<MovieSummary, MovieEF, int>, RepositoryGeneric<MovieSummary, MovieEF, int>>();
+            //services.AddTransient<IRepositoryGeneric<Adress, AdressEF,int>, RepositoryGeneric<Adress, AdressEF,int>>();
+            //services.AddTransient<IRepositoryGeneric<ApplicationUserEF,string>, RepositoryGeneric<ApplicationUserEF,string>>();
+            //services.AddTransient<IRepositoryGeneric<Message, MessageEF, int>, RepositoryGeneric<Message, MessageEF, int>>();
+            //services.AddTransient<IRepositoryGeneric<Conversation, ConversationEF, int>, RepositoryGeneric<Conversation, ConversationEF, int>>();
+
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }

@@ -1,45 +1,43 @@
-﻿using Common.BTO;
+﻿using Common.MTO;
 using DAL.Entities.Messages;
-using DAL.TypeExtentions;
+using DAL.Converters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace BLL.UserCases.Message
+namespace BLL.UserCases
 {
     public partial class MessageUC
     {
 
 
-        public ConversationEF RetrieveConv(string id1, string id2)
+        public Conversation RetrieveConv(string id1, string id2)
         {
-            Func<ConversationEF, bool> funcPred = p => (p.UserId1 == id1 && p.UserId2 == id2) || (p.UserId1 == id2 && p.UserId2 == id1);
+            Func<Conversation, bool> funcPred = p => (p.UserId1 == id1 && p.UserId2 == id2) || (p.UserId1 == id2 && p.UserId2 == id1);
 
-            return iConversationRepository.Filter(funcPred).FirstOrDefault();
+            return unitOfWork.iConversationRepository.Filter(funcPred).FirstOrDefault();
 
 
 
         }
 
-        public List<MessageBTO> DisplayMessagesConv(int convid)
+
+        public List<Message> DisplayMessagesConv(int convid)
         {
-            //List<MessageEF> list = new List<MessageEF>();
-            //var conv = RetrieveConv(id1, id2);
+            Func<Message, bool> funcPred = p => (p.ConversationId == convid);
 
+            var list = unitOfWork.iMessageRepository.Filter(funcPred).ToList();
 
-            Func<MessageEF, bool> funcPred = p => (p.ConversationId == convid);
-
-            var list = iMessageRepository.Filter(funcPred).Select(x => x.ToBTO()).ToList();
             list.ForEach(x => x.UserName = formatName(x.UserId));
+
             return list;
-            //return iMessageRepository.Filter(funcPred).ToList().ToBTO();
 
         }
 
         private string formatName(string id)
         {
-            var u = iUserRepository.GetById(id);
+            var u = unitOfWork.iUserRepository.GetById(id);
             return u.FirstName + " " + u.LastName + $"{u.UserName}";
         }
 

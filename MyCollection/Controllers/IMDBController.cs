@@ -6,7 +6,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Common.DataContracts;
-using Common.BTO;
+using Common.MTO;
 using DAL.Entities;
 using DAL.Repo;
 using Microsoft.AspNetCore.Http;
@@ -17,6 +17,7 @@ using MyCollection.Data;
 using Newtonsoft.Json;
 using BLL.UserCases;
 using Microsoft.AspNetCore.Authorization;
+using DAL.UnitOfWork;
 
 namespace MyCollection.Controllers
 {
@@ -36,12 +37,11 @@ namespace MyCollection.Controllers
 
         //}
 
-        private IRepositoryGeneric<MovieEF, int> repository = null;
+        private readonly IUnitOfWork unitOfWork;
 
-        public IMDBController(IRepositoryGeneric<MovieEF, int> Repository)
+        public IMDBController(IUnitOfWork UnitOfWork)
         {
-
-            this.repository = Repository;
+            unitOfWork = UnitOfWork;
         }
 
 
@@ -82,14 +82,14 @@ namespace MyCollection.Controllers
             return View(model);
         }
         [Authorize]
-        public ActionResult AddToCollection(MovieDetailBTO imdbmovie)
+        public ActionResult AddToCollection(MovieDetail imdbmovie)
         {
 
             //try
             //{
             var currentUser = User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-            var userUC = new User(currentUser, repository, null, null);
+            var userUC = new User(currentUser, unitOfWork);
 
             userUC.AddToUserCollection(imdbmovie);
 

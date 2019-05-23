@@ -1,4 +1,4 @@
-﻿@*@model IEnumerable<Common.BTO.MovieSummaryBTO>*@
+﻿@*@model IEnumerable<Common.MTO.MovieSummary>*@
 @model MyCollection.ViewModels.PostalMessageViewModel
 
 @{

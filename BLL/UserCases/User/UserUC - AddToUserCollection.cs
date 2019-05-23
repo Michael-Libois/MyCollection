@@ -1,4 +1,4 @@
-﻿using Common.BTO;
+﻿using Common.MTO;
 
 using DAL.Entities;
 using DAL.ExternalData;
@@ -11,24 +11,26 @@ namespace BLL.UserCases
 {
     public partial class User : Visitor
     {
-        public void AddToUserCollection(MovieDetailBTO imdbmovie)
+        public void AddToUserCollection(MovieDetail imdbmovie)
         {
             try
             {
-                MovieEF movie = new MovieEF();
-                movie.Director = imdbmovie.Director;
-                movie.Genre = imdbmovie.Genre;
-                movie.imdbID = imdbmovie.imdbID;
-                movie.Poster = imdbmovie.Poster;
-                movie.Title = imdbmovie.Title;
-                movie.Year = imdbmovie.Year;
-                movie.UserID = userId;
-                movie.Actors = imdbmovie.Actors;
-                movie.Country = imdbmovie.Country;
+                var movie = new Movie
+                {
+                    Director = imdbmovie.Director,
+                    Genre = imdbmovie.Genre,
+                    imdbID = imdbmovie.imdbID,
+                    Poster = imdbmovie.Poster,
+                    Title = imdbmovie.Title,
+                    Year = imdbmovie.Year,
+                    UserID = userId,
+                    Actors = imdbmovie.Actors,
+                    Country = imdbmovie.Country
+                };
 
                 // TODO: Add insert logic here
-                iMovieRepository.Create(movie);
-                iMovieRepository.SaveChanges();
+                unityOfWork.iMovieDetailRepository.Create(movie);
+                unityOfWork.iMovieDetailRepository.SaveChanges();
             }
             catch (Exception)
             {

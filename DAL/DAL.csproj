@@ -9,8 +9,7 @@
     <None Remove="Factory\IDbFactory.cs_" />
     <None Remove="Repo\IMovieRepository.cs_" />
     <None Remove="Repo\MovieRepository.cs_" />
-    <None Remove="UnitOfWork\IUnitOfWork.cs_" />
-    <None Remove="UnitOfWork\UnitOfWork.cs_" />
+    <None Remove="Repo\RepositoryGeneric.cs_" />
   </ItemGroup>
 
   <ItemGroup>
@@ -18,8 +17,7 @@
     <Compile Include="Factory\IDbFactory.cs_" />
     <Compile Include="Repo\IMovieRepository.cs_" />
     <Compile Include="Repo\MovieRepository.cs_" />
-    <Compile Include="UnitOfWork\IUnitOfWork.cs_" />
-    <Compile Include="UnitOfWork\UnitOfWork.cs_" />
+    <Compile Include="Repo\RepositoryGeneric.cs_" />
   </ItemGroup>
 
   <ItemGroup>

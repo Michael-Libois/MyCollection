@@ -1,4 +1,4 @@
-﻿using Common.BTO;
+﻿using Common.MTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +9,8 @@ namespace MyCollection.ViewModels
     public class MessConvViewModel
     {
 
-        public MessageBTO message { get; set; }
-        public List<ConversationBTO> conversation { get; set; }
+        public Message message { get; set; }
+        public List<Conversation> conversation { get; set; }
 
     }
 }

@@ -1,4 +1,4 @@
-﻿using Common.BTO;
+﻿using Common.MTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ namespace MyCollection.ViewModels
 {
     public class PostalMessageViewModel
     {
-        public List<MovieSummaryBTO> ListMoviePostal { get; set; }
-        public MessageBTO message { get; set; }
+        public List<MovieSummary> ListMoviePostal { get; set; }
+        public Message message { get; set; }
     }
 }

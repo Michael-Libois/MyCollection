@@ -1,4 +1,4 @@
-﻿using Common.BTO;
+﻿using Common.MTO;
 
 using DAL.Entities;
 using DAL.ExternalData;
@@ -14,8 +14,8 @@ namespace BLL.UserCases
         public void DeleteFromUserCollection(int id)
         {
 
-            iMovieRepository.Delete(id);
-            iMovieRepository.SaveChanges();
+            unityOfWork.iMovieDetailRepository.Delete(id);
+            unityOfWork.SaveChanges();
 
 
 

@@ -5,9 +5,9 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using BLL.UserCases;
 using Common.DataContracts;
-using Common.DTO.DataContext;
 using DAL.Entities;
 using DAL.Repo;
+using DAL.UnitOfWork;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -20,17 +20,17 @@ namespace MyCollection.Controllers
     //[Authorize]
     public class AccountController : Controller
     {
+        private readonly IUnitOfWork iUnitOfWork;
         private readonly UserManager<ApplicationUserEF> _userManager;
         private readonly SignInManager<ApplicationUserEF> _signInManager;
-        private IRepositoryGeneric<AdressEF, int> repositoryAdress = null;
 
-        public AccountController(UserManager<ApplicationUserEF> userManager,
-            SignInManager<ApplicationUserEF> signInManager, IRepositoryGeneric<AdressEF, int> RepositoryAdress)
+        public AccountController(IUnitOfWork unitOfWork, UserManager<ApplicationUserEF> userManager,
+            SignInManager<ApplicationUserEF> signInManager)//, IRepositoryGeneric<AdressEF, int> RepositoryAdress)
         {
             _userManager = userManager;
             _signInManager = signInManager;
 
-            repositoryAdress = RepositoryAdress;
+            this.iUnitOfWork = unitOfWork;
         }
 
         [AllowAnonymous]
@@ -81,14 +81,14 @@ namespace MyCollection.Controllers
             {
                 var user = new ApplicationUserEF() { UserName = loginViewModel.UserName, Email = loginViewModel.Email, AcceptShared = loginViewModel.AcceptShared };
                 var result = await _userManager.CreateAsync(user, loginViewModel.Password);
-                
+
                 if (result.Succeeded)
                 {
-                //await _signInManager.PasswordSignInAsync(user, loginViewModel.Password, false, false);
+                    //await _signInManager.PasswordSignInAsync(user, loginViewModel.Password, false, false);
                     //option2: var userid=  recherUserNonLoggedById();
                     //var userid = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-                    var UserRole = new User(user.Id, null, repositoryAdress, null);
-                    UserRole.AddNewUserAdress(loginViewModel.ToAdressBTO());
+                    var UserRole = new User(user.Id, iUnitOfWork);
+                    UserRole.AddNewUserAdress(loginViewModel.ToAdress());
 
                     return RedirectToAction("Index", "Home");
                 }
