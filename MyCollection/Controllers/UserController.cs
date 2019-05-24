@@ -54,7 +54,7 @@ namespace MyCollection.Controllers
             var vm = new PostalMessageViewModel
             {
                 ListMoviePostal = users.ToList(),
-                message = new Message()
+                Message = new Message()
             };
 
 
@@ -94,7 +94,7 @@ namespace MyCollection.Controllers
             var vm = new PostalMessageViewModel
             {
                 ListMoviePostal = listfilter.ToList(),
-                message = new Message()
+                Message = new Message()
             };
 
 

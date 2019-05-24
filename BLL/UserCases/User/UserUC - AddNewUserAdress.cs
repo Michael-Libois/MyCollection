@@ -25,8 +25,8 @@ namespace BLL.UserCases
                 adress.City = Adress.City;
 
                 // TODO: Add insert logic here
-                unitOfWork.iAdressRepository.Create(adress);
-                unitOfWork.iAdressRepository.SaveChanges();
+                unitOfWork.AdressRepository.Create(adress);
+                unitOfWork.SaveChanges();
             }
             catch (Exception)
             {

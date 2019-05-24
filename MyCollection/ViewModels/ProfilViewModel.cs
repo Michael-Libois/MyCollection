@@ -1,4 +1,5 @@
 ﻿using Common.MTO;
+using DAL.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,9 +7,10 @@ using System.Threading.Tasks;
 
 namespace MyCollection.ViewModels
 {
-    public class PostalMessageViewModel
+    public class ProfilViewModel
     {
-        public List<MovieSummary> ListMoviePostal { get; set; }
-        public Message Message { get; set; }
+        public ApplicationUserEF User { get; set; }
+        public Adress AdressUser { get; set; }
+
     }
 }

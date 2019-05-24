@@ -5,16 +5,15 @@ using DAL.Entities.Messages;
 
 namespace DAL.UnitOfWork
 {
-    public interface IUnitOfWork
+    public interface IUnitOfWork // : IDispose
     {
-        IRepositoryGeneric<Conversation, ConversationEF, int> iConversationRepository { get; }
-        IRepositoryGeneric<Message, MessageEF, int> iMessageRepository { get; }
-        IRepositoryGeneric<Adress, AdressEF, int> iAdressRepository { get; }
-        IRepositoryGeneric<MovieDetail, MovieEF, int> iMovieDetailRepository { get; }
-        IRepositoryGeneric<MovieSummary, MovieEF, int> iMovieSummaryRepository { get; }
-        IRepositoryGeneric<ApplicationUserEF, ApplicationUserEF, string> iUserRepository { get; }
+        IRepositoryGeneric<Conversation, ConversationEF, int> ConversationRepository { get; }
+        IRepositoryGeneric<Message, MessageEF, int> MessageRepository { get; }
+        IRepositoryGeneric<Adress, AdressEF, int> AdressRepository { get; }
+        IRepositoryGeneric<MovieDetail, MovieEF, int> MovieDetailRepository { get; }
+        IRepositoryGeneric<MovieSummary, MovieEF, int> MovieSummaryRepository { get; }
+        IRepositoryGeneric<ApplicationUserEF, ApplicationUserEF, string> UserRepository { get; }
 
-        void Dispose();
         void SaveChanges();
     }
 }

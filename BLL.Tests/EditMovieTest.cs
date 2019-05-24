@@ -35,8 +35,8 @@
 
 //            var isEditRepoCalled = false;
 //            var efReceivedByRepository = new MovieEF();
-//            var mock = new Mock<IRepositoryGeneric<MovieEF, int>>();
-//            mock.Setup(foo => foo.Edit(It.IsAny<MovieEF>()))
+//            var mock = new Mock<IRepositoryGeneric<MovieDetail, MovieEF, int>>();
+//            mock.Setup(foo => foo.Edit(It.IsAny<MovieDetail>()))
 //                .Callback(
 //                (MovieEF movieEF) =>
 //                {
@@ -44,6 +44,13 @@
 //                    efReceivedByRepository = movieEF;
 //                }
 //                );
+
+
+
+
+
+
+
 
 //            var isSaveChangesCalled = false;
 //            mock.Setup(foo => foo.SaveChanges())
@@ -53,6 +60,10 @@
 //                    isSaveChangesCalled = true;
 //                }
 //                );
+
+
+
+
 
 //            var UserUC = new User("1", mock.Object, null, null);
 

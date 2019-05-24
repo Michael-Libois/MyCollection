@@ -90,7 +90,7 @@ namespace MyCollection.Controllers
         // GET: Movie/Edit/5
         public ActionResult Edit(int id)
         {
-            MovieDetail model = unitOfWork.iMovieDetailRepository.GetById(id);
+            MovieDetail model = unitOfWork.MovieDetailRepository.GetById(id);
 
             //TODO EF to Common.MTO.MovieDetail
             return View(model);

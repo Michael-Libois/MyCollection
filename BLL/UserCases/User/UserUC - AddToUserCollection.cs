@@ -29,8 +29,8 @@ namespace BLL.UserCases
                 };
 
                 // TODO: Add insert logic here
-                unitOfWork.iMovieDetailRepository.Create(movie);
-                unitOfWork.iMovieDetailRepository.SaveChanges();
+                unitOfWork.MovieDetailRepository.Create(movie);
+                unitOfWork.SaveChanges();
             }
             catch (Exception)
             {

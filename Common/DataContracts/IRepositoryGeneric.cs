@@ -22,7 +22,7 @@ namespace Common.DataContracts
         IEnumerable<TDto> Filter(Func<TDto, bool> predicate);
 
         //separate method SaveChanges can be helpful when using this pattern with UnitOfWork
-        void SaveChanges();
+        //void SaveChanges();
 
 
     }

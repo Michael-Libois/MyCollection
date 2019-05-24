@@ -20,6 +20,7 @@ using Common.DataContracts;
 using DAL.Entities.Messages;
 using Common.MTO;
 using DAL.UnitOfWork;
+using DAL.Converters;
 
 namespace MyCollection
 {
@@ -59,13 +60,22 @@ namespace MyCollection
             })
                 .AddEntityFrameworkStores<DatabaseContext>();
 
+            //services.AddScoped(typeof(IRepositoryGeneric<>), typeof(RepositoryGeneric<>));
+            services.AddTransient<IRepositoryGeneric<MovieDetail, MovieEF, int>, RepositoryGeneric<MovieDetail, MovieEF, int>>();
+            services.AddTransient<IRepositoryGeneric<MovieSummary, MovieEF, int>, RepositoryGeneric<MovieSummary, MovieEF, int>>();
+            services.AddTransient<IRepositoryGeneric<Adress, AdressEF, int>, RepositoryGeneric<Adress, AdressEF, int>>();
+            services.AddTransient<IRepositoryGeneric<ApplicationUserEF,ApplicationUserEF, string>, RepositoryGeneric<ApplicationUserEF, ApplicationUserEF, string>>();
+            services.AddTransient<IRepositoryGeneric<Message, MessageEF, int>, RepositoryGeneric<Message, MessageEF, int>>();
+            services.AddTransient<IRepositoryGeneric<Conversation, ConversationEF, int>, RepositoryGeneric<Conversation, ConversationEF, int>>();
+
+            services.AddTransient<TypeConverter<MovieDetail, MovieEF>, MovieDetailConverter>();
+            services.AddTransient<TypeConverter<MovieSummary, MovieEF>, MovieSummaryConverter>();
+            services.AddTransient<TypeConverter<Adress, AdressEF>, AdressConverter>();
+            services.AddTransient<TypeConverter<ApplicationUserEF, ApplicationUserEF>, ApplicationUserConverter>();
+            services.AddTransient<TypeConverter<Message, MessageEF>, MessageConverter>();
+            services.AddTransient<TypeConverter<Conversation, ConversationEF>, ConversationConverter>();
+
             services.AddTransient<IUnitOfWork, UnitOfWork>();
-            //services.AddTransient<IRepositoryGeneric<MovieDetail, MovieEF,int>, RepositoryGeneric<MovieDetail, MovieEF,int>>();
-            //services.AddTransient<IRepositoryGeneric<MovieSummary, MovieEF, int>, RepositoryGeneric<MovieSummary, MovieEF, int>>();
-            //services.AddTransient<IRepositoryGeneric<Adress, AdressEF,int>, RepositoryGeneric<Adress, AdressEF,int>>();
-            //services.AddTransient<IRepositoryGeneric<ApplicationUserEF,string>, RepositoryGeneric<ApplicationUserEF,string>>();
-            //services.AddTransient<IRepositoryGeneric<Message, MessageEF, int>, RepositoryGeneric<Message, MessageEF, int>>();
-            //services.AddTransient<IRepositoryGeneric<Conversation, ConversationEF, int>, RepositoryGeneric<Conversation, ConversationEF, int>>();
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

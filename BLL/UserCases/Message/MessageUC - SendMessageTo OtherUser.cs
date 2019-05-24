@@ -13,7 +13,7 @@ namespace BLL.UserCases
         {
             Func<Conversation, bool> funcPred = p => (p.UserId1 == id1 && p.UserId2 == id2) || (p.UserId1 == id2 && p.UserId2 == id1);
 
-            return unitOfWork.iConversationRepository.Filter(funcPred).FirstOrDefault();
+            return unitOfWork.ConversationRepository.Filter(funcPred).FirstOrDefault();
 
 
 
@@ -23,7 +23,7 @@ namespace BLL.UserCases
         {
             Func<Conversation, bool> funcPred = p => p.Id == ConversationID;
 
-            var conv = unitOfWork.iConversationRepository.Filter(funcPred).FirstOrDefault();
+            var conv = unitOfWork.ConversationRepository.Filter(funcPred).FirstOrDefault();
 
             return new List<string> { conv.UserId1, conv.UserId2 };
         }
@@ -32,8 +32,8 @@ namespace BLL.UserCases
         {
             //ConversationEF conversation = iConversationRepository.Filter(x => x.Id == ConversationID).FirstOrDefault();
             Conversation conversation = new Conversation();
-            unitOfWork.iConversationRepository.Create(conversation);
-            unitOfWork.iConversationRepository.SaveChanges();
+            unitOfWork.ConversationRepository.Create(conversation);
+            unitOfWork.SaveChanges();
             //foreach (var item in Destinataires)
             //{
             //    var cuser = new ConvUserEF
@@ -49,7 +49,7 @@ namespace BLL.UserCases
 
             //}
 
-            unitOfWork.iConversationRepository.SaveChanges();
+            unitOfWork.SaveChanges();
 
         }
 
@@ -73,10 +73,10 @@ namespace BLL.UserCases
             {
                 conversation = new Conversation()
                 {
-                    UserId1 = unitOfWork.iUserRepository.GetById(User1Id).Id,
-                    UserId2 = unitOfWork.iUserRepository.GetById(User2Id).Id
+                    UserId1 = unitOfWork.UserRepository.GetById(User1Id).Id,
+                    UserId2 = unitOfWork.UserRepository.GetById(User2Id).Id
                 };
-                unitOfWork.iConversationRepository.Create(conversation);
+                unitOfWork.ConversationRepository.Create(conversation);
                 unitOfWork.SaveChanges();
             }
 
@@ -91,8 +91,8 @@ namespace BLL.UserCases
                 IsChecked = false
 
             };
-            unitOfWork.iMessageRepository.Create(message);
-            unitOfWork.iMessageRepository.SaveChanges();
+            unitOfWork.MessageRepository.Create(message);
+            unitOfWork.SaveChanges();
 
             //conversation.Messages.Add(message);
 

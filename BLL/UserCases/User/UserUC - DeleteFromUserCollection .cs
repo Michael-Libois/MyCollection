@@ -14,7 +14,7 @@ namespace BLL.UserCases
         public void DeleteFromUserCollection(int id)
         {
 
-            unitOfWork.iMovieDetailRepository.Delete(id);
+            unitOfWork.MovieDetailRepository.Delete(id);
             unitOfWork.SaveChanges();
 
 

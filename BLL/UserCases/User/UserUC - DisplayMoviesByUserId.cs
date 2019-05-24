@@ -13,7 +13,7 @@ namespace BLL.UserCases
         public IEnumerable<MovieSummary> DisplayMoviesByUserId(string UserID)
         {
             Func<MovieSummary, bool> funcPred = p => p.UserID == UserID;
-            return unitOfWork.iMovieSummaryRepository.Filter(funcPred);
+            return unitOfWork.MovieSummaryRepository.Filter(funcPred);
         }
     }
 }

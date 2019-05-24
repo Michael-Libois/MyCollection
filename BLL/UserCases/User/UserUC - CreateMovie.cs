@@ -12,7 +12,7 @@ namespace BLL.UserCases
         public void CreateMovie(MovieDetail movie)
         {
             movie.UserID = userId;
-            unitOfWork.iMovieDetailRepository.Create(movie);
+            unitOfWork.MovieDetailRepository.Create(movie);
             unitOfWork.SaveChanges();
 
         }

@@ -18,9 +18,9 @@ namespace BLL.UserCases
 
             Func<Conversation, bool> funcPred = p => (p.UserId1 == userId) || (p.UserId2 == userId);
 
-            
 
-            var list = unitOfWork.iConversationRepository.Filter(funcPred).ToList();
+
+            List<Conversation> list = unitOfWork.ConversationRepository.Filter(funcPred).ToList();
             list.ForEach(x => x.UserB =  userId==x.UserId1? formatName(x.UserId2) : formatName(x.UserId1));
 
 

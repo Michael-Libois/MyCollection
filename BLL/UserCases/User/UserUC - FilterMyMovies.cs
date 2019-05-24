@@ -15,7 +15,7 @@ namespace BLL.UserCases
             Func<MovieSummary, bool> funcPred = p => p.UserID == userId;
             Func<MovieSummary, bool> funcFilter;
 
-            var result1 = unitOfWork.iMovieSummaryRepository.Filter(funcPred);
+            var result1 = unitOfWork.MovieSummaryRepository.Filter(funcPred);
 
             switch (filter)
             {

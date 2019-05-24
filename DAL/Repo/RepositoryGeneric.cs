@@ -20,14 +20,14 @@ namespace DAL.Repo
         public IdentityDbContext<ApplicationUserEF> _context;
         private readonly TypeConverter<TMto, TEf> converter;
 
-        public RepositoryGeneric(IdentityDbContext<ApplicationUserEF> Context, TypeConverter<TMto, TEf> Converter)
+        public RepositoryGeneric(DatabaseContext Context, TypeConverter<TMto, TEf> Converter)
         {
             this._context = Context;
             converter = Converter;
         }
 
 
-        public RepositoryGeneric(IdentityDbContext<ApplicationUserEF> contextDB, DatabaseContext context) => _context = context;
+        //public RepositoryGeneric(IdentityDbContext<ApplicationUserEF> contextDB, DatabaseContext context) => _context = context;
 
         public void Create(TMto Dto)
         {
@@ -75,7 +75,7 @@ namespace DAL.Repo
             return _context.Set<TEf>().Select(x => converter.ToMTO(x)).Where(predicate);
         }
 
-        public void SaveChanges() => _context.SaveChanges();
+        //public void SaveChanges() => _context.SaveChanges();
 
     }
 

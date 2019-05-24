@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using BLL.UserCases;
 using Common.DataContracts;
+using Common.MTO;
 using DAL.Entities;
 using DAL.Repo;
 using DAL.UnitOfWork;
@@ -106,6 +107,21 @@ namespace MyCollection.Controllers
         public IActionResult AccessDenied()
         {
             return View();
+        }
+
+        public async Task<IActionResult> Profil()
+        {
+            var user = await _userManager.GetUserAsync(this.User);
+            var currentUser = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var userUC = new User(currentUser, iUnitOfWork);
+
+            var movies = userUC.GetAdress();
+            var model = new ProfilViewModel()
+            {
+                AdressUser = movies,
+                User = user
+            };
+            return View(model);
         }
     }
 }

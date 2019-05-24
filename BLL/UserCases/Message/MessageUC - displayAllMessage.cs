@@ -16,7 +16,7 @@ namespace BLL.UserCases
         {
             Func<Conversation, bool> funcPred = p => (p.UserId1 == id1 && p.UserId2 == id2) || (p.UserId1 == id2 && p.UserId2 == id1);
 
-            return unitOfWork.iConversationRepository.Filter(funcPred).FirstOrDefault();
+            return unitOfWork.ConversationRepository.Filter(funcPred).FirstOrDefault();
 
 
 
@@ -27,7 +27,7 @@ namespace BLL.UserCases
         {
             Func<Message, bool> funcPred = p => (p.ConversationId == convid);
 
-            var list = unitOfWork.iMessageRepository.Filter(funcPred).ToList();
+            var list = unitOfWork.MessageRepository.Filter(funcPred).ToList();
 
             list.ForEach(x => x.UserName = formatName(x.UserId));
 
@@ -37,7 +37,7 @@ namespace BLL.UserCases
 
         private string formatName(string id)
         {
-            var u = unitOfWork.iUserRepository.GetById(id);
+            var u = unitOfWork.UserRepository.GetById(id);
             return u.FirstName + " " + u.LastName + $"{u.UserName}";
         }
 

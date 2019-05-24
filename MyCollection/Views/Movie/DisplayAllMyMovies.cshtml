@@ -17,27 +17,7 @@
         <p>
             Find by
 
-            @*<select id="FilterType" name="FilterType">
-                    @foreach (var item in collection)
-                    {
-                        if (item = @ViewBag.FilterType)
-                        {
-                            <option value="item" selected="selected">item</option>
-                        }
-                        else
-                        {
-                            <option value="item">item</option>
-                        }
-                    }
-
-                    <option id="Title" value="Title">Title</option>
-                    <option value="Year">Year</option>
-
-
-
-                    <option value="Genre">Genre</option>
-                    <option value="Director">Director</option>
-                </select>*@
+           
 
             @Html.DropDownList("FilterType", new List<SelectListItem>
             {

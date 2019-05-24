@@ -20,7 +20,7 @@ namespace BLL.UserCases
             }
 
             userId = UserId;
-            this.unitOfWork = unitOfWork;
+            this.unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
         }
 
     }
