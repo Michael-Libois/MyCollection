@@ -21,6 +21,7 @@ using DAL.Entities.Messages;
 using Common.MTO;
 using DAL.UnitOfWork;
 using DAL.Converters;
+using BLL.UserCases;
 
 namespace MyCollection
 {
@@ -76,6 +77,7 @@ namespace MyCollection
             services.AddTransient<TypeConverter<Conversation, ConversationEF>, ConversationConverter>();
 
             services.AddTransient<IUnitOfWork, UnitOfWork>();
+            
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

@@ -1,81 +1,116 @@
-//using BLL.UserCases;
-//using Common.DataContracts;
-//using DAL.Entities;
-//using Microsoft.VisualStudio.TestTools.UnitTesting;
-//using Moq;
-//using System;
-//using System.Collections.Generic;
-//using System.Linq;
+using BLL.UserCases;
+using Common.DataContracts;
+using Common.MTO;
+using DAL.Entities;
+using DAL.UnitOfWork;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
-//namespace BLL.Tests
-//{
-//    [TestClass]
-//    public class UserUC_FilterMyMovies
-//    {
-//        [TestMethod]
-//        public void FilterMyMovies_ShouldFindGenre_WhenValidArgsIsProvided()
-//        {
-//            //ARRANGE
-//            var ListAReturner = new List<MovieEF> {
-//                new MovieEF { Id = 1, UserID="1", Genre = "Horror" },
-//                new MovieEF { Id = 2, UserID="1", Genre = "Action" }
-//            };
+namespace BLL.Tests
+{
+    [TestClass]
+    public class UserUC_FilterMyMovies
+    {
+        [TestMethod]
+        public void FilterMyMovies_ShouldFindGenre_WhenValidArgsIsProvided()
+        {
+            //ARRANGE
+            var ListAReturner = new List<MovieSummary> {
+                new MovieSummary { Id = 1, UserID="1", Genre = "Horror" },
+                new MovieSummary { Id = 2, UserID="1", Genre = "Action" }
+            };
 
-//            var mock = new Mock<IRepositoryGeneric<MovieEF, int>>();
-//            mock.Setup(foo => foo.Filter(It.IsAny<Func<MovieEF, bool>>()))
-//                .Returns(ListAReturner);
+            var mockMovieSummary = new Mock<IRepositoryGeneric<MovieSummary, MovieEF, int>>();
+            mockMovieSummary.Setup(foo => foo.Filter(It.IsAny<Func<MovieSummary, bool>>()))
+                .Returns(ListAReturner);
 
-//            var UserUC = new User("1", mock.Object, null, null);
+            var isSaveChangesCalled = false;
+            var mockUOW = new Mock<IUnitOfWork>();
+            mockUOW.Setup(foo => foo.SaveChanges())
+                .Callback(
+                () =>
+                {
+                    isSaveChangesCalled = true;
+                }
+                );
+            mockUOW.SetupGet(x => x.MovieSummaryRepository).Returns(mockMovieSummary.Object);
 
-//            //ACT
-//            var ListToAssert = UserUC.FilterMyMovies("Genre", "Horror").ToList();
+            var UserUC = new User("1", mockUOW.Object);
 
-//            //ASSERT
-//            Assert.AreEqual(1, ListToAssert.Count);
-//        }
+            //ACT
+            var ListToAssert = UserUC.FilterMyMovies("Genre", "Horror").ToList();
 
-//        [TestMethod]
-//        public void FilterMyMovies_ShouldReturnNothinh_WhenTitleNotContainSearchTerm()
-//        {
-//            //ARRANGE
-//            var ListAReturner = new List<MovieEF> {
-//                new MovieEF { Id = 1, UserID="1", Title = "Fake Title1", Genre = "Horror" },
-//                new MovieEF { Id = 2, UserID="1", Title = "Fake Title2", Genre = "Action" }
-//            };
+            //ASSERT
+            Assert.IsFalse(isSaveChangesCalled);
+            Assert.AreEqual(1, ListToAssert.Count);
+        }
 
-//            var mock = new Mock<IRepositoryGeneric<MovieEF, int>>();
-//            mock.Setup(foo => foo.Filter(It.IsAny<Func<MovieEF, bool>>()))
-//                .Returns(ListAReturner);
+        [TestMethod]
+        public void FilterMyMovies_ShouldReturnNothinh_WhenTitleNotContainSearchTerm()
+        {
+            //ARRANGE
+            var ListAReturner = new List<MovieSummary> {
+                new MovieSummary { Id = 1, UserID="1", Title = "Fake Title1", Genre = "Horror" },
+                new MovieSummary { Id = 2, UserID="1", Title = "Fake Title2", Genre = "Action" }
+            };
 
-//            var UserUC = new User("1", mock.Object, null, null);
+            var mock = new Mock<IRepositoryGeneric<MovieSummary, MovieEF, int>>();
+            mock.Setup(foo => foo.Filter(It.IsAny<Func<MovieSummary, bool>>()))
+                .Returns(ListAReturner);
 
-//            //ACT
-//            var ListToAssert = UserUC.FilterMyMovies("Genre", "Advanture").ToList();
+            var mockMovieSummary = new Mock<IRepositoryGeneric<MovieSummary, MovieEF, int>>();
+            mockMovieSummary.Setup(foo => foo.Filter(It.IsAny<Func<MovieSummary, bool>>()))
+                .Returns(ListAReturner);
 
-//            //ASSERT
-//            Assert.AreEqual(0, ListToAssert.Count);
-//        }
+            
+            var mockUOW = new Mock<IUnitOfWork>();
 
-//        [TestMethod]
-//        public void FilterMyMovies_ShouldReturnAll_WhenInValidFilterTypeIsProvided()
-//        {
-//            //ARRANGE
-//            var ListAReturner = new List<MovieEF> {
-//                new MovieEF { Id = 1, UserID="1", Genre = "Horror" },
-//                new MovieEF { Id = 2, UserID="1", Genre = "Action" }
-//            };
+            mockUOW.SetupGet(x => x.MovieSummaryRepository).Returns(mockMovieSummary.Object);
 
-//            var mockMovies = new Mock<IRepositoryGeneric<MovieEF, int>>();
-//            mockMovies.Setup(foo => foo.Filter(It.IsAny<Func<MovieEF, bool>>()))
-//                .Returns(ListAReturner);
+            var UserUC = new User("1", mockUOW.Object);
 
-//            var UserUC = new User("1", mockMovies.Object, null, null);
+            //ACT
+            var ListToAssert = UserUC.FilterMyMovies("Genre", "Advanture").ToList();
 
-//            //ACT
-//            var ListToAssert = UserUC.FilterMyMovies("...", "Horror").ToList();
+            //ASSERT
+            Assert.AreEqual(0, ListToAssert.Count);
+        }
 
-//            //ASSERT
-//            Assert.AreEqual(ListAReturner.Count, ListToAssert.Count);
-//        }
-//    }
-//}
+        [TestMethod]
+        public void FilterMyMovies_ShouldReturnAll_WhenInValidFilterTypeIsProvided()
+        {
+            //ARRANGE
+            var ListAReturner = new List<MovieSummary> {
+                new MovieSummary { Id = 1, UserID="1", Genre = "Horror" },
+                new MovieSummary { Id = 2, UserID="1", Genre = "Action" }
+            };
+
+            var mockMovieSummary = new Mock<IRepositoryGeneric<MovieSummary, MovieEF, int>>();
+            mockMovieSummary.Setup(foo => foo.Filter(It.IsAny<Func<MovieSummary, bool>>()))
+                .Returns(ListAReturner);
+
+            var isSaveChangesCalled = false;
+            var mockUOW = new Mock<IUnitOfWork>();
+            mockUOW.Setup(foo => foo.SaveChanges())
+                .Callback(
+                () =>
+                {
+                    isSaveChangesCalled = true;
+                }
+                );
+            mockUOW.SetupGet(x => x.MovieSummaryRepository).Returns(mockMovieSummary.Object);
+
+            var UserUC = new User("1", mockUOW.Object);
+
+            //ACT
+            var ListToAssert = UserUC.FilterMyMovies("...", "Horror").ToList();
+
+            //ASSERT
+            Assert.IsFalse(isSaveChangesCalled);
+            Assert.AreEqual(ListAReturner.Count, ListToAssert.Count);
+        }
+    }
+}

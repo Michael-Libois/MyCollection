@@ -2,6 +2,7 @@
 using Common.MTO;
 using DAL.Entities;
 using DAL.Entities.Messages;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace DAL.UnitOfWork
 {
@@ -13,6 +14,8 @@ namespace DAL.UnitOfWork
         IRepositoryGeneric<MovieDetail, MovieEF, int> MovieDetailRepository { get; }
         IRepositoryGeneric<MovieSummary, MovieEF, int> MovieSummaryRepository { get; }
         IRepositoryGeneric<ApplicationUserEF, ApplicationUserEF, string> UserRepository { get; }
+
+        IdentityDbContext<ApplicationUserEF> contextDB { get; }
 
         void SaveChanges();
     }

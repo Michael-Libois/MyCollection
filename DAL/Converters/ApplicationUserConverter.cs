@@ -12,10 +12,10 @@ namespace DAL.Converters
 {
     public class ApplicationUserConverter : TypeConverter<ApplicationUserEF, ApplicationUserEF>
     {
-        public ApplicationUserEF ToEF(ApplicationUserEF Message)
-            => Message;
+        public ApplicationUserEF ToEF(ApplicationUserEF user)
+            => user;
 
-        public ApplicationUserEF ToMTO(ApplicationUserEF messageEF)
-            => messageEF;
+        public ApplicationUserEF ToMTO(ApplicationUserEF user)
+            => user;
     }
 }

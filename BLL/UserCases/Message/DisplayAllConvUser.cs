@@ -34,7 +34,30 @@ namespace BLL.UserCases
         }
 
 
-        
+        public bool CheckForNewMessage(string userId)
+        {
+
+            Func<Conversation, bool> funcPred = p => (p.UserId1 == userId) || (p.UserId2 == userId);
+
+
+
+            List<Conversation> list = unitOfWork.ConversationRepository.Filter(funcPred).ToList();
+            var messages = new List<Message>();
+            foreach (var conv in list)
+            {
+                messages = DisplayMessagesConv(conv.Id);
+                foreach (var msg in messages)
+                {
+                    if (msg.UserId != userId && msg.IsChecked == false)
+                        return true;
+                }
+
+            }
+            return false;
+
+        }
+
+
 
     }
 }

@@ -1,7 +1,7 @@
 ﻿@model MyCollection.ViewModels.ProfilViewModel
 
 @{
-    Layout = null;
+    Layout = "_Layout";
 }
 
 <!DOCTYPE html>
@@ -13,8 +13,68 @@
 </head>
 <body>
 
-<h4>ProfilViewModel</h4>
+<h4>@Model.User.UserName</h4>
+
 <hr />
-<
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Profil">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <input asp-for="@Model.AdressUser.Id" class="form-control" hidden="hidden" />
+            <input asp-for="@Model.AdressUser.UserID" class="form-control" hidden="hidden" />
+            <input asp-for="@Model.User.Id" class="form-control" hidden="hidden" />
+
+            <div class="form-group">
+                <label asp-for="@Model.User.Email" class="control-label"></label>
+                <input asp-for="@Model.User.Email" class="form-control" />
+                <span asp-validation-for="@Model.User.Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="@Model.AdressUser.Street" class="control-label"></label>
+                <input asp-for="@Model.AdressUser.Street" class="form-control" />
+                <span asp-validation-for="@Model.AdressUser.Street" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="@Model.AdressUser.Number" class="control-label"></label>
+                <input asp-for="@Model.AdressUser.Number" class="form-control" />
+                <span asp-validation-for="@Model.AdressUser.Number" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="@Model.AdressUser.PostalCode" class="control-label"></label>
+                <input asp-for="@Model.AdressUser.PostalCode" class="form-control" />
+                <span asp-validation-for="@Model.AdressUser.PostalCode" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="@Model.AdressUser.City" class="control-label"></label>
+                <input asp-for="@Model.AdressUser.City" class="form-control" />
+                <span asp-validation-for="@Model.AdressUser.City" class="text-danger"></span>
+            </div>
+
+            <div class="checkbox">
+                <label>
+                    @*<input type="checkbox" checked= value="" />*@
+                    @*@Html.CheckBox("AcceptShared", @Model.User.AcceptShared)*@
+                    <input asp-for="@Model.User.AcceptShared" type="checkbox" />
+                           Share Collection
+                </label>
+
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
 </body>
 </html>

@@ -119,6 +119,16 @@ namespace MyCollection.Controllers
             //messageUC.AddNewMessage(message, listUsers);
             var model = messageUC.DisplayMessagesConv(convId);
 
+
+
+            //on marque les messages comme "lu"
+            foreach (var message in model)
+            {
+                message.IsChecked = true;
+            }
+            //On sauvegarde les messages comme lu
+            
+
             //var json = JsonConvert.SerializeObject(model);
 
             //return Json(json, JsonRequestBehavior.AllowGet);

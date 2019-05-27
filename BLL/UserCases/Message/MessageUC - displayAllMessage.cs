@@ -29,6 +29,17 @@ namespace BLL.UserCases
 
             var list = unitOfWork.MessageRepository.Filter(funcPred).ToList();
 
+            foreach (var message in list)
+            {
+                if (message.UserId != userId)
+                {
+                    message.IsChecked = true;
+                    unitOfWork.MessageRepository.Edit(message);
+                    
+                }
+                
+            }
+            unitOfWork.SaveChanges();
             list.ForEach(x => x.UserName = formatName(x.UserId));
 
             return list;

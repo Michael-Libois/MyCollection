@@ -12,6 +12,7 @@ using DAL.UnitOfWork;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MyCollection.Data;
 using MyCollection.ViewModels;
 
@@ -115,13 +116,44 @@ namespace MyCollection.Controllers
             var currentUser = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var userUC = new User(currentUser, iUnitOfWork);
 
-            var movies = userUC.GetAdress();
+            var adress = userUC.GetAdress();
             var model = new ProfilViewModel()
             {
-                AdressUser = movies,
+                AdressUser = adress,
                 User = user
             };
             return View(model);
         }
+        [HttpPost]
+        public  IActionResult Profil(ProfilViewModel profil)
+        {
+
+            var a = profil.AdressUser;
+            var u = profil.User;
+            //a.UserID = u.Id;
+
+
+            //var user = await _userManager.GetUserAsync(this.User);
+            var currentUser = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            //var updated = _userManager.UpdateAsync(u);
+
+            //if (updated.IsCompletedSuccessfully)
+            //{
+            //    iUnitOfWork.contextDB.Entry(u).State = EntityState.Modified;
+            //    iUnitOfWork.contextDB.SaveChangesAsync();
+            //}
+
+            var userUC = new User(currentUser, iUnitOfWork);
+            userUC.EditProfil(a, u);
+
+            return RedirectToAction("Profil");
+        }
+            
+        
+
+
+
+
     }
 }

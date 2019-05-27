@@ -24,12 +24,15 @@
 
 
             <input type="text" name="SearchString" value="@ViewData["SearchString"]" />
-            <input type="submit" value="Search" class="btn btn-default" /> 
+            <input type="submit" value="Search" class="btn btn-default" />
             <a asp-action="GetMoviesByPostalCode">Back to Full List</a>
             @*<a href="@ViewData["URL"]">Back</a>*@
         </p>
     </div>
 </form>
+
+@if (@ViewBag.ac)
+{
 
 
 
@@ -41,86 +44,86 @@
         <div class="row row-centered">
 
             @foreach (var item in Model.ListMoviePostal)
-        {
+            {
 
 
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="card h-100" style="width: 18rem;">
-                    <a href="#"><img class="card-img-top" src="@Url.Content(item.Poster)" alt=""></a>
-                    <div class="card-body">
-                        <h4 class="card-title">
-                            @Html.ActionLink(item.Title, "DetailsPostal", "Movie", new { id = item.Id })
-                        </h4>
-                        <h5>@*@Html.DisplayFor(modelItem => item.Genre)*@</h5>
-                        @*<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>*@
-                    </div>
-                    <div class="card-footer">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalScrollable" onclick="javascript:setUserId('@item.UserID');">
-                            Message To @item.UserName
-                        </button>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card h-100" style="width: 18rem;">
+                        <a href="#"><img class="card-img-top" src="@Url.Content(item.Poster)" alt=""></a>
+                        <div class="card-body">
+                            <h4 class="card-title">
+                                @Html.ActionLink(item.Title, "DetailsPostal", "Movie", new { id = item.Id })
+                            </h4>
+                            <h5>@*@Html.DisplayFor(modelItem => item.Genre)*@</h5>
+                            @*<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>*@
+                        </div>
+                        <div class="card-footer">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalScrollable" onclick="javascript:setUserId('@item.UserID');">
+                                Message To @item.UserName
+                            </button>
 
-                        <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalScrollableTitle">Modal title</h5>
-                                        @*<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>*@
-                                    </div>
+                            <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalScrollableTitle">Modal title</h5>
+                                            @*<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>*@
+                                        </div>
 
-                                    <hr />
-                                    <div class="modal-body">
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <form asp-controller="Message" asp-action="AddMessageByReceiver" id="test">
-                                                    @*item.UserID*@
-                                                    <input id="receiverId" name="receiverId" hidden="hidden" />
-                                                    <div asp-validation-summary="ModelOnly" />
+                                        <hr />
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <form asp-controller="Message" asp-action="AddMessageByReceiver" id="test">
+                                                        @*item.UserID*@
+                                                        <input id="receiverId" name="receiverId" hidden="hidden" />
+                                                        <div asp-validation-summary="ModelOnly" />
 
-                                                    <div class="form-group">
-                                                        <label asp-for="@Model.Message.Content" class="control-label"></label>
-                                                        @*<input asp-for="@Model.message.Content" class="form-control" />*@
-                                                        <textarea asp-for="@Model.Message.Content" class="form-control md-textarea" length="120" rows="5" cols="33"></textarea>
-                                                        <span asp-validation-for="@Model.Message.Content" class="text-danger"></span>
-                                                    </div>
+                                                        <div class="form-group">
+                                                            <label asp-for="@Model.Message.Content" class="control-label"></label>
+                                                            @*<input asp-for="@Model.message.Content" class="form-control" />*@
+                                                            <textarea asp-for="@Model.Message.Content" class="form-control md-textarea" length="120" rows="5" cols="33"></textarea>
+                                                            <span asp-validation-for="@Model.Message.Content" class="text-danger"></span>
+                                                        </div>
 
-                                                    <div class="form-group">
-                                                        @*<input type="submit" value="AddMessage" class="btn btn-primary"  onclick="postMessage()"/>*@
-                                                        <button type="button" class="btn btn-secondary" onclick="postMessage()" data-dismiss="modal">
-                                                            Send
-                                                        </button>
-                                                    </div>
+                                                        <div class="form-group">
+                                                            @*<input type="submit" value="AddMessage" class="btn btn-primary"  onclick="postMessage()"/>*@
+                                                            <button type="button" class="btn btn-secondary" onclick="postMessage()" data-dismiss="modal">
+                                                                Send
+                                                            </button>
+                                                        </div>
 
 
 
-                                                </form>
+                                                    </form>
+                                                </div>
                                             </div>
                                         </div>
+
+
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        @*<button type="button" class="btn btn-primary">Save changes</button>*@
                                     </div>
-
-
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    @*<button type="button" class="btn btn-primary">Save changes</button>*@
                                 </div>
+
                             </div>
 
+
+
                         </div>
-
-
-
                     </div>
                 </div>
-            </div>
 
-        }
+            }
         </div>
     </div>
 </div>
 
 
 
-
+}
 
 
 

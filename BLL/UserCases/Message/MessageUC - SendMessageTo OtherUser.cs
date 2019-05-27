@@ -78,6 +78,9 @@ namespace BLL.UserCases
                 };
                 unitOfWork.ConversationRepository.Create(conversation);
                 unitOfWork.SaveChanges();
+
+                conversation = CheckIfConvExist(User1Id, User2Id);
+
             }
 
 

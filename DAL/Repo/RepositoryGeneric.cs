@@ -52,12 +52,11 @@ namespace DAL.Repo
         {
             if (_context.Set<TEf>().Any(e => e.Id.Equals((converter.ToEF(Dto).Id))))
             {
-                _context.Set<TEf>().Attach(converter.ToEF(Dto));
-                _context.Set<TEf>().Update(converter.ToEF(Dto));
+                //_context.Set<TEf>().Update(converter.ToEF(Dto));
+                _context.Attach(converter.ToEF(Dto)).State = EntityState.Modified;
             }
 
-            //var editedEntity = _context.Set<T>().FirstOrDefault(e => e.Id == entity.Id);
-            //editedEntity = entity;
+            
         }
 
         public TMto GetById(TIdType id)

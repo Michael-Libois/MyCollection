@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using MyCollection.ViewModels;
 using DAL.UnitOfWork;
+using Microsoft.AspNetCore.Identity;
 
 namespace MyCollection.Controllers
 {
@@ -19,10 +20,15 @@ namespace MyCollection.Controllers
 
         private readonly IUnitOfWork unitOfWork;
 
-        public UserController(IUnitOfWork unitOfWork)
+        private readonly UserManager<ApplicationUserEF> _userManager;
+        private readonly SignInManager<ApplicationUserEF> _signInManager;
+
+        public UserController(IUnitOfWork unitOfWork, UserManager<ApplicationUserEF> userManager,
+            SignInManager<ApplicationUserEF> signInManager)
         {
             this.unitOfWork = unitOfWork;
-
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         public IActionResult Index()
@@ -45,9 +51,12 @@ namespace MyCollection.Controllers
 
             ViewData["URL"] = url;
 
-
-
+            
             var currentUser = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            var cur = _userManager.Users.FirstOrDefault(u => u.Id == currentUser);
+            ViewBag.ac = cur.AcceptShared;
+
             var userUC = new User(currentUser, unitOfWork);
             var users = userUC.ShowUsersSamePostalMovies();
 
