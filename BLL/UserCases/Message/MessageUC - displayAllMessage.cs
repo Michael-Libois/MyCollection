@@ -34,9 +34,10 @@ namespace BLL.UserCases
                 if (message.UserId != userId)
                 {
                     message.IsChecked = true;
-                    unitOfWork.MessageRepository.Edit(message);
-                    
+                    EditMessage(message);
+
                 }
+
                 
             }
             unitOfWork.SaveChanges();
@@ -55,16 +56,11 @@ namespace BLL.UserCases
 
 
 
-        //public List<MessageEF> DisplayMessagesConv (string id1, string id2)
-        //{
-        //    //List<MessageEF> list = new List<MessageEF>();
-        //    var conv = RetrieveConv(id1, id2);
-
-        //    Func<MessageEF, bool> funcPred = p => (p.ConversationId == conv.Id);
-
-
-        //    return iMessageRepository.Filter(funcPred).ToList();
-
-        //}
+        public void EditMessage(Message message)
+        {
+            
+            unitOfWork.MessageRepository.Edit(message);
+            unitOfWork.SaveChanges();
+        }
     }
 }

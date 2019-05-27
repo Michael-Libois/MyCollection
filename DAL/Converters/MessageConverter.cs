@@ -16,6 +16,7 @@ namespace DAL.Converters
             => new MessageEF
             {
                 UserId = Message.UserId,
+                Id = Message.Id,
                 Content = Message.Content,
                 Datetime = Message.Datetime,
                 IsChecked = Message.IsChecked,
@@ -27,6 +28,7 @@ namespace DAL.Converters
             => new Message
             {
                 UserId = messageEF.UserId,
+                Id = messageEF.Id,
                 Content = messageEF.Content,
                 Datetime = messageEF.Datetime,
                 IsChecked = messageEF.IsChecked,

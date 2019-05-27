@@ -23,7 +23,7 @@ namespace MyCollection.ViewModels
         public string Number { get; set; }
         public string PostalCode { get; set; }
         public string City { get; set; }
-
+        
         public string ReturnUrl { get; set; }
     }
 }

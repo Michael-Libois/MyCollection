@@ -1,6 +1,18 @@
 ﻿@model MyCollection.ViewModels.MessConvViewModel
+@using MyCollection.Auth
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Identity.EntityFrameworkCore
+@using MyCollection.Data
+@using DAL.UnitOfWork
+@using BLL.UserCases
+
+@inject UserManager<DAL.Entities.ApplicationUserEF> UserManager
+@inject SignInManager<DAL.Entities.ApplicationUserEF> SignInManager
+@inject IUnitOfWork unitOfWork
 
 @{
+    var currentUser = await UserManager.GetUserAsync(this.User);
+    var msgService = new MessageUC(currentUser.Id, unitOfWork);
     ViewData["Title"] = "DisplayAllConvConv";
 }
 
@@ -16,8 +28,8 @@
                     @Html.DisplayNameFor(model => model.Id)
                 </th>*@
             @*<th>
-                @Html.DisplayNameFor(model => model.conversation[0].Subject)
-            </th>*@
+                    @Html.DisplayNameFor(model => model.conversation[0].Subject)
+                </th>*@
             <th>
                 @*@Html.DisplayNameFor(model => model.conversation[0].UserB)*@
                 USER
@@ -34,124 +46,135 @@
     <tbody>
         @foreach (var item in Model.conversation)
         {
-            <tr>
-                @*<td>
-                        @Html.DisplayFor(modelItem => item.Id)
-                    </td>*@
-                @*<td>
-                    @Html.DisplayFor(modelItem => item.Subject)
-                </td>*@
-                <td>
-                    @Html.DisplayFor(modelItem => item.UserB)
-                </td>
-                @*<td>
-                        @Html.DisplayFor(modelItem => item.UserId1)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.UserId2)
-                    </td>*@
-                <td>
-                    @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |*@
-                    @*@Html.ActionLink("Details", "DisplayMessageConv", new { convId = item.Id })*@
+        <tr>
+            @*<td>
+            @Html.DisplayFor(modelItem => item.Id)
+        </td>*@
+            @*<td>
+            @Html.DisplayFor(modelItem => item.Subject)
+        </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.UserB)
+            </td>
+            @if (@msgService.CheckForNewMessageByIDConv(item.Id))
+            {
+                <td class="alert-danger">new message</td>
+            }
+            
 
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalScrollable" onclick="getConversation(@item.Id)">
-                        Open
-                    </button>
-                    <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalScrollableTitle">Modal title</h5>
-                                    @*<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>*@
-                                </div>
-                                <div class="modal-body">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th>
-                                                    "UserName"
-                                                </th>
-                                                <th style="overflow-wrap: break-word">
-                                                    "Content"
-                                                </th>
-                                                <th>
-                                                    "Datetime"
-                                                </th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="ConvContent"></tbody>
 
-                                    </table>
 
-                                </div>
-                                <div class="modal-footer">
 
-                                    <div class="row">
-                                        <div class="col-md-4" @*style="width: 500px;"*@>
-                                            <form asp-action="AddMessage" id="test">
+
+            @*<td>
+            @Html.DisplayFor(modelItem => item.UserId1)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserId2)
+        </td>*@
+            <td>
+                @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |*@
+                @*@Html.ActionLink("Details", "DisplayMessageConv", new { convId = item.Id })*@
+
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalScrollable" onclick="getConversation(@item.Id)">
+                    Open
+                </button>
+                <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalScrollableTitle">Conversation with @item.UserB</h5>
+                                @*<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>*@
+                            </div>
+                            <div class="modal-body">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                "UserName"
+                                            </th>
+                                            <th style="overflow-wrap: break-word">
+                                                "Content"
+                                            </th>
+                                            <th>
+                                                "Datetime"
+                                            </th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="ConvContent"></tbody>
+
+                                </table>
+
+                            </div>
+                            <div class="modal-footer">
+
+                                <div class="row">
+                                    <div class="col-md-4" @*style="width: 500px;"*@>
+                                        <form asp-action="AddMessage" id="test">
+                                            <input asp-for="@Model.message.ConversationId" class="form-control" hidden="hidden" />
+
+                                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                            @*<div class="form-group">
+                                            <label asp-for="Id" class="control-label"></label>
+                                            <input asp-for="Id" class="form-control" />
+                                            <span asp-validation-for="Id" class="text-danger"></span>
+                                        </div>*@
+                                            @*<div class="form-group">
+                                            <label asp-for="UserId" class="control-label"></label>
+                                            <input asp-for="UserId" class="form-control" />
+                                            <span asp-validation-for="UserId" class="text-danger"></span>
+                                        </div>*@
+                                            @*<div class="form-group">
+                                            <label asp-for="ConversationId" class="control-label"></label>
+                                            <input asp-for="ConversationId" class="form-control" />
+                                            <span asp-validation-for="ConversationId" class="text-danger"></span>
+                                        </div>*@
+                                            <div class="form-group" style="width: 600px;">
+                                                <label asp-for="@Model.message.Content" class="control-label">New Message</label>
+                                                <input asp-for="@Model.message.Content" class="form-control" />
                                                 <input asp-for="@Model.message.ConversationId" class="form-control" hidden="hidden" />
-
-                                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                                @*<div class="form-group">
-            <label asp-for="Id" class="control-label"></label>
-            <input asp-for="Id" class="form-control" />
-            <span asp-validation-for="Id" class="text-danger"></span>
-        </div>*@
-                                                @*<div class="form-group">
-            <label asp-for="UserId" class="control-label"></label>
-            <input asp-for="UserId" class="form-control" />
-            <span asp-validation-for="UserId" class="text-danger"></span>
-        </div>*@
-                                                @*<div class="form-group">
-            <label asp-for="ConversationId" class="control-label"></label>
-            <input asp-for="ConversationId" class="form-control" />
-            <span asp-validation-for="ConversationId" class="text-danger"></span>
-        </div>*@
-                                                <div class="form-group"style="width: 600px;"  >
-                                                    <label asp-for="@Model.message.Content" class="control-label">New Message</label>
-                                                    <input asp-for="@Model.message.Content" class="form-control" />
-                                                    <span asp-validation-for="@Model.message.Content" class="text-danger"></span>
-                                                </div>
-                                                @*<div class="form-group">
-            <label asp-for="Datetime" class="control-label"></label>
-            <input asp-for="Datetime" class="form-control" />
-            <span asp-validation-for="Datetime" class="text-danger"></span>
-        </div>*@
-                                                @*<div class="form-group form-check">
-            <label class="form-check-label">
-                <input class="form-check-input" asp-for="IsChecked" /> @Html.DisplayNameFor(model => model.IsChecked)
-            </label>
-        </div>*@
+                                                <span asp-validation-for="@Model.message.Content" class="text-danger"></span>
+                                            </div>
+                                            @*<div class="form-group">
+                                            <label asp-for="Datetime" class="control-label"></label>
+                                            <input asp-for="Datetime" class="form-control" />
+                                            <span asp-validation-for="Datetime" class="text-danger"></span>
+                                        </div>*@
+                                            @*<div class="form-group form-check">
+                                            <label class="form-check-label">
+                                                <input class="form-check-input" asp-for="IsChecked" /> @Html.DisplayNameFor(model => model.IsChecked)
+                                            </label>
+                                        </div>*@
                                             <div class="form-group">
                                                 @*<input type="submit" value="Submit" class="btn btn-primary" />*@
                                                 <button type="button" class="btn btn-secondary" onclick="postMessage()">
                                                     Send
                                                 </button>
                                             </div>
-                                            </form>
-                                        </div>
+                                        </form>
                                     </div>
-
-
-
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    @*<button type="button" class="btn btn-primary">Save changes</button>*@
                                 </div>
+
+
+
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="location.href='@Url.Action("DisplayAllConvConv", "Message")'">Close</button>
+                                @*<button type="button" class="btn btn-primary">Save changes</button>*@
                             </div>
                         </div>
                     </div>
+                </div>
 
 
 
 
 
 
-                    @*@Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
-                </td>
-            </tr>
+                @*@Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
+            </td>
+        </tr>
         }
     </tbody>
 </table>
@@ -160,7 +183,7 @@
 
     function postMessage() {
         //ajaxpost nouveaumessage
-        $.ajax({ 
+        $.ajax({
    type: "post",
    url: "@Url.Action("AddMessage")",
    data: $("#test").serialize(),
@@ -171,7 +194,7 @@
             //getConversation('convId')
             ;
         //getElementById()
-    
+
     }
 function getConversation(id) {
  $.ajax({
@@ -188,7 +211,7 @@ function getConversation(id) {
          var resultsJSON = JSON.parse(results);
          //alert(r[0].Content);
              for (y in resultsJSON) {
-                 
+
                  var table = document.getElementById("ConvContent");
                  var row = table.insertRow(0);
                  var cell1 = row.insertCell(0);

@@ -62,7 +62,8 @@
     <div class="checkbox">
         <label>
             @*<input type="checkbox" checked= value="" />*@
-            @Html.CheckBox("Accept Shared", @Model.AcceptShared)
+            @*@Html.CheckBox("AcceptShared", @Model.User.AcceptShared)*@
+            <input asp-for="@Model.AcceptShared" type="checkbox" />
             Share Collection
         </label>
 

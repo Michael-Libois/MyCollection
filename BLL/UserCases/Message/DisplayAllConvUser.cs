@@ -41,12 +41,17 @@ namespace BLL.UserCases
 
 
 
-            List<Conversation> list = unitOfWork.ConversationRepository.Filter(funcPred).ToList();
-            var messages = new List<Message>();
-            foreach (var conv in list)
+            List<Conversation> listConv = unitOfWork.ConversationRepository.Filter(funcPred).ToList();
+            var ListMessages = new List<Message>();
+            foreach (var conv in listConv)
             {
-                messages = DisplayMessagesConv(conv.Id);
-                foreach (var msg in messages)
+                Func<Message, bool> funcPred2 = p => (p.ConversationId == conv.Id);
+
+                var listMessages = unitOfWork.MessageRepository.Filter(funcPred2).ToList();
+
+
+                
+                foreach (var msg in listMessages)
                 {
                     if (msg.UserId != userId && msg.IsChecked == false)
                         return true;
@@ -57,7 +62,25 @@ namespace BLL.UserCases
 
         }
 
+        public bool CheckForNewMessageByIDConv(int id)
+        {
+            
+            //Conversation conv = unitOfWork.ConversationRepository.GetById(id);
+            Func<Message, bool> funcPred2 = p => (p.ConversationId == id);
+            var listMessages = unitOfWork.MessageRepository.Filter(funcPred2).ToList();
+            foreach (var msg in listMessages)
+            {
+                if (msg.UserId != userId && msg.IsChecked == false)
+                    return true;
+            }
+            return false;
+        }
+            
 
 
-    }
+
+
+        }
+
 }
+
