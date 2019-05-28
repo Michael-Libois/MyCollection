@@ -20,7 +20,7 @@ namespace DAL.Context
         DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseSqlServer("Data Source = (localdb)\\mssqllocaldb;Database=MuCollection;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer("Data Source = Server=tcp:dotnet1819.database.windows.net,1433;Initial Catalog=MuCollection;Persist Security Info=False;User ID=aspnetcore1819;Password=Dev=2019;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
