@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace BLL.UserCases
 {
@@ -20,6 +21,16 @@ namespace BLL.UserCases
 
 
 
+        }
+
+        public async Task<List<Message>> DisplayMessagesConvAsync(int convid)
+        {
+
+            var ReturnValue = new List<Message>();
+
+            await Task.Run(() => ReturnValue = DisplayMessagesConv(convid));
+
+            return ReturnValue;
         }
 
 

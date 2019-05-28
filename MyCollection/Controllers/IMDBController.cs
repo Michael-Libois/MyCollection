@@ -23,7 +23,7 @@ namespace MyCollection.Controllers
 {
 
 
-    public class IMDBController : Controller
+    public class IMDBController : MicBaseController
     {
         //public async Task<List<IMDBMovieSummary>> GetMovies(string name)
         //{
@@ -37,11 +37,8 @@ namespace MyCollection.Controllers
 
         //}
 
-        private readonly IUnitOfWork unitOfWork;
-
-        public IMDBController(IUnitOfWork UnitOfWork)
+        public IMDBController(IUnitOfWork UnitOfWork) :base(UnitOfWork)
         {
-            unitOfWork = UnitOfWork;
         }
 
 
@@ -87,11 +84,9 @@ namespace MyCollection.Controllers
 
             //try
             //{
-            var currentUser = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+           
 
-            var userUC = new User(currentUser, unitOfWork);
-
-            userUC.AddToUserCollection(imdbmovie);
+           userUC.AddToUserCollection(imdbmovie);
 
             //return RedirectToAction(nameof(Index));
             return RedirectToAction("DisplayAllMyMovies", "Movie");

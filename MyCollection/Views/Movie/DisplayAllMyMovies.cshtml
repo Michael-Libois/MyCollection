@@ -71,14 +71,14 @@
 
                     <div class="card-body">
                         <h4 class="card-title">
-                            @Html.ActionLink(item.Title, "Details", new { id = item.Id })
+                            @Html.ActionLink(item.Title, "Details", new { id = item.Id } , new { style = "color:black" })
                         </h4>
                         <h5>@*@Html.DisplayFor(modelItem => item.Genre)*@</h5>
                         @*<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>*@
                     </div>
-                    <div class="card-footer">
+                    @*<div class="card-footer">
                         <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-                    </div>
+                    </div>*@
                 </div>
             </div>
 

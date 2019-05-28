@@ -7,16 +7,12 @@
   <ItemGroup>
     <None Remove="Factory\DbFactory.cs_" />
     <None Remove="Factory\IDbFactory.cs_" />
-    <None Remove="Repo\IMovieRepository.cs_" />
-    <None Remove="Repo\MovieRepository.cs_" />
     <None Remove="Repo\RepositoryGeneric.cs_" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Include="Factory\DbFactory.cs_" />
     <Compile Include="Factory\IDbFactory.cs_" />
-    <Compile Include="Repo\IMovieRepository.cs_" />
-    <Compile Include="Repo\MovieRepository.cs_" />
     <Compile Include="Repo\RepositoryGeneric.cs_" />
   </ItemGroup>
 

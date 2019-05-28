@@ -20,19 +20,16 @@ namespace MyCollection.Controllers
 {
 
     //[Authorize]
-    public class AccountController : Controller
+    public class AccountController : MicBaseController
     {
-        private readonly IUnitOfWork iUnitOfWork;
         private readonly UserManager<ApplicationUserEF> _userManager;
         private readonly SignInManager<ApplicationUserEF> _signInManager;
 
         public AccountController(IUnitOfWork unitOfWork, UserManager<ApplicationUserEF> userManager,
-            SignInManager<ApplicationUserEF> signInManager)//, IRepositoryGeneric<AdressEF, int> RepositoryAdress)
+            SignInManager<ApplicationUserEF> signInManager) : base(unitOfWork)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-
-            this.iUnitOfWork = unitOfWork;
         }
 
         [AllowAnonymous]
@@ -89,8 +86,8 @@ namespace MyCollection.Controllers
                     //await _signInManager.PasswordSignInAsync(user, loginViewModel.Password, false, false);
                     //option2: var userid=  recherUserNonLoggedById();
                     //var userid = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-                    var UserRole = new User(user.Id, iUnitOfWork);
-                    UserRole.AddNewUserAdress(loginViewModel.ToAdress());
+
+                    userUC.AddNewUserAdress(loginViewModel.ToAdress());
 
                     return RedirectToAction("Index", "Home");
                 }
@@ -113,8 +110,6 @@ namespace MyCollection.Controllers
         public async Task<IActionResult> Profil()
         {
             var user = await _userManager.GetUserAsync(this.User);
-            var currentUser = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var userUC = new User(currentUser, iUnitOfWork);
 
             var adress = userUC.GetAdress();
             var model = new ProfilViewModel()
@@ -134,7 +129,7 @@ namespace MyCollection.Controllers
 
 
             //var user = await _userManager.GetUserAsync(this.User);
-            var currentUser = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+           
 
             //var updated = _userManager.UpdateAsync(u);
 
@@ -144,7 +139,6 @@ namespace MyCollection.Controllers
             //    iUnitOfWork.contextDB.SaveChangesAsync();
             //}
 
-            var userUC = new User(currentUser, iUnitOfWork);
             userUC.EditProfil(a, u);
 
             return RedirectToAction("Profil");

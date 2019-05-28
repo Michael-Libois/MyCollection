@@ -15,18 +15,17 @@ using Microsoft.AspNetCore.Identity;
 
 namespace MyCollection.Controllers
 {
-    public class UserController : Controller
+    public class UserController : MicBaseController
     {
 
-        private readonly IUnitOfWork unitOfWork;
+        //private readonly IUnitOfWork unitOfWork;
 
         private readonly UserManager<ApplicationUserEF> _userManager;
         private readonly SignInManager<ApplicationUserEF> _signInManager;
 
         public UserController(IUnitOfWork unitOfWork, UserManager<ApplicationUserEF> userManager,
-            SignInManager<ApplicationUserEF> signInManager)
+            SignInManager<ApplicationUserEF> signInManager) : base(unitOfWork)
         {
-            this.unitOfWork = unitOfWork;
             _userManager = userManager;
             _signInManager = signInManager;
         }
@@ -40,24 +39,12 @@ namespace MyCollection.Controllers
         {
 
             var displayUrl = UriHelper.GetDisplayUrl(Request);
-            var urlBuilder =
-            new UriBuilder(displayUrl)
-            {
-                Query = null,
-                Fragment = null
-            };
-            string url = urlBuilder.ToString();
 
+            ViewData["URL"] = GetBuildedUrl(displayUrl); ;
 
-            ViewData["URL"] = url;
-
-            
-            var currentUser = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-
-            var cur = _userManager.Users.FirstOrDefault(u => u.Id == currentUser);
+            var cur = _userManager.Users.FirstOrDefault(u => u.Id == userID);
             ViewBag.ac = cur.AcceptShared;
 
-            var userUC = new User(currentUser, unitOfWork);
             var users = userUC.ShowUsersSamePostalMovies();
 
             var vm = new PostalMessageViewModel
@@ -72,32 +59,30 @@ namespace MyCollection.Controllers
             return View(vm);
         }
 
+        //private string GetCurrentUserID()
+        //    => User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
+        //private string GetBuildedUrl(string displayUrl)
+        //    => (new UriBuilder(displayUrl)
+        //    {
+        //        Query = null,
+        //        Fragment = null
+        //    }).ToString();
 
 
         public IActionResult FilterMoviesByPostalCode(string FilterType, string SearchString)
         {
 
             var displayUrl = UriHelper.GetDisplayUrl(Request);
-            var urlBuilder =
-            new UriBuilder(displayUrl)
-            {
-                Query = null,
-                Fragment = null
-            };
-            string url = urlBuilder.ToString();
+            ViewData["URL"] = GetBuildedUrl(displayUrl);
 
 
-            ViewData["URL"] = url;
-
-
-
-            var currentUser = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var userUC = new User(currentUser, unitOfWork);
             var users = userUC.ShowUsersSamePostalMovies();
 
             var listfilter = userUC.FilterMovies(users, FilterType, SearchString);
 
+            var cur = _userManager.Users.FirstOrDefault(u => u.Id == userID);
+            ViewBag.ac = cur.AcceptShared;
 
 
             var vm = new PostalMessageViewModel

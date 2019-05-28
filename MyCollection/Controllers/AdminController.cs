@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MyCollection.Auth;
-using MyCollection.Data;
 using MyCollection.ViewModels;
 
 namespace MyCollection.Controllers

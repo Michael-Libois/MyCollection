@@ -7,7 +7,7 @@ using System.Text;
 
 namespace BLL.UserCases
 {
-    public partial class User
+    public partial class User : Visitor
     {
         private readonly string userId;
         private readonly IUnitOfWork unitOfWork;

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BLL.UserCases
 {
-    public partial class User : Visitor
+    public partial class User
     {
         public void DeleteFromUserCollection(int id)
         {

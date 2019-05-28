@@ -18,15 +18,11 @@ using DAL.UnitOfWork;
 namespace MyCollection.Controllers
 {
     [Authorize]
-    public class MovieController : Controller
+    public class MovieController : MicBaseController
     {
-        private readonly IUnitOfWork unitOfWork;
-
-        //public MovieController(IUnitOfWork Repository)
-        public MovieController(IUnitOfWork unitOfWork)
+        public MovieController(IUnitOfWork unitOfWork) :base(unitOfWork)
         {
 
-            this.unitOfWork = unitOfWork;
         }
 
         //public MovieController(IRepositoryGeneric<Movie> repository)
@@ -45,8 +41,6 @@ namespace MyCollection.Controllers
         // GET: Movie/Details/5
         public ActionResult Details(int id)
         {
-            var currentUser = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var userUC = new User(currentUser, unitOfWork);
             var moviedetail = userUC.DisplayMovieDetail(id);
             return View(moviedetail);
         }
@@ -54,8 +48,6 @@ namespace MyCollection.Controllers
 
         public ActionResult DetailsPostal(int id)
         {
-            var currentUser = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var userUC = new User(currentUser, unitOfWork);
             var moviedetail = userUC.DisplayMovieDetail(id);
             return View(moviedetail);
         }
@@ -75,8 +67,6 @@ namespace MyCollection.Controllers
         {
             try
             {
-                var currentUser = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-                var userUC = new User(currentUser, unitOfWork);
                 userUC.CreateMovie(movie);
 
                 return RedirectToAction("DisplayAllMyMovies", "Movie");
@@ -90,7 +80,7 @@ namespace MyCollection.Controllers
         // GET: Movie/Edit/5
         public ActionResult Edit(int id)
         {
-            MovieDetail model = unitOfWork.MovieDetailRepository.GetById(id);
+            MovieDetail model = userUC.DisplayMovieDetail(id);
 
             //TODO EF to Common.MTO.MovieDetail
             return View(model);
@@ -103,8 +93,7 @@ namespace MyCollection.Controllers
         {
             if (ModelState.IsValid)
             {
-                var currentUser = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-                var userUC = new User(currentUser, unitOfWork);
+                
                 userUC.EditMovie(movie);
                 
                 return RedirectToAction("DisplayAllMyMovies", "Movie");
@@ -118,8 +107,6 @@ namespace MyCollection.Controllers
         // GET: Movie/Delete/5
         public ActionResult Delete(int Id)
         {
-            var currentUser = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var userUC = new User(currentUser, unitOfWork);
             userUC.DeleteFromUserCollection(Id);
 
 
@@ -152,22 +139,10 @@ namespace MyCollection.Controllers
         {
 
             var displayUrl = UriHelper.GetDisplayUrl(Request);
-            var urlBuilder =
-            new UriBuilder(displayUrl)
-            {
-                Query = null,
-                Fragment = null
-            };
-            string url = urlBuilder.ToString();
 
 
-            ViewData["URL"] = url;
+            ViewData["URL"] = GetBuildedUrl(displayUrl);
 
-
-
-            var currentUser = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-
-            var userUC = new User(currentUser, unitOfWork);
 
             var movies = userUC.DisplayMyMovies();
 
@@ -178,22 +153,9 @@ namespace MyCollection.Controllers
         {
 
             var displayUrl = UriHelper.GetDisplayUrl(Request);
-            var urlBuilder =
-            new UriBuilder(displayUrl)
-            {
-                Query = null,
-                Fragment = null
-            };
-            string url = urlBuilder.ToString();
 
+            ViewData["URL"] = ViewData["URL"] = GetBuildedUrl(displayUrl); ;
 
-            ViewData["URL"] = url;
-
-
-
-            var currentUser = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-
-            var userUC = new User(currentUser, unitOfWork);
 
             var movies = userUC.DisplayMoviesByUserId(UserID);
 
@@ -204,23 +166,7 @@ namespace MyCollection.Controllers
         {
 
             var displayUrl = UriHelper.GetDisplayUrl(Request);
-            var urlBuilder =
-            new UriBuilder(displayUrl)
-            {
-                Query = null,
-                Fragment = null
-            };
-            string url = urlBuilder.ToString();
-
-
-            ViewData["URL"] = url;
-
-
-
-
-            var currentUser = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-
-            var userUC = new User(currentUser, unitOfWork);
+            ViewData["URL"] = GetBuildedUrl(displayUrl);
 
             var movies = userUC.FilterMyMovies(FilterType, SearchString);
 

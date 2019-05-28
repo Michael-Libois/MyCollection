@@ -20,7 +20,10 @@ namespace MyCollection.ViewModels
         public bool AcceptShared { get; set; }
 
         public string Street { get; set; }
+        //[RegularExpression(@"^[0-9]", ErrorMessage = "Type a number ")]
         public string Number { get; set; }
+        //[Required]
+        //[RegularExpression(@"^[0-9]", ErrorMessage = "Type a number ")]
         public string PostalCode { get; set; }
         public string City { get; set; }
         

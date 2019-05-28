@@ -17,18 +17,11 @@ using BLL.UserCases;
 
 namespace MyCollection.Controllers
 {
-    public class MessageController : Controller
+    public class MessageController : MicBaseController
     {
 
-        
-
-        private readonly IUnitOfWork unitOfWork;
-
-        public MessageController(IUnitOfWork UnitOfWork)
-        {
-
-            unitOfWork = UnitOfWork;
-        }
+        public MessageController(IUnitOfWork UnitOfWork) :base(UnitOfWork)
+        { }
 
         public IActionResult Index()
         {
@@ -47,9 +40,7 @@ namespace MyCollection.Controllers
         public JsonResult AddMessageByReceiver(Message message, string receiverID)
         {
 
-            var currentUser = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var messageUC = new MessageUC(currentUser, unitOfWork);
-            messageUC.AddNewMessage(message, currentUser, receiverID);
+            messageUC.AddNewMessage(message, userID, receiverID);
 
             return Json(true);
         }
@@ -57,9 +48,7 @@ namespace MyCollection.Controllers
         public JsonResult AddMessage(Message message)
         {
             var data = message.ConversationId;
-            var currentUser = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var messageUC = new MessageUC(currentUser, unitOfWork);
-            //messageUC.AddNewMessage(message, listUsers);
+           
             messageUC.AddNewMessage(message, message.ConversationId);
 
 
@@ -67,13 +56,15 @@ namespace MyCollection.Controllers
             return Json(data);
         }
 
+        public JsonResult HasNewMessage()
+            => Json(messageUC.CheckForNewMessage(userID));
 
         public IActionResult DisplayMessageConv(int convId)
         {
 
-            var currentUser = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+           
             //var listUsers = new List<string> { receiverId, currentUser };
-            var messageUC = new MessageUC(currentUser, unitOfWork);
+
             //messageUC.AddNewMessage(message, listUsers);
             var model = messageUC.DisplayMessagesConv(convId);
 
@@ -84,15 +75,14 @@ namespace MyCollection.Controllers
 
         public IActionResult DisplayAllConvConv(/*string receiverId*/)
         {
-            var currentUser = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+           
             //var listUsers = new List<string> { receiverId, currentUser };
-            var messageUC = new MessageUC(currentUser, unitOfWork);
             //messageUC.AddNewMessage(message, listUsers);
-            var model = messageUC.DisplayAllConvUser(currentUser);
+            var model = messageUC.DisplayAllConvUser(userID);
 
             var vm = new MessConvViewModel
             {
-                conversation = messageUC.DisplayAllConvUser(currentUser),
+                conversation = messageUC.DisplayAllConvUser(userID),
                 message = new Message()
             };
 
@@ -110,16 +100,13 @@ namespace MyCollection.Controllers
         }
 
         [HttpGet]
-        public JsonResult GetConversation(int convId)
+        public async Task<JsonResult> GetConversation(int convId)
         {
 
-            var currentUser = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+           
             //var listUsers = new List<string> { receiverId, currentUser };
-            var messageUC = new MessageUC(currentUser, unitOfWork);
             //messageUC.AddNewMessage(message, listUsers);
-            var model = messageUC.DisplayMessagesConv(convId);
-
-
+            var model =  await messageUC.DisplayMessagesConvAsync(convId);
 
             //on marque les messages comme "lu"
             foreach (var message in model)

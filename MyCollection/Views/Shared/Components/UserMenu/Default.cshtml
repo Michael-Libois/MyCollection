@@ -7,8 +7,8 @@
     <ul class="dropdown-menu">
         @foreach (var menuItem in Model)
         {
-            <li>
-                <a asp-controller="Message" asp-action=@menuItem.ActionValue>@menuItem.DisplayValue</a>
+            <li class="nav-item">
+                <a class="nav-link" style="color:black" asp-controller="Message" asp-action=@menuItem.ActionValue>@menuItem.DisplayValue</a>
             </li>
         }
     </ul>
