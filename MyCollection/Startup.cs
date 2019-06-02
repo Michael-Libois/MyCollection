@@ -46,7 +46,7 @@ namespace MyCollection
 
             services.AddDbContext<DatabaseContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("azure")));
+                    Configuration.GetConnectionString("DefaultConnection")));
 
             //services.AddDefaultIdentity<ApplicationUser>()
             //    .AddDefaultUI(UIFramework.Bootstrap4)

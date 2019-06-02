@@ -17,7 +17,7 @@
         <p>
             Find by
 
-           
+
 
             @Html.DropDownList("FilterType", new List<SelectListItem>
             {
@@ -28,8 +28,8 @@
             })
 
             <input type="text" name="SearchString" value="@ViewData["SearchString"]" />
-            <input type="submit" value="Search" class="btn btn-default" /> 
-            <a asp-action="DisplayAllMyMovies" >Back to Full List</a>
+            <input type="submit" value="Search" class="btn btn-default" />
+            <a asp-action="DisplayAllMyMovies">Back to Full List</a>
             @*<a href="@ViewData["URL"]">Back</a>*@
         </p>
     </div>
@@ -44,47 +44,54 @@
 
 
 
+@if ( Model.Count() >= 1)
+{
+
+    <div class="row justify-content-center">
+        <div class="col-12">
 
 
-<div class="row justify-content-center">
-    <div class="col-12">
+            <div class="row row-centered">
+
+                @foreach (var item in Model)
+                {
 
 
-        <div class="row row-centered">
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="card h-100" style="width: 18rem;">
 
-            @foreach (var item in Model)
-        {
-
-
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="card h-100" style="width: 18rem;">
-
-                    @if (item.Poster != null)
-                    {
-                        <a ><img class="card-img-top" src="@Url.Content(item.Poster)" alt=""></a>
-                    }
-                    @if (item.Poster == null)
-                    {
-                        <a href="#"><img class="card-img-top" src="~/img/noimage.png" alt=""></a>
-                    }
+                            @if (item.Poster != null)
+                            {
+                                <a><img class="card-img-top" src="@Url.Content(item.Poster)" alt=""></a>
+                            }
+                            @if (item.Poster == null)
+                            {
+                                <a href="#"><img class="card-img-top" src="~/img/noimage.png" alt=""></a>
+                            }
 
 
-                    <div class="card-body">
-                        <h4 class="card-title">
-                            @Html.ActionLink(item.Title, "Details", new { id = item.Id } , new { style = "color:black" })
-                        </h4>
-                        <h5>@*@Html.DisplayFor(modelItem => item.Genre)*@</h5>
-                        @*<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>*@
+                            <div class="card-body">
+                                <h4 class="card-title">
+                                    @Html.ActionLink(item.Title, "Details", new { id = item.Id }, new { style = "color:black" })
+                                </h4>
+                                <h5>@*@Html.DisplayFor(modelItem => item.Genre)*@</h5>
+                                @*<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>*@
+                            </div>
+                            @*<div class="card-footer">
+                                    <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+                                </div>*@
+                        </div>
                     </div>
-                    @*<div class="card-footer">
-                        <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-                    </div>*@
-                </div>
-            </div>
 
-        }
+                }
+            </div>
         </div>
     </div>
-</div>
+}
+
+    @if (Model.Count() < 1)
+    {
+        <h5>No Result</h5>
+    }
 
 

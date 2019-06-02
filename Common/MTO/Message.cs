@@ -16,7 +16,8 @@ namespace Common.MTO
 
         public int ConversationId { get; set; }
         //public ConversationEF Conversation { get; set; }
-
+        [Required]
+        [MinLength (2)]
         public string Content { get; set; }
 
         [DataType(DataType.Date)]

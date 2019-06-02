@@ -36,6 +36,9 @@
 
 
 
+@if (Model.ListMoviePostal.Count() >= 1)
+{
+
 
 
     <div class="row justify-content-center">
@@ -79,7 +82,7 @@
                                     <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalScrollableTitle">Modal title</h5>
+                                                <h5 class="modal-title" id="exampleModalScrollableTitle">New message to @item.UserName</h5>
                                                 @*<button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>*@
@@ -94,11 +97,12 @@
                                                             <input id="receiverId" name="receiverId" hidden="hidden" />
                                                             <div asp-validation-summary="ModelOnly" />
 
-                                                            <div class="form-group">
+                                                            <div class="form-group" style="width: 400px;">
                                                                 <label asp-for="@Model.Message.Content" class="control-label"></label>
                                                                 @*<input asp-for="@Model.message.Content" class="form-control" />*@
                                                                 <textarea asp-for="@Model.Message.Content" class="form-control md-textarea" length="120" rows="5" cols="33"></textarea>
                                                                 <span asp-validation-for="@Model.Message.Content" class="text-danger"></span>
+                                                                @Html.ValidationMessageFor(model => model.Message.Content, "", new { @class = "text-danger" })
                                                             </div>
 
                                                             <div class="form-group">
@@ -135,6 +139,16 @@
     </div>
 
 
+    }
+@if (Model.ListMoviePostal.Count() < 1)
+{
+    <h5>No Result</h5>
+}
+}
+
+@if(!@ViewBag.ac) { 
+
+<h5>Need to activate "Share collection" in your profil to enable this feature!!</h5>
 
 }
 

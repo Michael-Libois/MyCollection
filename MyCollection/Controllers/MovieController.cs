@@ -164,16 +164,22 @@ namespace MyCollection.Controllers
 
         public ActionResult DisplayMyMoviesByFilter(string FilterType, string SearchString)
         {
-
             var displayUrl = UriHelper.GetDisplayUrl(Request);
             ViewData["URL"] = GetBuildedUrl(displayUrl);
+            if (SearchString != null)
+            {
+                
 
-            var movies = userUC.FilterMyMovies(FilterType, SearchString);
+                var movies = userUC.FilterMyMovies(FilterType, SearchString);
 
-            ViewData["FilterType"] = FilterType;
-            ViewData["SearchString"] = SearchString;
+                ViewData["FilterType"] = FilterType;
+                ViewData["SearchString"] = SearchString;
 
-            return View("DisplayAllMyMovies",movies);
+                return View("DisplayAllMyMovies", movies);
+            }
+            var nomovies = new List<MovieSummary>();
+            return View("DisplayAllMyMovies", nomovies);
+            
         }
 
      

@@ -75,26 +75,34 @@ namespace MyCollection.Controllers
 
             var displayUrl = UriHelper.GetDisplayUrl(Request);
             ViewData["URL"] = GetBuildedUrl(displayUrl);
-
-
-            var users = userUC.ShowUsersSamePostalMovies();
-
-            var listfilter = userUC.FilterMovies(users, FilterType, SearchString);
-
-            var cur = _userManager.Users.FirstOrDefault(u => u.Id == userID);
-            ViewBag.ac = cur.AcceptShared;
-
-
-            var vm = new PostalMessageViewModel
+            if (SearchString != null)
             {
-                ListMoviePostal = listfilter.ToList(),
+
+                var users = userUC.ShowUsersSamePostalMovies();
+
+                var listfilter = userUC.FilterMovies(users, FilterType, SearchString);
+
+                var cur = _userManager.Users.FirstOrDefault(u => u.Id == userID);
+                ViewBag.ac = cur.AcceptShared;
+
+
+                var vm = new PostalMessageViewModel
+                {
+                    ListMoviePostal = listfilter.ToList(),
+                    Message = new Message()
+                };
+
+                return View("GetMoviesByPostalCode", vm);
+            }
+
+            var cur2 = _userManager.Users.FirstOrDefault(u => u.Id == userID);
+            ViewBag.ac = cur2.AcceptShared;
+            var nofilm = new PostalMessageViewModel
+            {
+                ListMoviePostal = new List<MovieSummary>(),
                 Message = new Message()
             };
-
-
-
-
-            return View("GetMoviesByPostalCode", vm);
+            return View("GetMoviesByPostalCode", nofilm);
         }
     }
 }

@@ -6,11 +6,11 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>GetMovieDetail</h1>
+@*<h1>GetMovieDetail</h1>*@
 @*<div class="float-left">Float left on all viewport sizes</div><br>
     <div class="float-right">Float right on all viewport sizes</div><b*@
 <div>
-    <h4>IMDBMovieSummary</h4>
+    @*<h4>IMDBMovieSummary</h4>*@
     <hr />
     <div class="row">
         <div class="col-6">
@@ -25,7 +25,7 @@
                     @Html.DisplayFor(model => model.Title)
                 </div>
                 <div class="col-sm-4 ">
-                    @Html.DisplayNameFor(model => model.Year)
+                    <strong>@Html.DisplayNameFor(model => model.Year)</strong>
                 </div>
                 <div class="col-sm-8">
                     @Html.DisplayFor(model => model.Year)
@@ -46,26 +46,26 @@
                 @*<dd class = "col-sm-8">
             @Html.DisplayFor(model => model.Poster)
         </dd>*@
-                <div class="col-sm-4 ">
-                    @Html.DisplayNameFor(model => model.Genre)
-                </div>
+            <div class="col-sm-4 ">
+                <strong>@Html.DisplayNameFor(model => model.Genre)</strong>
+            </div>
                 <div class="col-sm-8">
                     @Html.DisplayFor(model => model.Genre)
                 </div>
                 <div class="col-sm-4 ">
-                    @Html.DisplayNameFor(model => model.Director)
+                    <strong>@Html.DisplayNameFor(model => model.Director)</strong>
                 </div>
                 <div class="col-sm-8">
                     @Html.DisplayFor(model => model.Director)
                 </div>
                 <div class="col-sm-4 ">
-                    @Html.DisplayNameFor(model => model.Actors)
+                    <strong>@Html.DisplayNameFor(model => model.Actors)</strong>
                 </div>
                 <div class="col-sm-8">
                     @Html.DisplayFor(model => model.Actors)
                 </div>
                 <div class="col-sm-4 ">
-                    @Html.DisplayNameFor(model => model.Country)
+                    <strong>@Html.DisplayNameFor(model => model.Country)</strong>
                 </div>
                 <div class="col-sm-8">
                     @Html.DisplayFor(model => model.Country)

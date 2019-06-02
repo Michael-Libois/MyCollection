@@ -47,13 +47,16 @@ namespace MyCollection.Controllers
         [HttpPost]
         public JsonResult AddMessage(Message message)
         {
-            var data = message.ConversationId;
-           
-            messageUC.AddNewMessage(message, message.ConversationId);
+            
+                var data = message.ConversationId;
+
+                messageUC.AddNewMessage(message, message.ConversationId);
 
 
 
-            return Json(data);
+                return Json(data);
+            
+            
         }
 
         public JsonResult HasNewMessage()
