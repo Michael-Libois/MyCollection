@@ -35,7 +35,7 @@ namespace MyCollection.Controllers
         [AllowAnonymous]
         public IActionResult Login(string returnUrl)
         {
-            return View(new LoginViewModel
+            return View(new RegisterViewModel
             {
                 ReturnUrl = returnUrl
             });
@@ -43,7 +43,7 @@ namespace MyCollection.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(LoginViewModel loginViewModel)
+        public async Task<IActionResult> Login(RegisterViewModel loginViewModel)
         {
             if (!ModelState.IsValid)
                 return View(loginViewModel);

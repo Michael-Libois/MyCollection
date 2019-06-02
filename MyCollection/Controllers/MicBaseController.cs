@@ -32,6 +32,10 @@ namespace MyCollection.Controllers
         public string userID
             => User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
+
+
+
+
         public string GetBuildedUrl(string displayUrl)
             => (new UriBuilder(displayUrl)
             {
