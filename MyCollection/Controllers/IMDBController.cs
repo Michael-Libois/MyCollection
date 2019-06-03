@@ -46,11 +46,7 @@ namespace MyCollection.Controllers
         public ActionResult GetMoviesByName(string name)
         {
 
-
-
-            var guest = new Visitor();
-
-            var model = guest.SearchMoviesByName(name);
+            var model = visitorUC.SearchMoviesByName(name);
 
             if (model.First()?.imdbID != null)
             {
@@ -72,9 +68,7 @@ namespace MyCollection.Controllers
 
         public ActionResult GetMovieDetail(string imdbid)
         {
-            var guest = new Visitor();
-
-            var model = guest.SearchDetailsOfMovie(imdbid);
+            var model = visitorUC.SearchDetailsOfMovie(imdbid);
 
             return View(model);
         }

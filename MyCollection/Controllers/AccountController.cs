@@ -86,8 +86,8 @@ namespace MyCollection.Controllers
                     //await _signInManager.PasswordSignInAsync(user, loginViewModel.Password, false, false);
                     //option2: var userid=  recherUserNonLoggedById();
                     //var userid = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-
-                    userUC.AddNewUserAdress(loginViewModel.ToAdress());
+                    
+                    visitorUC.AddNewUserAdress(user.Id,loginViewModel.ToAdress());
 
                     return RedirectToAction("Index", "Home");
                 }

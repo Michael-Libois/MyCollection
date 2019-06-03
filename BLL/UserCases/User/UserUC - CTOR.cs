@@ -13,6 +13,7 @@ namespace BLL.UserCases
         private readonly IUnitOfWork unitOfWork;
 
         public User(string UserId, IUnitOfWork unitOfWork)
+            : base(unitOfWork)
         {
             if (string.IsNullOrWhiteSpace(UserId) || string.IsNullOrEmpty(UserId))
             {

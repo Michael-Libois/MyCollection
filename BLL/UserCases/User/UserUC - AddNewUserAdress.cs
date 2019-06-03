@@ -13,26 +13,7 @@ namespace BLL.UserCases
     {
         public void AddNewUserAdress(Adress Adress)
         {
-            try
-            {
-                var adress = new Adress();
-
-                adress.Id = Adress.Id;
-                adress.UserID = userId; //Ref:Au cas on a besoin du BTO: Adress.UserID;
-                adress.Street = Adress.Street;
-                adress.Number = Adress.Number;
-                adress.PostalCode = Adress.PostalCode;
-                adress.City = Adress.City;
-
-                // TODO: Add insert logic here
-                unitOfWork.AdressRepository.Create(adress);
-                unitOfWork.SaveChanges();
-            }
-            catch (Exception)
-            {
-
-                throw new Exception("Adress for new User not added to db.");
-            }
+                AddNewUserAdress(userId, Adress);
         }
     }
 }

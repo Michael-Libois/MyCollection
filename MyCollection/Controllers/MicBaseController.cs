@@ -18,6 +18,9 @@ namespace MyCollection.Controllers
     public class MicBaseController : Controller
     {
         private readonly IUnitOfWork unitOfWork;  //TODO mettre en prive et ne pas appeler dans les controleurs
+        public Visitor visitorUC
+            => new Visitor(unitOfWork);
+
         public User userUC
             => new User(userID, unitOfWork);
 
@@ -31,9 +34,6 @@ namespace MyCollection.Controllers
 
         public string userID
             => User.FindFirst(ClaimTypes.NameIdentifier).Value;
-
-
-
 
 
         public string GetBuildedUrl(string displayUrl)
